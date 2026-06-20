@@ -7,7 +7,7 @@ description: Use when writing, reviewing, or filling gaps in a product PRD or �
 
 ## Core Principle
 
-The job is not "fill in a document." The job is **to figure out the product together with the user** — align on the real need, research the domain, design the whole flow and UX — and then capture that as a doc a developer (or an AI) can implement directly. Work progressively: confirm what the business is trying to do, reconstruct the main flow, then expand into object flow, data flow, linkage, rules, exceptions, states, data, page structure, and final detail. **Be complete but lean** — do not add words, entities, statuses, pages, fields, or components unless they make the product clearer, safer, more usable, or more testable. **Never dump every checklist at the user at once, and never let a generated detail enter the PRD without a source or a 待确认 mark.**
+The job is not "fill in a document." The job is **to figure out the product together with the user** — align on the real need, research the domain, design the whole flow and UX — and then capture that as a doc a developer (or an AI) can implement directly. Work progressively: confirm what the business is trying to do, identify the flow shape, reconstruct every business flow, then expand into object flow, data flow, linkage, rules, exceptions, object status changes, data, page structure, and final detail. Do not force a real parallel, master-child, state-machine, event-driven, or cycle workflow into one artificial sequential mainline. **Be complete but lean** — do not add words, entities, statuses, pages, fields, or components unless they make the product clearer, safer, more usable, or more testable. **Never dump every checklist at the user at once, and never let a generated detail enter the PRD without a source or a 待确认 mark.**
 
 ## Definition of Done — The One Bar
 
@@ -47,11 +47,24 @@ Guide the user toward the better product; do not merely transcribe what they fir
 ## Progressive Workflow
 
 1. **Business First** — plain-language business context, agreed mainline, non-negotiable premises, scope (in/out), users, role glossary, core concepts, business objects.
-2. **Main Flow Next** — reconstruct the user's flow, propose a better one, offer MVP. Guide toward the cleaner path; do not merely record.
-3. **Research Before Locking** — see "Research Is a Hard Gate" below.
-4. **Rules After Flow** — states, source documents, idempotency, data sources, permissions, exceptions, boundaries, rollback.
-5. **Pages After Business Shape** — menu/page organization, page-level Tabs vs list Tabs, design.md/UI conventions, interaction habits.
-6. **Write After Confirmation** — show confirmed rules, recommended defaults, open high-risk decisions, out-of-scope. Wait for confirmation.
+2. **Flow Shape Next** — identify whether the requirement is single-line, parallel, master-child, state-machine, event-driven, cycle/periodic, or a mix. For parallel flows, name each independent line and its convergence points instead of flattening it into one sequential story.
+3. **Flow Diagrams Before Detail** — in the main PRD file, output a business flow atlas before detailed rules, page specs, or field tables. Use Mermaid diagrams to show global relationships, each independent flow, key convergence points, and object status changes.
+4. **Research Before Locking** — see "Research Is a Hard Gate" below.
+5. **Rules After Flow** — only after the flow shape and diagrams are clear, drill into states, source documents, idempotency, data sources, permissions, exceptions, boundaries, and rollback.
+6. **Pages After Business Shape** — menu/page organization, page-level Tabs vs list Tabs, design.md/UI conventions, interaction habits.
+7. **Write After Confirmation** — show confirmed rules, recommended defaults, open high-risk decisions, out-of-scope. Wait for confirmation.
+
+## Main PRD Flow Diagrams
+
+When producing the main PRD file, begin with a **business flow atlas** before detailed rules, page specs, field tables, or acceptance criteria. Pick the diagram set based on the flow shape:
+
+- For a single-line flow, draw one Mermaid `flowchart` for the full path.
+- For parallel or master-child flows, draw one global relationship/convergence diagram plus one Mermaid `flowchart` per independent flow line.
+- For event-driven or cycle/periodic flows, draw the trigger/timing loop and the downstream side effects/writebacks.
+- For every key business object with a lifecycle, draw a Mermaid `stateDiagram-v2` showing object status changes, allowed transitions, rollback/reopen paths, terminal states, and which flow step triggers each transition.
+- Mark convergence points explicitly: which flow depends on which object status, which data is written back, which downstream flow is unlocked/frozen, and which exceptions interrupt another flow.
+
+Diagrams clarify structure; they do not replace rules. After each diagram, still write the trigger, preconditions, actors, input/output, persisted object, status changes, exception branches, downstream impact, and testable acceptance criteria.
 
 ## What a Locked Mainline Must Contain
 
@@ -136,6 +149,7 @@ Read only the references needed for the current stage:
 - Keep questions small: 3-6 decisions per batch, each with a recommended option and tradeoff.
 - Treat short answers ("加 / 不需要 / 你来 / 按最佳实践") as decisions to digest, not missing context.
 - Use the minimum structure that makes the product buildable, testable, and understandable. Do not add entities, statuses, pages, components, tables, or prose just to look complete.
+- In the main PRD file, draw the business flow atlas first. Include Mermaid flowcharts for each flow line and Mermaid `stateDiagram-v2` diagrams for key object status changes when objects have lifecycles.
 - When proposing a flow, page, component, or rule, explain the product constraint it solves and what would break without it.
 - Write from the user-agreed business mainline. Generic best practices and polished wording must not override confirmed business facts.
 - Every extension beyond the confirmed mainline needs a basis: user confirmation, business anchor, source data, existing system behavior, market research marked as recommendation, or "待确认".
@@ -145,6 +159,8 @@ Read only the references needed for the current stage:
 ## Red Flags — STOP, you are about to violate the skill
 
 - About to output exception matrices / page-Tab tables / state machines **before** business + main flow are confirmed.
+- About to flatten parallel, master-child, event-driven, cycle/periodic, or state-machine flows into one linear mainline.
+- About to omit lifecycle/state diagrams for objects whose statuses govern operations, writebacks, locks, or downstream flows.
 - About to write the full PRD **without** marking invented details as 待确认, because the user said "别问、直接写".
 - About to lock口径 / write defaults **without** first reading existing project docs (skipping research under time pressure).
 - About to write an abstract term (计价口径 / 统计口径 / 结算口径 / 规则 / 策略) into a uniqueness key, filter, or acceptance rule **without** decomposing it into fields.
@@ -156,4 +172,4 @@ Read only the references needed for the current stage:
 
 ## Default First Response Shape
 
-For a rough requirement, start with: (1) one-sentence plain-language business goal, (2) known/unknown about scope/users/objects/risk, (3) initial main-flow reconstruction marked as inferred, (4) the 3-6 highest-value confirmation questions with recommended defaults. Do not open with exception matrices, Tab tables, or detailed state machines.
+For a rough requirement, start with: (1) one-sentence plain-language business goal, (2) known/unknown about scope/users/objects/risk, (3) initial flow-shape judgment and business flow atlas plan, clearly marked as inferred if needed; if multiple flows may run in parallel, name each flow and its convergence points, (4) the 3-6 highest-value confirmation questions with recommended defaults. Do not open with exception matrices, page-level Tab tables, or detailed state machines before the business and flow shape are clear.
