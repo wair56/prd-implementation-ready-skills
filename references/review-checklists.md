@@ -1,0 +1,120 @@
+# Review Checklists
+
+Use before saying a PRD is complete or when the user asks to review an existing PRD.
+
+## Stage and Flow
+
+- Does the PRD stay lean: no needless entities, fields, states, pages, components, tables, or repeated prose?
+- For each added object/status/field/page/component/flow step, is the user/business/process need clear?
+- Are the agreed business mainline and business anchors written explicitly before detailed rules?
+- Did the assistant preserve user-confirmed anchors when recommending best practices, rewriting, or polishing?
+- Does every extension beyond the mainline have a basis: user confirmation, anchor, source data, existing behavior, research recommendation, or待确认?
+- Are obvious insider premises written clearly enough for a new reader?
+- Can a new reader understand what business this is before reading rules?
+- Is the business goal written separately from the system construction goal?
+- Are role glossary, core concepts, and special/counterintuitive terms defined in plain language?
+- Do money/value/data flows among roles have a simple front-door explanation?
+- Are circular definitions avoided, especially for financial concepts?
+- Is the business goal clear before details?
+- Is scope explicit, including out-of-scope?
+- Is the main flow confirmed before exceptions and states?
+- Did the assistant compare original, recommended, and MVP flow when useful?
+- Did it guide the user when flow was awkward?
+
+## Coverage Matrix
+
+- Are all core business objects extracted from the notes, not only page/menu names?
+- Did the assistant apply the necessity gate before adding new entities or details?
+- For each core object, were source/creation, lifecycle, information delta, data flow, linkage/side effects, actor, time/period, amount/formula, state axes, data fields, query/list, interaction, locking, reverse flow, cross-system, cross-module, and audit trail considered?
+- For each core object, is there a flow / information ledger showing each step, actor/system, state change, newly introduced information, source/authority, validation, persistence target, side effect, and failure/retry?
+- When a step creates or updates another object, was that downstream object added to the object list and covered too?
+- Are open items marked as confirmed, recommended default,待确认, or out of scope?
+- Did the assistant ask only the highest-risk missing decisions first instead of dumping every axis at once?
+- Was the matrix re-run after the main flow changed?
+
+## Data Flow and Linkage
+
+- Is there a data flow map for high-risk data: source/authority, trigger, transform/rule, validation, persistence target, consumer, writeback/sync timing, and failure handling?
+- Is there a linkage map for high-impact actions: linked objects/modules, linkage type, side effect, trigger timing, reverse/rollback, user visibility, and risk?
+- Are "同步更新 / 自动回滚 / 联动处理" decomposed into affected objects, affected fields, timing, and failure behavior?
+- For reverse actions, are released locks, reverted data, recomputed data, non-reverted data, and audit reason clear?
+
+## P0 Consistency and Computability
+
+- If multiple PRD files exist, are the same objects, actions, statuses, and money terms consistent across files?
+- Are business anchors consistent across all module docs?
+- Before rewriting a section, were the original business conclusions preserved or explicitly changed with confirmation?
+- Are document links, file ranges, module indexes, and reading order accurate after docs are merged, deleted, or renumbered?
+- If an item is marked pending / out of scope / not in acceptance, is it prevented from appearing later as confirmed implementation detail?
+- Does every fund movement define source amount, split rule, timing, side effect, and reversal?
+- Does every formula define operands, rates, caps/floors, rounding, snapshot, and zero/negative handling?
+- Does every amount field have an authoritative source document, contract, bill, fee item, import, or manual adjustment source?
+- If a payment order is created, is it clear whether it triggers real external payment or only records a business/accounting action?
+- Is every "audit" tied to a specific audited object, audit actor, audit type, and post-approval side effect?
+- Are ghost statuses eliminated: every status in body text, Tab/filter, exception handling, and state machine is defined in one consistent place?
+
+## Finance Operations
+
+- Does every monthly aggregation define attribution date, month boundary, current-month exclusion, late data handling, and lock/freeze behavior?
+- For payments/recharges, are payer, payee, balance types, deduction priority, insufficient-balance handling, ledger effects, and reversal defined?
+- For synced supplier/cost data, are source system, sync direction, sync mode, cursor, duplicate/update rule, disabled/deleted data handling, and sync timestamp defined?
+- If a supplier is disabled after use, are historical visibility, future selectable scope, notifications, and effects on existing bills/contracts/drivers defined?
+- For reconciliation, are selectable source records, grouping, locking, audit effects, invoice lifecycle, write-off, cancel/reject rollback, red flush, and void behavior defined?
+- For cross-module jumps, are source action, target menu/page/Tab, parameters, default filters, empty state, and permission behavior defined?
+- If confirm and view-detail reuse a modal, are confirm mode, view mode, pagination/search, grouping, and amount-summary consistency defined?
+
+## Source and Language
+
+- Does every added interaction/default/filter/list/field have a source or待确认?
+- Are data source, authoritative source, include/exclude conditions, and refresh timing clear?
+- Are technical fields, SQL conditions, code enums, and interface params converted to business wording?
+- Are abstract terms such as 计价口径 / 统计口径 / 规则 / 策略 decomposed into fields, enums, IDs, versions, or source document sets?
+
+## Rules and Objects
+
+- Are core objects identified?
+- Are state fields separated by axis: business confirmation, audit, payment, invoice, receipt, profit sharing, push?
+- For each object, is the lifecycle traced from creation / initial state instead of starting midway at audit or payment?
+- If an object has a pre-audit stage such as confirmation, calculation, matching, claim, signing, or submission, is that stage modeled separately?
+- Are shared status labels valid for every listed object, or should some objects have object-specific state axes?
+- Are state transitions clear, with trigger, actor, next state, side effects, forbidden scenes?
+- Are source documents, unique constraints, idempotency keys, and writebacks defined?
+- Are idempotency keys made of stable, comparable fields?
+
+## Exceptions and Boundaries
+
+- Network, permission, data, concurrency, duplicate submit, callback delay, callback repeat, callback disorder.
+- Partial success and retry.
+- Rollback, cancel, refund, reverse, rebuild rules.
+- Empty, max, min, invalid input, file, amount, date, pagination.
+
+## Page and UI
+
+- Target端 / touchpoint confirmed from user task and working context, not assumed.
+- Menu/page structure confirmed from business reality, not style taste.
+- Each page, Tab, component, and interaction is tied to a workflow constraint, user task, risk control, or comprehension need.
+- Page-level Tabs vs list filter Tabs are separated.
+- UX carrier and components are specified for key pages/actions: table, detail, drawer, modal, wizard, batch action, exception workbench, upload/download, timeline/log.
+- Important actions define primary/secondary actions, disabled reasons, confirmation copy, validation, recovery, and audit trace.
+- High-density tables define key fields, default sort, pagination, frozen/important columns, empty state, and export needs.
+- Cross-module links define target page/Tab, parameters, default filters, permission, and empty target behavior.
+- design.md / existing UI conventions checked if available.
+- Loading, empty, disabled, submitting, success, failure, high-risk confirmation covered.
+
+## Output Placement
+
+- Global overview contains only cross-module summary rules and main flow.
+- Page-level Tab filters, field tables, button rules, and sort rules are in the relevant module/page.
+- Detailed tables do not appear only in the index/global overview.
+
+## Red Flags
+
+- "通用上更正确" wording that replaces a user-confirmed business fact.
+- "大家都知道 / 默认就是 / 这个不用写" around pricing, funds, roles, source data, or status.
+- Detailed implementation that cannot point to a user discussion, anchor, source, existing behavior, or recommendation label.
+- "按规则处理", "具体以实际为准", "计价口径", "有效单据" without definition.
+- Long sections or tables that do not change behavior, testing, UX, risk, or implementation.
+- New status/object/page/component added only for neatness, not because the flow requires it.
+- `incomeStatus in (...)` or code enum in PRD正文.
+- "可勾选", "默认全选", "自动处理" without source.
+- Global overview stuffed with page-level Tab filter tables.
