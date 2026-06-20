@@ -31,6 +31,27 @@ For complex PRDs, especially money/settlement/approval/cross-system flows, add a
 | Main flow in one paragraph | Plain-language start-to-end flow |
 | Scope note | What this phase does, does not do, and what remains pending |
 
+## Tenant, Organization, and Role Relationship
+
+For SaaS, platform, partner, finance, or collaboration products, define tenant/organization relationships before page and permission details. A user-facing role is not enough; the same real-world subject may appear in several tenant spaces or play multiple roles.
+
+Use:
+
+| Subject / Entity | Tenant / Organization Scope | Possible Roles | Shared Identity? | Tenant Isolation Rule | Data Ownership | Cross-Tenant Visibility | Migration / Merge/Split Behavior | Confirm |
+|---|---|---|---|---|---|---|---|---|
+
+Check:
+
+- Can the same customer appear across multiple tenants?
+- Can the same legal entity have multiple roles in one tenant or across tenants?
+- Are accounts global, tenant-scoped, organization-scoped, or project-scoped?
+- Which identifiers are authoritative: platform ID, tenant-local ID, external system ID, tax/license ID, phone/email, contract number?
+- What happens when a tenant, customer, supplier, contractor, branch, or account is merged, split, disabled, migrated, or re-bound?
+- Which records must remain tenant-isolated even for users who belong to several tenants?
+- Which reports, exports, notifications, callbacks, or admin tools may cross tenant boundaries?
+
+If the product does not support cross-tenant collaboration in this release, say so explicitly and define safe behavior for duplicate names, duplicate external IDs, login switching, import conflicts, and permission denial.
+
 ## Role Glossary
 
 Use:

@@ -7,7 +7,7 @@ description: Use when writing, reviewing, or filling gaps in a product PRD or �
 
 ## Core Principle
 
-The job is not "fill in a document." The job is **to figure out the product together with the user** — align on the real need, research the domain, design the whole flow and UX — and then capture that as a doc a developer (or an AI) can implement directly. Work progressively: confirm what the business is trying to do, identify the flow shape, reconstruct every business flow, then expand into object flow, data flow, linkage, rules, exceptions, object status changes, data, page structure, and final detail. Do not force a real parallel, master-child, state-machine, event-driven, or cycle workflow into one artificial sequential mainline. **Be complete but lean** — do not add words, entities, statuses, pages, fields, or components unless they make the product clearer, safer, more usable, or more testable. **Never dump every checklist at the user at once, and never let a generated detail enter the PRD without a source or a 待确认 mark.**
+The job is not "fill in a document." The job is **to figure out the product together with the user** — align on the real need, research the domain, design the whole flow and UX — and then capture that as a doc a developer (or an AI) can implement directly. Work progressively: confirm what the business is trying to do, identify the flow shape, scan business possibilities, reconstruct every business flow, then expand into object flow, data flow, linkage, rules, exceptions, object status changes, data, page structure, and final detail. Do not force a real parallel, master-child, state-machine, event-driven, or cycle workflow into one artificial sequential mainline. **Be complete but lean** — do not add words, entities, statuses, pages, fields, or components unless they make the product clearer, safer, more usable, or more testable. **Never dump every checklist at the user at once, and never let a generated detail enter the PRD without a source or a 待确认 mark.**
 
 ## Definition of Done — The One Bar
 
@@ -66,6 +66,24 @@ When producing the main PRD file, begin with a **business flow atlas** before de
 
 Diagrams clarify structure; they do not replace rules. After each diagram, still write the trigger, preconditions, actors, input/output, persisted object, status changes, exception branches, downstream impact, and testable acceptance criteria.
 
+
+## Business Possibility Scan
+
+Before locking flows, actively scan for business shapes that are easy to miss. This is especially important for SaaS, marketplace, platform, finance, approval, and partner-collaboration products.
+
+Treat multi-tenant / 多租户 and SaaS compatibility as a first-class possibility, not a late technical detail. Check whether the same customer, same legal entity, account, supplier, contractor, employee, or asset can appear in multiple tenants, multiple organizations, or multiple roles at the same time.
+
+For each possibility, decide whether it is in scope, out of scope, or closed by a recommended default:
+
+- Same customer across multiple tenants: one customer cooperates with several tenants, branches, service providers, or projects.
+- Same legal entity in multiple roles: customer, supplier, contractor, payer, receiver, approver, operator, or platform account at different times.
+- Tenant isolation vs shared identity: which data is tenant-private, which identity/account can be shared, and what users see when the same subject exists in several spaces.
+- Data ownership and cross-tenant permissions: who owns records, who can view/export/operate, and whether cross-tenant aggregation is allowed.
+- Duplicate, merge/split, migration, and compatibility: existing data import, tenant migration, tenant merge/split, customer re-bind, account reuse, historical snapshot, and backward compatibility.
+- Billing, settlement, invoice, contract, and approval boundaries across tenants or roles.
+- Integration compatibility: callbacks, external IDs, source systems, webhooks, and third-party records that may not follow the product's tenant model.
+
+Do not add all of these to the PRD as features. Use them as a possibility scan to prevent wrong assumptions. If the answer is "not supported in MVP", write the boundary and the safe behavior.
 
 ## Reader-First Module PRD Structure
 
@@ -176,6 +194,7 @@ Read only the references needed for the current stage:
 - Keep questions small: 3-6 decisions per batch, each with a recommended option and tradeoff.
 - Do not invent terms. Use the user's wording, existing system labels, or confirmed business terms. If a new short label is needed, mark it as 建议命名 and keep the old wording nearby until confirmed.
 - Close pending decisions by default: when existing business anchors, source data, system behavior, or a low-risk best-practice default is enough, write the recommended default as the working requirement instead of leaving it as 待确认. Leave 待确认 only when the user explicitly says it is undecided, sources conflict, or the decision is high-risk and has no safe default.
+- Before locking flows, run a business possibility scan for SaaS/multi-tenant, multiple-role, cross-organization, migration, compatibility, and external-system variants. Close each as supported, blocked, later, or a recommended default.
 - Treat short answers ("加 / 不需要 / 你来 / 按最佳实践") as decisions to digest, not missing context.
 - Use the minimum structure that makes the product buildable, testable, and understandable. Do not add entities, statuses, pages, components, tables, or prose just to look complete.
 - In the main PRD file, draw the business flow atlas first. Include Mermaid flowcharts for each flow line and Mermaid `stateDiagram-v2` diagrams for key object status changes when objects have lifecycles.
