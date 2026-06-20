@@ -68,6 +68,33 @@ Use this as a menu, not a quota. Omit or merge sections that add no decision, ru
 19. Dependencies and risks.
 20. Appendix.
 
+## Reader-First Module Document
+
+Specific module PRDs should start with a reader-first section, then place implementation details in the relevant page, action, or server-only flow.
+
+Recommended module order:
+
+1. Module purpose.
+2. Main flow.
+3. Page presentation.
+4. Key operations.
+5. Risks and exceptions.
+6. Page implementation details.
+7. Server-only automatic flows, if the module has background jobs, callbacks, sync, scheduled tasks, or compensation.
+8. Module acceptance checklist.
+
+The detailed page sections must include fields, data sources, status/writeback, permissions, idempotency, interaction behavior, and validation together. Avoid separate "field table / status table / permission table" sections when they force readers to jump around.
+
+For a page, use:
+
+| Page Area / Operation | User Goal | Layout / Interaction | Fields | Data Source | Status / Writeback | Permission | Idempotency / Duplicate Handling | Error / Empty / Disabled | Acceptance |
+|---|---|---|---|---|---|---|---|---|---|
+
+For a server-only automatic flow, use:
+
+| Automatic Flow | Trigger / Timing | Input Source | Processing Rule | Persisted Object | Status / Writeback | Idempotency / Retry | Failure / Compensation | Visibility / Log | Acceptance |
+|---|---|---|---|---|---|---|---|---|---|
+
 ## Feature Detail Page Section
 
 Each concrete page/module should include:

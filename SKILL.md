@@ -22,7 +22,7 @@ Concretely, every one of these must be answered in the doc, not in the reader's 
 - **Data** — each field's source object/snapshot, authoritative source, include/exclude conditions, refresh timing.
 - **Rules** — every formula decomposed into operands (no black-box 计价口径); uniqueness keys from stable fields; idempotency; permissions and 端-level data isolation.
 
-If a reader would have to ask "but what happens when…" or "where does this number come from?", it is not done. Anything genuinely undecided is written as **待确认 + a recommended default**, so the reader sees a marked decision, not a silent hole.
+If a reader would have to ask "but what happens when…" or "where does this number come from?", it is not done. Do not multiply 待确认. When a safe working口径 can be derived from business anchors, source data, existing system behavior, or a low-risk best-practice default, close the decision with that default and its basis. Use **待确认 + recommended default** only when the user explicitly leaves it open, sources conflict, or no safe default exists.
 
 **When the user's draft is a downgrade of a doc that already exists**, do not silently backfill it into a fresh "complete" version — that creates two contradictory docs. Diff the draft against the existing locked doc, reconcile to its 口径, and ask the user which differences are intentional changes vs accidental omissions. Treat a regression as a question, not a gap to quietly fix.
 
@@ -66,6 +66,33 @@ When producing the main PRD file, begin with a **business flow atlas** before de
 
 Diagrams clarify structure; they do not replace rules. After each diagram, still write the trigger, preconditions, actors, input/output, persisted object, status changes, exception branches, downstream impact, and testable acceptance criteria.
 
+
+## Reader-First Module PRD Structure
+
+Module PRDs should be easy for humans to read first, then detailed enough for implementation. Do not open a module with dense rule tables unless the user explicitly asks for a checklist-only artifact.
+
+Use this top-level order for each concrete module:
+
+1. **Module Purpose**: What this module does, who uses it, which business problem it solves, what is in/out for this release, and the core objects it owns.
+2. **Main Flow**: The module's business flow diagram and step list. Each step says who acts, what happens, what object is created/updated, and which status changes.
+3. **Page Presentation**: What pages/Tabs/entry points exist and what the user sees first. Describe layout, information hierarchy, list/detail/drawer/modal carriers, and the primary path before listing every field.
+4. **Key Operations**: The important actions users can take, grouped by page and object state.
+5. **Risks and Exceptions**: The abnormal paths, irreversible points, failure recovery, concurrency, permission, and data-missing cases that matter for this module.
+
+After the reader-first section, write implementation detail inside the page/action/server-flow where it belongs. Do not create separate generic sections for "fields and data source", "status and writeback", and "permissions and idempotency" when those details are easier to understand in the page context.
+
+For each page, include **Page Implementation Details**:
+
+- Page purpose, target user, entry, permission, and default view.
+- Page layout: page-level Tabs vs list Tabs, filter area, table/list columns, key status tags, operation area, detail/drawer/modal placement, empty/loading/error/disabled states.
+- Fields: display name, business meaning, required/optional, editability, validation, default, visibility, export behavior, and whether it appears in list/detail/form.
+- Data source: where each list, field, option, statistic, default, and selectable record set comes from; source authority; generation/sync timing; fallback and consistency check.
+- Status/writeback: which object status changes on this page, what is written back to source/downstream objects, and what gets locked/unlocked.
+- Operations: trigger, preconditions, allowed states, input, confirmation, result, failure behavior, audit trace, and recovery.
+- Permissions and idempotency: who can view/operate/export, how repeated clicks/submits/imports/callbacks are handled, and the unique business key when needed.
+- Acceptance checks for the page and its important operations.
+
+For **server-only automatic flows** that do not need page participation, still keep them inside the owning module. Write them as "后台自动流程" or "系统自动处理": trigger/timing, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log/alert entry, downstream impact, and acceptance checks. Do not hide business behavior in a technical appendix just because no one clicks a page.
 ## What a Locked Mainline Must Contain
 
 "Align the mainline first" is meaningless without saying what a complete mainline is. **The mainline is the closed loop of how value/money is created, flows through objects, and is finally settled — not a one-line process summary.** A summary like "成本归集 → 应收 → 分润 → 支付" is usually an *open* line: it emits 应收 but never says how the money comes in or gets collected. Modules hung on an open mainline will not reconcile.
@@ -98,7 +125,7 @@ Under time pressure this is the first thing skipped. Do not. If you genuinely ca
 This is the highest-pressure failure point. The wrong move is to abandon confirmation and write a PRD full of invented-but-unmarked rules. The right move:
 
 - **You may write the full PRD immediately** — pages, fields, states, exceptions all present.
-- **But every detail you were not given and cannot source MUST be marked 待确认** with the default口径 you assumed. Confirmed items come only from the user's words or existing docs.
+- **Every detail you were not given must either be closed with a sourced/reasonable recommended default, or marked 待确认** when the user explicitly leaves it open, sources conflict, or no safe default exists. Confirmed items come from the user's words, existing docs, source data, or a default you clearly state as the working口径.
 - **Lead with the main flow + the 3-6 highest-risk口径** (especially 计价/结算/唯一性/打款幂等) as a confirm-first block, so the reviewer sees known gaps, not buried landmines.
 - Money/contract/invoice/settlement formulas: never invent a concrete formula and present it as decided. Decompose into fields and leave the formula as a 评审必锁项.
 
@@ -147,6 +174,8 @@ Read only the references needed for the current stage:
 
 - Recommend best-practice defaults when the user hasn't decided, but label them as recommendations until confirmed.
 - Keep questions small: 3-6 decisions per batch, each with a recommended option and tradeoff.
+- Do not invent terms. Use the user's wording, existing system labels, or confirmed business terms. If a new short label is needed, mark it as 建议命名 and keep the old wording nearby until confirmed.
+- Close pending decisions by default: when existing business anchors, source data, system behavior, or a low-risk best-practice default is enough, write the recommended default as the working requirement instead of leaving it as 待确认. Leave 待确认 only when the user explicitly says it is undecided, sources conflict, or the decision is high-risk and has no safe default.
 - Treat short answers ("加 / 不需要 / 你来 / 按最佳实践") as decisions to digest, not missing context.
 - Use the minimum structure that makes the product buildable, testable, and understandable. Do not add entities, statuses, pages, components, tables, or prose just to look complete.
 - In the main PRD file, draw the business flow atlas first. Include Mermaid flowcharts for each flow line and Mermaid `stateDiagram-v2` diagrams for key object status changes when objects have lifecycles.
