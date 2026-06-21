@@ -80,6 +80,24 @@ If page-level Tabs are recommended:
 
 Page-level Tabs are independent work pages. List Tabs are filters. Do not mix the two.
 
+## Side / Module / Page / Function Map
+
+Before detailed page specs, build an information architecture map for the product or 00 主文件. It should answer where each function lives, which side owns it, and how users enter it.
+
+Use:
+
+| 端 / Side | 模块 | 页面 / Page | 功能点 | Default Entry | Target Role | Permission | Data Scope | Cross-side / 跨端 Link | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- "端" is a touchpoint or system side: platform-side, customer portal, supplier portal, contractor portal, driver mobile, API/system job.
+- "模块" is a business domain or object group, not just a left-menu label.
+- "页面" includes page-level Tabs, detail pages, workbenches, drawers only when they are real work carriers, and server-only flows when there is no page.
+- "功能点" is what users or systems do there: view, create, audit, reconcile, pay, sync, import, export, configure, recover exception, analyze.
+- Put cross-side links on the map when one side creates data and another side views/operates it.
+- If a function cannot be placed on this map, either it is missing a page/entry or it should be a server-only flow with visibility/log entry.
+
 ## Role Perspective and Resource Visibility
 
 For any page involving a controlled resource/value, design the role perspective explicitly. This applies to finance and non-finance resources: inventory, coupon, quota, capacity, permission, entitlement, membership rights, appointment slots, task capacity, or content visibility.

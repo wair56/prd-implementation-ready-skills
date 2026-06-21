@@ -16,6 +16,7 @@ It contains:
 - Business anchors / non-negotiable premises and change-control note.
 - One-sentence business goal.
 - Document/module index.
+- Main file navigation map: 端 / module / page / function point information architecture.
 - Main business flow.
 - Core object relationship.
 - Data flow and linkage map.
@@ -25,6 +26,47 @@ It contains:
 - High-risk must-read items.
 
 It does not contain page-level detailed tables.
+
+## Main File Navigation Map
+
+The 00 主文件 needs a front-door information architecture so readers know where each function lives before module details. Use this for multi-module, multi-side, or B端后台 products.
+
+Output a Mermaid `mindmap` or `flowchart` with four levels:
+
+```mermaid
+mindmap
+  root((Product / 00))
+    Platform-side / 平台端
+      Finance module
+        Contractor account page
+          Balance overview
+          Ledger list
+      Supplier reconciliation module
+        Reconciliation page
+          Generate bill
+          Invoice management
+    Contractor portal
+      Account module
+        My balance page
+          View own funds
+    System job
+      Sync module
+        Server-only flow
+          Sync supplier consumption
+```
+
+For each important node, add a compact note/table:
+
+| 端 / Side | 模块 | 页面 / Page | 功能点 | Default Entry | Role | Permission | Data Scope | Cross-side Link |
+|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- The map explains where each function lives; it does not replace module details.
+- Include page-level Tabs and server-only flows when they are real work carriers.
+- Mark cross-side / 跨端 jumps, shared objects, and pages that can switch viewed subject.
+- Keep detailed fields, button rules, and list Tab filters inside module/page docs.
+- Put this before module details and before dense page specifications so users can orient themselves in 00.
 
 ## Global Rule Boundary
 

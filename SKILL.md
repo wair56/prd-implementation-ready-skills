@@ -48,7 +48,7 @@ Guide the user toward the better product; do not merely transcribe what they fir
 
 1. **Business First** — plain-language business context, agreed mainline, non-negotiable premises, scope (in/out), users, role glossary, core concepts, business objects.
 2. **Flow Shape Next** — identify whether the requirement is single-line, parallel, master-child, state-machine, event-driven, cycle/periodic, or a mix. For parallel flows, name each independent line and its convergence points instead of flattening it into one sequential story.
-3. **Flow Diagrams Before Detail** — in the main PRD file, output a business flow atlas before detailed rules, page specs, or field tables. Use Mermaid diagrams to show global relationships, each independent flow, key convergence points, and object status changes.
+3. **Navigation and Flow Diagrams Before Detail** — in the main PRD / 00 主文件, output a side/module/page/function navigation map and a business flow atlas before detailed rules, page specs, or field tables. Use Mermaid diagrams to show where each function lives, global relationships, each independent flow, key convergence points, and object status changes.
 4. **Research Before Locking** — see "Research Is a Hard Gate" below.
 5. **Rules After Flow** — only after the flow shape and diagrams are clear, drill into states, source documents, idempotency, data sources, permissions, exceptions, boundaries, and rollback.
 6. **Pages After Business Shape** — menu/page organization, page-level Tabs vs list Tabs, design.md/UI conventions, interaction habits.
@@ -65,6 +65,19 @@ When producing the main PRD file, begin with a **business flow atlas** before de
 - Mark convergence points explicitly: which flow depends on which object status, which data is written back, which downstream flow is unlocked/frozen, and which exceptions interrupt another flow.
 
 Diagrams clarify structure; they do not replace rules. After each diagram, still write the trigger, preconditions, actors, input/output, persisted object, status changes, exception branches, downstream impact, and testable acceptance criteria.
+
+## Main File Navigation Map
+
+For a multi-module or multi-side PRD, the 00 主文件 must include an information architecture / mind map before module details so users can immediately see where each function lives. This map complements the business flow atlas: the atlas explains how the business runs; the navigation map explains where users find and operate each capability.
+
+Use Mermaid `mindmap` or `flowchart`:
+
+- Level 1: 端 / side / touchpoint, such as platform-side, customer portal, supplier portal, contractor portal, mobile, API/system job.
+- Level 2: 模块 / module.
+- Level 3: 页面 / page, page-level Tab, workbench, detail page, drawer, or server-only flow.
+- Level 4: 功能点 / function point, key operation, list, import/export, exception handling, report, or configuration.
+
+For each node with meaningful difference, mark default entry, target role, permission, data scope, and cross-side / 跨端 linkage. Do not bury this in module text. The reader of 00 should know which side/module/page owns each function before detailed module PRDs begin.
 
 
 ## Business Possibility Scan

@@ -129,6 +129,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 ## Page and UI
 
+- Does the 00 主文件 include a main file navigation map / information architecture mind map showing 端 / 模块 / 页面 / 功能点 before module details?
+- Can a reader immediately tell where each function lives, including default entry, target role, permission, data scope, and cross-side / 跨端 links?
 - Target端 / touchpoint confirmed from user task and working context, not assumed.
 - Menu/page structure confirmed from business reality, not style taste.
 - Each page, Tab, component, and interaction is tied to a workflow constraint, user task, risk control, or comprehension need.
