@@ -247,6 +247,27 @@ Separate cash payment from cost recognition:
 
 Do not write "annual insurance enters payment management" as the whole rule if the product needs monthly cost. The PRD must state whether insurance is paid annually but recognized monthly, and how monthly amortization enters cost management.
 
+## Payroll and Freight Formula Gate
+
+Use this for driver payroll, contractor freight, salary, commission, guaranteed pay, attendance pay, waybill-based freight, performance bonus, fine, subsidy, and plus/minus adjustments.
+
+A payroll formula must define:
+
+| Item | Must Define |
+|---|---|
+| Payroll object | Driver payroll, contractor freight bill, settlement line, or cost item |
+| Base amount | Guaranteed pay, monthly salary, daily base, route guarantee, vehicle guarantee, contract minimum, or other configured base |
+| Detail-calculated amount | Waybill-based freight, order amount, trips, mileage, tonnage, attendance, usage, or other source detail |
+| Comparison basis | For max/min/take greater: same driver/vehicle/contractor, same period, same currency/tax/unit, eligible source states |
+| Period and entity scope | Payroll month, service period, driver, vehicle, contractor, tenant, route, or project |
+| Eligibility | Active driver, bound vehicle, completed waybill, audited source, excluded/cancelled/abnormal records |
+| Proration | New hire, resignation, leave, absence, mid-month vehicle change, no waybills, missing binding |
+| Adjustment timing | Bonus/fine/subsidy/扣款 before comparison, after comparison, inside guaranteed pay, inside detail amount, or separate line |
+| Evidence | Payslip line items showing which branch won and why |
+| Reversal | Recalculate, adjustment bill, locked period correction, payroll void/reissue |
+
+Driver payroll is incomplete if it only says "take greater of guaranteed pay and waybill-based freight, then add/subtract items". It must answer 保底是什么保底 / guarantee of what, what source creates waybill-based freight, which records participate, and whether adjustments are before comparison or after comparison.
+
 ## Cross-Module Navigation
 
 For "查看详情，带参跳转到 X 对应 Tab" define:

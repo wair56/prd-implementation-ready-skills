@@ -79,7 +79,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Are invoice, payment trace, exception record, allocation detail, attachment, adjustment, receipt, refund, approval task, or external sync record treated with a child object lifecycle when users need to query/operate/audit them?
 - If a rule uses a single total for summary calculation, are detail dimensions such as vehicle dimension, customer/shipper, supplier, contract, route, project, cost type, and period still preserved for dimension analysis when useful?
 - For annual/prepaid/cross-period costs, are cash payment and cost recognition separated, with monthly amortization or another allocation rule when needed?
-- Does every formula define operands, rates, caps/floors, rounding, snapshot, and zero/negative handling?
+- Does every formula define operand semantics, source/authority, entity scope, period, eligibility, comparison basis, proration, rates, caps/floors, tier, threshold, rounding, snapshot, and zero/negative handling?
+- For guarantee/保底, max/min/取大取小/take greater, base amount, detail-calculated amount, and adjustments, does the PRD answer guarantee of what, what is being compared, and whether adjustments happen before comparison or after comparison?
 - Does every amount field have an authoritative source document, contract, bill, fee item, import, or manual adjustment source?
 - If a payment order is created, is it clear whether it triggers real external payment or only records a business/accounting action?
 - Is every "audit" tied to a specific audited object, audit actor, audit type, and post-approval side effect?
@@ -92,6 +93,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - For payments/recharges, are payer, payee, balance types, deduction priority, insufficient-balance handling, ledger effects, and reversal defined?
 - For supplier reconciliation, are supplier types separated, and do non-prepaid supplier flows include payment trace, payment status, and invoice management?
 - For insurance, rent, license, maintenance package, or other annual/prepaid costs, is cash payment separated from monthly amortization/cost recognition?
+- For driver payroll or freight settlement, are guaranteed pay, waybill-based freight, comparison basis, adjustment timing, period/entity scope, eligibility, and proration defined?
 - For synced supplier/cost data, are source system, sync direction, sync mode, cursor, duplicate/update rule, disabled/deleted data handling, and sync timestamp defined?
 - If a supplier is disabled after use, are historical visibility, future selectable scope, notifications, and effects on existing bills/contracts/drivers defined?
 - For reconciliation, are selectable source records, grouping, locking, audit effects, invoice lifecycle, write-off, cancel/reject rollback, red flush, and void behavior defined?

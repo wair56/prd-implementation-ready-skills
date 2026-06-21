@@ -23,7 +23,7 @@ Use this after identifying the business goal and core objects. The purpose is to
 | Linkage / side effect | Linked objects, modules, messages, reports, locks, permissions, reverse effects | "联动处理" without affected objects |
 | Actor / permission | Who can view, create, edit, approve, cancel, export, jump | One backend role assumed too broadly |
 | Time / period | Attribution date, month boundary, current month rule, late data | "按月汇总" without date source |
-| Amount / formula | Source amount, formula, rate, rounding, split, snapshot | Fund or profit amount not computable |
+| Amount / formula | Source amount, formula, operand semantics, comparison basis, rate, rounding, split, snapshot | Fund or profit amount not computable |
 | Resource / value flow | Any scarce or controlled resource: inventory, coupon, quota, points, capacity, permission, balance, entitlement. Check source, eligibility, reserve, allocate, combine, consume, release, trace, and role perspective | Treating non-finance resources as simple fields instead of closed-loop objects |
 | State axes | Business, audit, payment, invoice, receipt, push, exception separated | Mixed "status" field |
 | Data fields | Required fields, optional fields, display source, editability | Field list copied without source |
@@ -81,6 +81,23 @@ Define:
 |---|---|---|---|---|---|---|---|---|
 
 Manual completion must say what users can fill, what source becomes authoritative after completion, which downstream records recalculate, and which flow step the record re-enters. Do not strand data in an exception status with no operator action.
+
+## Formula Operand Semantics Gate
+
+Use this before accepting any formula, not only finance. Formula words such as 保底/guarantee, 取大/take greater, max/min, cap, floor, tier, threshold, rate, coefficient, base amount, detail-calculated amount, and adjustment are not self-explanatory. Each operand must be a business object or source-derived value that a tester can compute.
+
+For each formula, define:
+
+| Formula | Operand | Business Meaning | Source / Authority | Entity Scope | Period | Eligibility | Unit | Comparison Basis | Proration | Rounding | Boundary / Exception | Confirm |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- Ask "保底是什么保底 / guarantee of what?" before writing a guaranteed amount as final wording.
+- For max/min or take greater/take smaller, define the comparison basis: same period, same driver/customer/order/resource, same tax/currency/unit, and whether zero/negative values participate.
+- For base amount vs detail-calculated amount, define whether the base is configured, contracted, manually adjusted, or generated, and whether the detail amount comes from orders, waybills, usage, inventory movement, or source records.
+- Define adjustment timing: whether加减项/adjustments happen before comparison, after comparison, inside each operand, or as separate ledger lines.
+- Define proration for partial periods, onboarding/offboarding, inactive days, missing source details, and no-activity cases.
 
 ## Resource / Value Flow Gate
 

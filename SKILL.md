@@ -199,6 +199,7 @@ Read only the references needed for the current stage:
 | Requirement involves any controlled resource/value such as inventory, coupon, quota, capacity, permission, entitlement, slot, balance, support credit, or visibility right | `references/coverage-matrix.md`, then `references/data-flow.md`, `references/business-consistency.md`, and domain-specific references |
 | Requirement mixes platform-side/admin-side/finance-side/operator wording, or a page can switch viewed subjects | `references/page-ui.md`, then `references/business-context.md` and `references/coverage-matrix.md` |
 | Requirement says "single total", "summary only", "按总额", "不按明细", or removes a detail dimension used for analysis | `references/data-flow.md` and `references/business-consistency.md` |
+| Requirement contains formula operators or vague formula nouns such as guarantee/保底, max/min/取大取小, cap/floor/封顶兜底, tier/阶梯, threshold/门槛, base amount, adjustment, rate, coefficient, or "plus/minus items" | `references/business-consistency.md`, then `references/coverage-matrix.md` and domain-specific references |
 | Requirement includes annual/prepaid/cross-period costs, one-time payments recognized over time, or amortization/accrual | `references/finance-operations.md`, then `references/data-flow.md` |
 | Requirement has missing required links such as unmatched vehicle, customer, supplier, contract, source detail, or external record | `references/page-ui.md`, `references/data-flow.md`, and `references/review-checklists.md` |
 | User describes workflow, says "你来决定", or flow seems awkward | `references/research-and-flow.md` |
@@ -218,6 +219,7 @@ Read only the references needed for the current stage:
 - Before locking flows, run a business possibility scan for SaaS/multi-tenant, multiple-role, cross-organization, migration, compatibility, and external-system variants. Close each as supported, blocked, later, or a recommended default.
 - Treat short answers ("加 / 不需要 / 你来 / 按最佳实践") as decisions to digest, not missing context.
 - Use the minimum structure that makes the product buildable, testable, and understandable. Do not add entities, statuses, pages, components, tables, or prose just to look complete.
+- **Formula Operand Semantics Gate:** Before writing any formula with guarantee/保底, max/min/取大取小, cap/floor, tier, threshold, rate, base amount, detail-calculated amount, or adjustment, define every operand's business meaning, source, entity scope, period, eligibility, comparison basis, rounding, and boundary behavior. A formula is not complete until a tester can compute it from source records without asking "保底是什么保底 / guarantee of what?"
 - **Finance Fund-Flow Gate:** Before finalizing any balance, credit, support fund, prepayment, recharge, refund, freeze, occupation, release, write-off, profit sharing, or payment rule, prove the fund loop closes: source pool, usable amount, deduction/occupation order, mixed funding behavior, ledger effect, source trace, closure path, reversal, page visibility, and cross-module side effects. Do not invent a single-source, single-period, one-to-one, or audit-heavy path just because it is easy to write.
 - In the main PRD file, draw the business flow atlas first. Include Mermaid flowcharts for each flow line and Mermaid `stateDiagram-v2` diagrams for key object status changes when objects have lifecycles.
 - When proposing a flow, page, component, or rule, explain the product constraint it solves and what would break without it.
@@ -240,6 +242,7 @@ Read only the references needed for the current stage:
 - About to collapse detail dimensions into a single total before deciding which downstream calculation uses summary calculation and which report needs dimension analysis.
 - About to mention invoice, payment trace, exception record, allocation detail, or any child object only inside an operation row without its own lifecycle/page/visibility.
 - About to put unmatched or missing-link data into an exception status without an exception workbench, manual completion path, recalculation, and re-enter downstream flow.
+- About to write "保底 / guarantee / 取大 / take greater / 加减项" without explaining guarantee of what, comparison basis, period, entity scope, eligibility, proration, and whether adjustments happen before comparison or after comparison.
 - About to write an abstract term (计价口径 / 统计口径 / 结算口径 / 规则 / 策略) into a uniqueness key, filter, or acceptance rule **without** decomposing it into fields.
 - About to put `status=1` / `incomeStatus in (...)` / code enums into PRD正文.
 - Adding an entity/status/page/field just to look complete, with no product constraint behind it.

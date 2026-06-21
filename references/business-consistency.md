@@ -18,6 +18,7 @@ Treat these as P0 blockers. Do not continue writing detailed PRD口径 until the
 - A money movement says funds increase/decrease/split/freeze/refund, but does not define the calculation rule.
 - A non-finance resource movement says inventory/coupon/quota/permission/capacity is granted, reserved, allocated, consumed, released, or revoked without source, authoritative anchor, pool, trace, one-to-one rule, or reversal.
 - An amount field is used in a formula but has no authoritative source.
+- A formula uses guarantee/保底, max/min/取大取小, cap/floor, tier, threshold, base amount, detail-calculated amount, rate, coefficient, or adjustment without defining operand semantics, comparison basis, period, entity scope, eligibility, proration, and adjustment timing.
 - A period-based finance rule mentions current month, this month, this period, billing cycle, same month, next month, locked month, late data, backfill, or correction without an explicit attribution anchor and period boundary.
 - A source-generated bill, reconciliation, settlement, payment, invoice, profit-sharing, or recovery flow says "select orders / select waybills / select details" without source detail eligibility, occupation, release rule, and unavailable reason.
 - A relative period phrase such as "本月", "当月", "本期", "账期内", "周期内", or "同月" appears without naming the business object, authoritative time field, period boundary/timezone, and cross-month rule.
@@ -76,6 +77,38 @@ Examples:
 - "来账确认后增加货主冻结资金和运营支持金" is incomplete unless it defines how one receipt amount is split between the two pools.
 - "分润金额" is incomplete unless it defines profit formula, sharing parties, sharing ratio/source, rounding, snapshot, and negative/zero handling.
 - "按月包车应收金额" is incomplete unless it defines whether the source is shipper contract, monthly fixed amount, route/package agreement, manual adjustment, or imported bill.
+
+## Formula Operand Semantics Gate
+
+This gate catches the "the formula looks obvious, but the business term is undefined" failure. A formula is not complete because it has operators. It is complete only when each operand has business meaning and a source.
+
+Use it for finance and non-finance formulas involving guarantee/保底, max/min, take greater/take smaller, cap, floor, tier, threshold, rate, coefficient, base amount, detail-calculated amount, adjustment, score, quota, usage, points, or ranking.
+
+Require:
+
+| Item | Must Define |
+|---|---|
+| Formula purpose | What business decision/result this formula creates |
+| Operand semantics | What each operand means in business language, not only its label |
+| Source / authority | Which contract, configuration, bill, order, waybill, attendance, usage, source record, or manual adjustment provides it |
+| Entity scope | Driver, vehicle, customer, supplier, contractor, tenant, order, resource, or period owner |
+| Period | Daily, monthly, billing cycle, service period, employment period, policy period, or custom cycle |
+| Eligibility | Which records/people/resources qualify and which are excluded |
+| Comparison basis | For max/min/take greater: same scope, same period, same unit/currency/tax basis, and comparable states |
+| Proration | New join/leave, partial period, inactive days, no source records, missing mapping, or mid-period rule changes |
+| Adjustment timing | Whether adjustments happen before comparison, after comparison, inside one operand, or as separate lines |
+| Boundary behavior | Zero/negative, missing operand, tie, cap/floor, rounding, precision, locked period correction |
+
+Diagnostic questions:
+
+- 保底是什么保底 / guarantee of what: monthly guaranteed pay, daily guaranteed amount, route guarantee, vehicle guarantee, contract minimum, or platform subsidy?
+- What is it compared with: detail-calculated amount, order amount, waybill-based freight, usage value, score, quota, or another configured base?
+- Are plus/minus items included before comparison or after comparison?
+- Does the result need explainable line items so users can audit why the max/min branch won?
+
+Example:
+
+Driver payroll is incomplete if it only says `max(guaranteed pay, waybill-based freight) + adjustments`. It must define the guaranteed pay source and period, which driver/entity scope it applies to, how waybill-based freight is calculated and filtered, whether absent/new/left drivers get proration, whether adjustments are before comparison or after comparison, and how the chosen branch is shown on the payslip.
 
 ## Resource and Value Computability Guard
 
