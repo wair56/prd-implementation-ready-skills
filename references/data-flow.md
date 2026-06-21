@@ -117,6 +117,25 @@ Common linkage types:
 - External linkage: push, callback, sync, retry, dedupe, timeout.
 - Audit/log linkage: operation record, before/after value, reason, operator, time.
 
+## Payment Completion Side-Effect Gate
+
+Payment success is often a business event, not only a payment status change. When a payment order comes from another business module, define the attached actions that run after payment completion and the failure behavior when those actions cannot finish.
+
+Use this gate for finance and non-finance flows where a completion event unlocks downstream work: supplier payment completion, payroll payment, refund completion, subscription payment, booking deposit, inventory purchase, membership renewal, ad spend recharge, or any external payment/callback.
+
+| Item | Must Define |
+|---|---|
+| Payment source | original business object, payment order, channel callback, auto-completed adjustment, or manual confirmation |
+| Completion event | paid, partially paid, failed, refunded, voided, red-flushed, or callback confirmed |
+| Attached actions | source object status writeback, supplier payroll detail output, invoice/write-off update, balance release, allocation creation, message, external push, report/statistic update |
+| Idempotency | stable key for payment callback and each attached action; repeated callbacks must not repeat money, files, or pushes |
+| Retry | which attached actions can retry, retry trigger, retry limit, manual retry entry, and what stays pending |
+| Partial failure | whether payment stays completed while side effect is pending/failed, or whether compensation is required |
+| Visibility | where users see payment result, attached action result, failure reason, and recovery button |
+| Reverse | refund, cancel, void, red flush, or compensation effect on already completed attached actions |
+
+Do not hide this under "after payment, linkage is handled automatically." The PRD must say what is linked, when it runs, how it is retried, and how operators recover it.
+
 ## Reverse Linkage
 
 Every cancel, reject, refund, red flush, void, rollback, rebuild, disable, or re-sync must define:

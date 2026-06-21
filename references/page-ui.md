@@ -112,8 +112,27 @@ For any page involving a controlled resource/value, design the role perspective 
 
 Do not show only the acting user's local field when the operation depends on counterparty context. If an action is disabled because another party's pool, lock, status, quota, permission, or trace is insufficient, stale, frozen, occupied, or missing, the page must show that reason in business language.
 
-## UX and Component Selection
+## Centralized Credit and Settlement Operations Page
 
+When credit/support fund/frozen fund/profit-sharing/payment rules affect several modules, decide whether the platform side needs a centralized page instead of hiding operations in separate detail pages.
+
+Use a centralized page when users must manage or audit cross-object pools, especially: support credit grant, credit occupation, repay, release, freeze/unfreeze, contractor own-funded advances, shipper/customer frozen funds, platform service fee collection, abnormal locks, and downstream profit-sharing recovery.
+
+Page must define:
+
+| Area | Must Show / Support |
+|---|---|
+| Summary cards | current credit pool, available, occupied, frozen, repayable, released, outstanding, platform pocket/service fee totals |
+| Subject switch | contractor, shipper/customer, supplier, project, contract, tenant, or all platform records depending on role scope |
+| Ledger table | source, trace, business object, amount, status, period, counterparty, operator, time, reason, downstream object |
+| Operations | grant, adjust, occupy, repay, release, freeze/unfreeze, export, retry side effect, jump to source bill/payment/profit-sharing record |
+| Disabled reason | insufficient pool, locked period, occupied by source detail, pending payment, missing counterparty, permission, duplicate/parallel bill conflict |
+| Exception recovery | failed payment completion side effect, missing source mapping, stale callback, negative/zero settlement, void rollback pending |
+
+If the page is not needed, state which existing page/workbench owns each operation and how platform/admin users still see the whole fund/credit situation.
+
+## UX and Component Selection
+ 
 For each page or important action, specify the UX carrier and component behavior. Do not stop at "add a page" or "add a button".
 
 | Need | Recommended Component / Pattern | Must Specify |

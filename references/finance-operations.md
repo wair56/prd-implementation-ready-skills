@@ -76,6 +76,27 @@ Required definition:
 
 Do not write "本月运单" as final wording. Write "waybills whose [authoritative time field] falls in [period boundary]".
 
+## Cost Inclusion State Gate
+
+Use this before any cost enters a monthly bill, customer reconciliation, supplier reconciliation, profit sharing, report, or downstream settlement. A cost source is not eligible just because it exists.
+
+Define the full state gate:
+
+| Item | Must Define |
+|---|---|
+| Cost source object | vehicle fee, driver payroll, supplier consumption, insurance amortization, maintenance, toll, energy, manual adjustment, imported cost |
+| Audit status | whether business audit, finance audit, supplier confirmation, or system validation must be passed before inclusion |
+| Payment status | unpaid, pending payment, paying, payment failed, paid, auto-completed adjustment, or no external payment required |
+| Cost recognition state | recognized, amortized into this period, deferred, reversed, voided, red-flushed, or exception pending completion |
+| Locked cost period | whether the current cost period/bill is open, confirmed, locked, or already used downstream |
+| Inclusion rule | exact states that allow entry into cost; exact states excluded from cost |
+| Late or missing source | whether to add a zero payroll line, create an exception task, defer to next unlocked period, or block confirmation |
+| Rebuild rule | what happens when audit/payment/source data changes before and after the locked cost period |
+
+If the business requires paid costs, say that explicitly: "cost enters the monthly cost bill only when audit status has passed and payment status is paid/auto-completed." If the business accepts accrued but unpaid cost, say that explicitly too and define the liability/payment follow-up. Do not blur audit status and payment status into one word such as "confirmed".
+
+For payroll-like costs, if a driver/worker/resource is eligible in the period but has no payable amount, decide whether the system creates a zero payroll line. A zero payroll line is often better than omitting the person because it proves the person was considered and prevents silent gaps. If a line is eligible but no payable amount exists because source data is missing, route it to an exception page instead of writing zero.
+
 ## Fund and Payment Priority
 
 When one role pays another or a recharge/payment order is created, define:
@@ -105,6 +126,25 @@ For every recharge/prepayment/payment-like word, decide whether it is:
 | Quota allocation | Existing quota/balance is assigned from one object to another | Source quota, target object, release/reclaim rule |
 
 Do not call an operating payment or supplier pre-recharge an internal ledger registration merely because the amount is later allocated to vehicles/assets/users. Allocation after payment is not proof that no external payment happens.
+
+## Payment Order Origin Payload
+
+Every payment order must carry the original business payload. Payment management should not guess payer/payee/account/metadata after the fact.
+
+Require:
+
+| Item | Must Define |
+|---|---|
+| Source business object | cost item, supplier reconciliation bill, payroll bill, vehicle fee, operating payment, support credit repayment, refund, profit-sharing deduction, manual adjustment |
+| Business type | what the payment is paying for and which downstream action depends on it |
+| Payer/payee | legal/business party and role: platform, contractor, shipper/customer, supplier, driver, internal platform account |
+| Receiver account | account name, account type, bank/payment channel, masked account identifier, and source/verification rule |
+| Amount split | total amount, tax/fee if relevant, multiple receiver lines, mixed funding split, currency, rounding |
+| Transaction metadata | purpose/remark, source bill number, contract/project/vehicle/driver/supplier/customer, period, attachments, invoice link, risk flags |
+| Trigger and status | create directly as completed adjustment, wait for external payment, submit to payment channel, callback source |
+| Reverse and retry | cancel, fail, retry, duplicate callback, refund, void, and whether source business object is released or stays occupied |
+
+When payment order creation is triggered by another module, put these fields in that module's operation/page/server flow too. Do not write "enter payment management" unless the originating module provides enough payload for payment management to execute and reconcile the payment.
 
 ## Fund Pools, Source Trace, and Closure Paths
 
@@ -141,6 +181,25 @@ Do not add an approval flow just because money is involved. If a rule is determi
 - Failure: insufficient amount, forbidden source, concurrent occupation, duplicate submit.
 
 Use an audit only when a human/business judgment is required: exception amount, manual adjustment, dispute, risk review, source conflict, or policy override.
+
+## Centralized Credit Management
+
+If the product grants support credit, operating credit, quota, frozen shipper funds, contractor advances, or any pool that can be granted/occupied/repaid/released, add a centralized credit management entry on the platform side. Do not scatter credit logic only inside account pages or settlement side effects.
+
+Centralized credit management must define:
+
+| Item | Must Define |
+|---|---|
+| Managed credit sources | platform grant, shipper/customer frozen funds, contractor own advance, manual adjustment, recovered credit, imported opening balance |
+| Grant | who can grant, source basis, amount, effective period, target contractor/customer/project, ledger effect, audit/no-audit rule |
+| Occupation | which business actions occupy credit, priority, mixed funding behavior, pool vs trace, unavailable reason |
+| Repay | whether repayment is direct, auto-completed, taken from available balance/support credit, or triggered by profit sharing/payment |
+| Release | refund, reconciliation/write-off, profit-sharing recovery, void, red flush, expiry, manual correction |
+| Limits and risk | max credit, negative balance policy, frozen amount, overdraft, tenant/project/contract boundary |
+| Page operations | grant, adjust, repay, release, freeze/unfreeze, export ledger, view source trace, recover exception |
+| Reconciliation | how totals tie to contractor/shipper/customer/platform ledger views and downstream reports |
+
+The page should make credit governance visible to platform/admin roles: current pool, occupied amount, available amount, source trace, related counterparty, and pending closure actions. This is a management capability, not only a computed field on another page.
 
 ## Frozen Funds Closed Loop
 
@@ -202,6 +261,23 @@ For supplier or shipper reconciliation:
 
 Do not state "撤销 / 拒绝 / 红冲 / 作废" without the affected object, rollback scope, and status after rollback.
 
+### Reconciliation Scope and Duplicate Prevention
+
+Duplicate prevention must match the business unit of work, not only the calendar period. If multiple parallel projects, routes, contracts, vehicles, billing units, or independent settlement batches can coexist for the same customer/supplier/contractor and period, the duplicate prevention key must include that project/contract/billing unit or source-detail occupation key.
+
+Define:
+
+| Item | Must Define |
+|---|---|
+| Billing unit | customer, supplier, contractor, project, route, vehicle, contract, business line, order batch, or custom billing unit |
+| Parallel projects | whether the same parties and period can have several valid reconciliation bills at the same time |
+| Duplicate prevention key | stable fields that make a bill unique: party + period + billing unit + source detail set/version |
+| Source occupation | whether selected details block reuse even when another bill exists for the same broad period |
+| Partial reconciliation | whether part of a period/detail set can reconcile first and the rest later |
+| User message | when blocked, show which existing bill or occupied detail caused the block |
+
+Do not write "one bill per customer + month" unless the business has no parallel projects and no partial reconciliation.
+
 ### Supplier Reconciliation Completeness
 
 Supplier reconciliation completeness requires more than consumption sync and reconciliation totals. Define invoice management and payment trajectory, especially for each supplier type.
@@ -227,6 +303,41 @@ When reconciliation is generated from selectable source details, also apply the 
 | Occupation | when selected details become occupied and cannot be selected again |
 | Release rule | when cancel, reject, void, or rollback releases occupation; when confirmed/paid/profit-shared details stay occupied |
 | Unavailable reason | how users see why an item cannot be selected |
+
+## Billing and Profit-Sharing Settlement Gate
+
+Use this for customer/shipper billing, contractor settlement, platform service fees, profit sharing, and downstream revenue/cost analysis.
+
+Keep billing formulas tied to the real commercial object:
+
+| Scenario | Must Define |
+|---|---|
+| Monthly charter | Whether pricing is by vehicle, route, project, contract, or fleet; vehicle count, active days, vehicle-level adjustments, and how inactive/changeover vehicles prorate |
+| Transport volume | Use shipper freight on the waybill or the confirmed receivable amount from the source order/waybill; define weight/trip/unit price source and abnormal waybill handling |
+| Adjustments | Plus/minus adjustments source, reason, permission, before/after tax, relation to vehicle/waybill/project, and whether they affect analysis dimensions |
+| Header party | The bill issuer/receiver, such as platform name, shipper/customer, contractor, tax identity, and contract snapshot |
+| Detail vs summary | Which downstream calculation uses the total and which analysis keeps vehicle, waybill, customer, project, route, cost type, and period dimensions |
+
+Do not say "monthly charter amount = total cost * rate" when the commercial agreement is by vehicle. Monthly charter can still use totals for summary, but it should preserve by vehicle evidence and adjustments so single-vehicle profitability can be analyzed.
+
+Platform service fee is platform revenue. Define payer, receiver/platform pocket, source rate, rate snapshot, fee base, timing, ledger entry, invoice/tax effect if relevant, and whether the fee is deducted before profit sharing, collected separately, or booked as payable to platform.
+
+Profit-sharing funds waterfall must distinguish at least:
+
+| Layer | Must Define |
+|---|---|
+| Available receivable/cash | customer/shipper received or written-off funds that can be distributed |
+| Frozen customer funds | whether they secure settlement, participate in reconciliation/write-off, and when they release |
+| Platform-granted credit | occupied, repaid, released, or still outstanding |
+| Contractor own-funded advances | costs paid by the contractor's own balance that should be recovered before withdrawable profit |
+| Platform service fee | deducted/collected into the platform pocket using the rate snapshot |
+| Remaining contractor profit | withdrawable, retained, negative, or carried forward |
+
+If available funds are insufficient, define continuing deduction: what is repaid now, what remains outstanding, which future bill/profit-sharing event continues deduction, and how users see the balance. Do not assume the first profit-sharing bill consumes an entire monthly cost if funds are not enough.
+
+Zero/negative profit sharing still needs a rule. Decide whether to generate a zero/negative profit-sharing bill for audit and downstream status closure, or create a carry-forward record. If the user expects every reconciliation bill to close, generate the bill even when amount <= 0 and mark the ledger effect explicitly.
+
+Profit-sharing void must define fund rollback: released source-detail occupation, service fee reversal, support credit re-occupation/release, contractor own-funded recovery rollback, payable/withdrawable balance rollback, and whether payment orders or completed payments are voided, red-flushed, or compensated.
 
 ## Amortization / Accrual Gate
 

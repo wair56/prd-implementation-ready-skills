@@ -24,6 +24,8 @@ Use this after identifying the business goal and core objects. The purpose is to
 | Actor / permission | Who can view, create, edit, approve, cancel, export, jump | One backend role assumed too broadly |
 | Time / period | Attribution date, month boundary, current month rule, late data | "按月汇总" without date source |
 | Amount / formula | Source amount, formula, operand semantics, comparison basis, rate, rounding, split, snapshot | Fund or profit amount not computable |
+| Cost inclusion state | Audit status, payment status, recognition state, locked cost period, inclusion/exclusion states, late/missing source behavior | Cost enters downstream bills before it is audited, paid, recognized, or recoverable |
+| Settlement/payment closure | Payment order origin payload, receiver account, transaction metadata, platform service fee, profit-sharing funds waterfall, payment completion side effects | "Enter payment management" or "generate profit sharing" without enough data/action closure |
 | Resource / value flow | Any scarce or controlled resource: inventory, coupon, quota, points, capacity, permission, balance, entitlement. Check source, eligibility, reserve, allocate, combine, consume, release, trace, and role perspective | Treating non-finance resources as simple fields instead of closed-loop objects |
 | State axes | Business, audit, payment, invoice, receipt, push, exception separated | Mixed "status" field |
 | Data fields | Required fields, optional fields, display source, editability | Field list copied without source |

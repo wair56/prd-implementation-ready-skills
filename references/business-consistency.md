@@ -17,6 +17,14 @@ Treat these as P0 blockers. Do not continue writing detailed PRD口径 until the
 - A topic is marked pending / out of scope / not in acceptance in one place but later written as confirmed detailed implementation.
 - A money movement says funds increase/decrease/split/freeze/refund, but does not define the calculation rule.
 - A non-finance resource movement says inventory/coupon/quota/permission/capacity is granted, reserved, allocated, consumed, released, or revoked without source, authoritative anchor, pool, trace, one-to-one rule, or reversal.
+- A cost enters a monthly bill, reconciliation, profit sharing, or report without a Cost Inclusion State Gate: audit status, payment status, cost recognition state, locked cost period, inclusion/exclusion states, and rebuild behavior.
+- A duplicate prevention key blocks business work without proving whether parallel projects, project/contract/billing unit, partial reconciliation, or source-detail occupation allow multiple valid bills in the same broad period.
+- A billing or profit-sharing rule collapses vehicle, waybill, customer, supplier, contract, route, project, cost type, or period dimensions before deciding which downstream calculations use totals and which analytics preserve detail.
+- A platform service fee appears without payer, receiver/platform pocket, rate snapshot, fee base, ledger effect, and collection/deduction timing.
+- A profit-sharing flow lacks a profit-sharing funds waterfall: customer funds, frozen funds, platform-granted credit, contractor own-funded advances, platform service fee, remaining profit, insufficient/continuing deduction, zero/negative profit sharing, and profit-sharing void fund rollback.
+- A payment order lacks payment order origin payload: source business object, business type, payer/payee, receiver account, amount split, transaction metadata, trigger/status, and reverse/retry rule.
+- Payment completion changes only payment status while attached business actions, idempotency, retry, partial failure, visibility, and reverse behavior are not specified.
+- Credit/support fund logic appears only as side effects or account fields, without centralized credit management for grant, occupation, repay, release, limits, page operations, and ledger reconciliation.
 - An amount field is used in a formula but has no authoritative source.
 - A formula uses guarantee/保底, max/min/取大取小, cap/floor, tier, threshold, base amount, detail-calculated amount, rate, coefficient, or adjustment without defining operand semantics, comparison basis, period, entity scope, eligibility, proration, and adjustment timing.
 - A period-based finance rule mentions current month, this month, this period, billing cycle, same month, next month, locked month, late data, backfill, or correction without an explicit attribution anchor and period boundary.
