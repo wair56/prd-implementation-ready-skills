@@ -20,6 +20,23 @@ Use:
 | Scenario / Task | Primary User | Recommended端 / Touchpoint | Why | Fallback入口 | Confirm |
 |---|---|---|---|---|---|
 
+## Role vs Touchpoint Scope Gate
+
+Do not confuse a system side, an organization scope, and an operator role. "Finance-side" is often an operator role inside the platform-side, not the whole platform scope. A platform-side page may let platform can see all subjects, while a finance operator role may only perform finance actions within that platform scope.
+
+Define:
+
+| Item | Must Define |
+|---|---|
+| System side / touchpoint | platform-side, customer portal, supplier portal, contractor portal, mobile, API/system job |
+| Organization scope | tenant, platform, branch, project, contractor, customer, supplier, or cross-tenant |
+| Operator role | finance, operations, admin, approver, auditor, external partner, system |
+| Viewed subject | whether the page shows self only, all subjects, or a switchable subject such as contractor/customer/supplier |
+| Data scope | what "all" means: all platform records, all tenant records, all authorized records, or only owned records |
+| Action scope | which role can view, operate, export, audit, switch subject, and recover exceptions |
+
+If a page says "财务端可切换承包人", check whether that really means "platform-side page; finance operator can switch contractor within authorized/all platform scope". Do not write a platform page as if it were only one finance user's personal account.
+
 ## Menu, Page, and UX Are Business Decisions
 
 Do not choose target端, menu, page structure, or components by taste. Decide from:

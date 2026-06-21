@@ -74,6 +74,11 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - If an item is marked pending / out of scope / not in acceptance, is it prevented from appearing later as confirmed implementation detail?
 - Does every fund movement define source amount, split rule, timing, side effect, and reversal?
 - Does every controlled resource/value movement define source, pool, trace, one-to-one rule, combine rule, state effect, role perspective, and reversal?
+- If a page says platform-side, finance-side, admin-side, or operator-side, are system side, organization scope, operator role, viewed subject, and data/action scope separated?
+- If the platform can see all records, is that platform scope preserved instead of being narrowed to one operator role's self view?
+- Are invoice, payment trace, exception record, allocation detail, attachment, adjustment, receipt, refund, approval task, or external sync record treated with a child object lifecycle when users need to query/operate/audit them?
+- If a rule uses a single total for summary calculation, are detail dimensions such as vehicle dimension, customer/shipper, supplier, contract, route, project, cost type, and period still preserved for dimension analysis when useful?
+- For annual/prepaid/cross-period costs, are cash payment and cost recognition separated, with monthly amortization or another allocation rule when needed?
 - Does every formula define operands, rates, caps/floors, rounding, snapshot, and zero/negative handling?
 - Does every amount field have an authoritative source document, contract, bill, fee item, import, or manual adjustment source?
 - If a payment order is created, is it clear whether it triggers real external payment or only records a business/accounting action?
@@ -85,6 +90,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Was the general Resource / Value Flow Gate applied first, instead of treating finance as a special pile of isolated rules?
 - Does every monthly aggregation define attribution date, month boundary, current-month exclusion, late data handling, and lock/freeze behavior?
 - For payments/recharges, are payer, payee, balance types, deduction priority, insufficient-balance handling, ledger effects, and reversal defined?
+- For supplier reconciliation, are supplier types separated, and do non-prepaid supplier flows include payment trace, payment status, and invoice management?
+- For insurance, rent, license, maintenance package, or other annual/prepaid costs, is cash payment separated from monthly amortization/cost recognition?
 - For synced supplier/cost data, are source system, sync direction, sync mode, cursor, duplicate/update rule, disabled/deleted data handling, and sync timestamp defined?
 - If a supplier is disabled after use, are historical visibility, future selectable scope, notifications, and effects on existing bills/contracts/drivers defined?
 - For reconciliation, are selectable source records, grouping, locking, audit effects, invoice lifecycle, write-off, cancel/reject rollback, red flush, and void behavior defined?
@@ -130,6 +137,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Cross-module links define target page/Tab, parameters, default filters, permission, and empty target behavior.
 - design.md / existing UI conventions checked if available.
 - Loading, empty, disabled, submitting, success, failure, high-risk confirmation covered.
+- Exception workbench exists for missing vehicle/customer/supplier/contract/source mappings, with manual completion, validation, recalculation, and re-enter downstream flow.
 
 ## Output Placement
 

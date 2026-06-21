@@ -60,6 +60,28 @@ Rules:
 - If the source of a new information item is unknown, mark that step "信息来源待确认" instead of writing the value as final PRD口径.
 - If the step moves data across objects, systems, pages, or reports, also use `data-flow.md` to create a data flow map and linkage map.
 
+## Child Object Lifecycle Gate
+
+If a module mentions a child/secondary object, do not leave it as a column in an operation table. Invoice, payment trace, exception record, allocation detail, attachment, adjustment, receipt, refund, approval task, message, or external sync record may each need its own lifecycle, page placement, visibility, and rollback.
+
+For each child object, define:
+
+| Parent Module | Child Object | Why It Exists | Source / Creation | Lifecycle | Page / Entry | Key Fields | Role Visibility | Writeback | Reverse / Delete | Confirm |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+If the child object is not needed as an independent object, say why it is only a display field or log line. If users must query, audit, correct, export, or operate it, treat it as a real object.
+
+## Missing Link Exception Closure
+
+When required linkage is missing, "mark exception" is not enough. Missing vehicle, customer, supplier, contract, source detail, external record, owner, permission, or mapping must have a page and recovery path.
+
+Define:
+
+| Missing Link | Detection Timing | Exception Workbench / Page | Manual Completion Fields | Validation | Recalculate / Rebuild | Re-enter Downstream Flow | Audit / History | Confirm |
+|---|---|---|---|---|---|---|---|---|
+
+Manual completion must say what users can fill, what source becomes authoritative after completion, which downstream records recalculate, and which flow step the record re-enters. Do not strand data in an exception status with no operator action.
+
 ## Resource / Value Flow Gate
 
 Use this not only finance. Any non-finance controlled resource can break the product if its loop is vague: inventory, coupon, quota, points, seat capacity, task capacity, appointment slots, membership rights, content permission, API usage, visibility rights, or approval authority.

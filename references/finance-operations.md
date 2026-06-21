@@ -202,6 +202,20 @@ For supplier or shipper reconciliation:
 
 Do not state "撤销 / 拒绝 / 红冲 / 作废" without the affected object, rollback scope, and status after rollback.
 
+### Supplier Reconciliation Completeness
+
+Supplier reconciliation completeness requires more than consumption sync and reconciliation totals. Define invoice management and payment trajectory, especially for each supplier type.
+
+| Supplier Type | Must Define |
+|---|---|
+| Prepaid / pre-recharge supplier | Prepayment balance, consumption deduction, allocation to vehicles/orders/assets, recharge payment, refund/reversal |
+| Non-prepaid supplier | Payable generation, reconciliation bill, invoice management, payment application/order, payment completion, unpaid/part-paid/paid status |
+| Mixed supplier | Which products/cost types are prepaid vs postpaid and whether one supplier has separate ledgers |
+
+For non-prepaid supplier payment trace, define: payable source, payment trigger, payment order or auto-completed adjustment, payment status, callback/result source, failure retry, cancellation, and how the reconciliation bill shows paid/unpaid/part-paid.
+
+Invoice management is a child object, not a line in "发票登记". Define invoice source, upload/import/sync, invoice number uniqueness, invoice amount vs bill amount matching, edit/void/red-flush, attachment/image source, invoice status, page entry, and writeback to reconciliation/payment.
+
 When reconciliation is generated from selectable source details, also apply the Source Detail Eligibility Gate:
 
 | Item | Must Define |
@@ -213,6 +227,25 @@ When reconciliation is generated from selectable source details, also apply the 
 | Occupation | when selected details become occupied and cannot be selected again |
 | Release rule | when cancel, reject, void, or rollback releases occupation; when confirmed/paid/profit-shared details stay occupied |
 | Unavailable reason | how users see why an item cannot be selected |
+
+## Amortization / Accrual Gate
+
+Use this for annual, prepaid, cross-period, subscription, insurance, maintenance package, rent, license, warranty, or any one-time payment whose business cost belongs to several periods.
+
+Separate cash payment from cost recognition:
+
+| Item | Must Define |
+|---|---|
+| Cash payment | When real payment happens, payer/payee, payment order, payment status, and ledger effect |
+| Cost recognition | Which periods receive the cost and whether monthly amortization is required |
+| Authoritative period anchors | Start date, end date, service period, policy period, contract period, vehicle binding period, or usage period |
+| Allocation formula | Straight-line monthly amortization, daily proration, vehicle count/usage allocation, manual split, rounding, remainder handling |
+| Source and snapshot | Which policy/contract/payment document defines amount and period, and whether later edits rebuild schedule |
+| Generated schedule | Amortization plan lines, monthly cost items, status, lock after bill/reconciliation/profit sharing |
+| Early termination / refund | How cancellation, refund, vehicle disposal, supplier change, or policy correction affects future and locked periods |
+| Page visibility | Where users see original payment, remaining unamortized amount, current-month cost, and schedule detail |
+
+Do not write "annual insurance enters payment management" as the whole rule if the product needs monthly cost. The PRD must state whether insurance is paid annually but recognized monthly, and how monthly amortization enters cost management.
 
 ## Cross-Module Navigation
 

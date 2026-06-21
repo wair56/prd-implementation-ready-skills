@@ -49,6 +49,24 @@ Rules:
 - Reserve and release are not finance-only. Inventory can be reserved, appointment slots can be held, coupons can be locked, quotas can be occupied, permissions can be granted/revoked.
 - Role perspective matters: actor, owner, counterparty, approver, platform/admin, and tenant may see different totals, traces, disabled reasons, and history.
 
+## Aggregation and Dimension Preservation Gate
+
+Do not let a single total destroy useful business dimensions. A downstream step may use summary calculation while reports, audit, diagnosis, or profit analysis still need dimension analysis.
+
+Use this when a PRD says "single total", "按总额", "不按车/不按明细", "汇总后传导", or when a detail dimension is removed.
+
+| Decision | Must Define |
+|---|---|
+| Summary calculation | Which downstream object uses the single total and why it does not need detail allocation |
+| Preserved dimensions | Which detail dimensions remain stored: vehicle dimension, customer/shipper, supplier, contract, route, project, tenant, period, cost type |
+| Analysis use | Which pages/reports still support dimension analysis such as single-vehicle profit, customer profitability, supplier cost, exception diagnosis |
+| Attribution rule | When a detail can map to a customer/vehicle/contract, whether it should be linked for analysis even if settlement uses total |
+| Non-allocation boundary | Which downstream calculations explicitly do not allocate by detail, and what tradeoff that creates |
+| Drilldown | How users jump from total to details and reconcile totals with detail sums |
+| Historical change | Whether later mapping corrections rebuild only analysis dimensions or also downstream financial results |
+
+Example: profit sharing may use a bill's single total for settlement, but the system can still keep vehicle dimension and customer mapping for single-vehicle profit analysis. Do not delete the detail dimension just because the settlement formula uses the total.
+
 ## Source Detail Eligibility Gate
 
 Use this before any PRD says users or the system can select source details to generate a bill, reconciliation record, settlement record, payment request, invoice, profit-sharing record, or recovery batch. "Selectable source details" are not just list filters; they are financial input boundaries.

@@ -197,6 +197,10 @@ Read only the references needed for the current stage:
 | Need broad coverage across business objects, object flow, or information introduced during each step without dumping all questions at once | `references/coverage-matrix.md` |
 | Need to clarify data flow, cross-object linkage, side effects, writebacks, notifications, statistics, locks, rollback, or downstream impacts | `references/data-flow.md` |
 | Requirement involves any controlled resource/value such as inventory, coupon, quota, capacity, permission, entitlement, slot, balance, support credit, or visibility right | `references/coverage-matrix.md`, then `references/data-flow.md`, `references/business-consistency.md`, and domain-specific references |
+| Requirement mixes platform-side/admin-side/finance-side/operator wording, or a page can switch viewed subjects | `references/page-ui.md`, then `references/business-context.md` and `references/coverage-matrix.md` |
+| Requirement says "single total", "summary only", "按总额", "不按明细", or removes a detail dimension used for analysis | `references/data-flow.md` and `references/business-consistency.md` |
+| Requirement includes annual/prepaid/cross-period costs, one-time payments recognized over time, or amortization/accrual | `references/finance-operations.md`, then `references/data-flow.md` |
+| Requirement has missing required links such as unmatched vehicle, customer, supplier, contract, source detail, or external record | `references/page-ui.md`, `references/data-flow.md`, and `references/review-checklists.md` |
 | User describes workflow, says "你来决定", or flow seems awkward | `references/research-and-flow.md` |
 | Reviewing multiple docs, finding contradictory口径, or checking money / formula / fund movement computability | `references/business-consistency.md` |
 | Finance operations include cost periods, fund priority, fund-flow, support credit, recharge/payment, sync data, supplier states, reconciliation, invoice, red flush / void, or cross-module jumps | `references/finance-operations.md` |
@@ -232,6 +236,10 @@ Read only the references needed for the current stage:
 - About to model a finance action as "choose one balance source" when partial insufficiency could require mixed funding, or as "automatic audit/payment" when the business only needs a deterministic ledger adjustment.
 - About to tie a refund/release to the same receipt/source detail without proving that the occupied pool and the source trace have a one-to-one pairing.
 - About to call a supplier pre-recharge or operating payment an internal ledger registration without checking whether real external payment happens.
+- About to equate "finance-side" with the whole platform-side without defining organization scope, operator role, and whether platform can see all subjects.
+- About to collapse detail dimensions into a single total before deciding which downstream calculation uses summary calculation and which report needs dimension analysis.
+- About to mention invoice, payment trace, exception record, allocation detail, or any child object only inside an operation row without its own lifecycle/page/visibility.
+- About to put unmatched or missing-link data into an exception status without an exception workbench, manual completion path, recalculation, and re-enter downstream flow.
 - About to write an abstract term (计价口径 / 统计口径 / 结算口径 / 规则 / 策略) into a uniqueness key, filter, or acceptance rule **without** decomposing it into fields.
 - About to put `status=1` / `incomeStatus in (...)` / code enums into PRD正文.
 - Adding an entity/status/page/field just to look complete, with no product constraint behind it.
