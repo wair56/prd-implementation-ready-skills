@@ -8,12 +8,16 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - For each added object/status/field/page/component/flow step, is the user/business/process need clear?
 - Are the agreed business mainline and business anchors written explicitly before detailed rules?
 - Did the assistant preserve user-confirmed anchors when recommending best practices, rewriting, or polishing?
-- Does every extension beyond the mainline have a basis: user confirmation, anchor, source data, existing behavior, research recommendation, or待确认?
+- If the user changed the business mainline or an anchor, was the change handled through an impact table before rewriting?
+- Were affected business context, scope, objects, lifecycles, data flows, linkage, rules, pages, exceptions, acceptance criteria, indexes, and module references updated together?
+- Were obsolete downstream口径 removed or marked superseded instead of coexisting with the new mainline?
+- Does every extension beyond the mainline have a basis: user confirmation, anchor, source data, existing behavior, research recommendation pending user confirmation, or 待确认?
 - Are obvious insider premises written clearly enough for a new reader?
 - Can a new reader understand what business this is before reading rules?
 - Is the business goal written separately from the system construction goal?
 - Are role glossary, core concepts, and special/counterintuitive terms defined in plain language?
 - Do money/value/data flows among roles have a simple front-door explanation?
+- Is every controlled resource/value closed loop before writing modules: source, reserve, allocate, consume, release, reverse, and role visibility?
 - Are circular definitions avoided, especially for financial concepts?
 - Is the business goal clear before details?
 - Is scope explicit, including out-of-scope?
@@ -25,16 +29,37 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 - Are all core business objects extracted from the notes, not only page/menu names?
 - Did the assistant apply the necessity gate before adding new entities or details?
-- For each core object, were source/creation, lifecycle, information delta, data flow, linkage/side effects, actor, time/period, amount/formula, state axes, data fields, query/list, interaction, locking, reverse flow, cross-system, cross-module, and audit trail considered?
+- For each core object, were source/creation, lifecycle, information delta, data flow, resource/value flow, linkage/side effects, actor, time/period, amount/formula, state axes, data fields, query/list, interaction, locking, reverse flow, cross-system, cross-module, and audit trail considered?
 - For each core object, is there a flow / information ledger showing each step, actor/system, state change, newly introduced information, source/authority, validation, persistence target, side effect, and failure/retry?
 - When a step creates or updates another object, was that downstream object added to the object list and covered too?
-- Are open items marked as confirmed, recommended default,待确认, or out of scope?
+- Are open items marked as confirmed, recommended default pending user confirmation, 待确认, or out of scope?
 - Did the assistant ask only the highest-risk missing decisions first instead of dumping every axis at once?
 - Was the matrix re-run after the main flow changed?
+
+## Reader-First Completeness
+
+- Treat "Readable but incomplete" as a red flag, not as a successful simplification.
+- Does the PRD preserve complete information for implementation, testing, UX, risk, operation, money movement, source data, state changes, exceptions, and acceptance?
+- Was a coverage ledger used or mentally checked so every build-critical coverage item is Covered, Missing but required, Recommended default, Pending confirmation, Out of scope, or External source required?
+- Are Missing but required items either written into the local section, converted to a recommended default pending user confirmation, or left as explicit Pending confirmation / External source required instead of silently omitted?
+- Are details placed near the workflow, page, operation, object state, or server-only flow where the reader needs them?
+- Did the assistant avoid fixing readability by deleting fields, states, source rules, eligibility conditions, period anchors, failures, reversals, writebacks, permissions, idempotency, audit, or acceptance?
+
+## Confirmation Discipline
+
+- Treat "Unconfirmed final wording" as a P0 issue.
+- Is every final rule confirmed by the user, copied from a user-confirmed in-scope source without changing meaning, or accepted as a best-practice default after user confirmation?
+- Are best-practice defaults marked as recommended until the user says OK?
+- Is every inference, external-source import, market pattern, low-risk default, and assistant proposal not silently promoted into final wording?
+- If the user said "you decide" or "best practice", did the PRD still show the recommended default and wait for confirmation before finalizing it?
 
 ## Data Flow and Linkage
 
 - Is there a data flow map for high-risk data: source/authority, trigger, transform/rule, validation, persistence target, consumer, writeback/sync timing, and failure handling?
+- Does every list, field, status, statistic, formula operand, selectable record set, and default value show a visible data source marker in正文 or its local table?
+- Were visible data source markers checked for真实性 and consistency: source exists in the flow, contains the data used, authority is clear, timing is valid, and cross-doc wording is consistent?
+- For internal generated data, are trigger, input data, generation rule/version, persisted object, authority after generation, consumers, and correction/rebuild behavior clear?
+- For non-finance resources such as inventory, coupon, quota, points, capacity, permission, entitlement, slots, or visibility rights, are source, authoritative anchor, pool, trace, reserve, allocate, combine, consume, release, partial insufficiency, and role perspective defined?
 - Is there a linkage map for high-impact actions: linked objects/modules, linkage type, side effect, trigger timing, reverse/rollback, user visibility, and risk?
 - Are "同步更新 / 自动回滚 / 联动处理" decomposed into affected objects, affected fields, timing, and failure behavior?
 - For reverse actions, are released locks, reverted data, recomputed data, non-reverted data, and audit reason clear?
@@ -44,9 +69,11 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - If multiple PRD files exist, are the same objects, actions, statuses, and money terms consistent across files?
 - Are business anchors consistent across all module docs?
 - Before rewriting a section, were the original business conclusions preserved or explicitly changed with confirmation?
+- If a confirmed anchor changed, does every downstream module now follow the new anchor and no stale wording remain?
 - Are document links, file ranges, module indexes, and reading order accurate after docs are merged, deleted, or renumbered?
 - If an item is marked pending / out of scope / not in acceptance, is it prevented from appearing later as confirmed implementation detail?
 - Does every fund movement define source amount, split rule, timing, side effect, and reversal?
+- Does every controlled resource/value movement define source, pool, trace, one-to-one rule, combine rule, state effect, role perspective, and reversal?
 - Does every formula define operands, rates, caps/floors, rounding, snapshot, and zero/negative handling?
 - Does every amount field have an authoritative source document, contract, bill, fee item, import, or manual adjustment source?
 - If a payment order is created, is it clear whether it triggers real external payment or only records a business/accounting action?
@@ -55,6 +82,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 ## Finance Operations
 
+- Was the general Resource / Value Flow Gate applied first, instead of treating finance as a special pile of isolated rules?
 - Does every monthly aggregation define attribution date, month boundary, current-month exclusion, late data handling, and lock/freeze behavior?
 - For payments/recharges, are payer, payee, balance types, deduction priority, insufficient-balance handling, ledger effects, and reversal defined?
 - For synced supplier/cost data, are source system, sync direction, sync mode, cursor, duplicate/update rule, disabled/deleted data handling, and sync timestamp defined?
@@ -67,6 +95,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 - Does every added interaction/default/filter/list/field have a source or待确认?
 - Are data source, authoritative source, include/exclude conditions, and refresh timing clear?
+- Are data sources visibly marked where the PRD uses them, not only implied in reasoning?
+- Are internal sources such as generated records, snapshots, callbacks after idempotency, statistics, tasks, and copied fields treated as data sources with authenticity and consistency checks?
 - Are technical fields, SQL conditions, code enums, and interface params converted to business wording?
 - Are abstract terms such as 计价口径 / 统计口径 / 规则 / 策略 decomposed into fields, enums, IDs, versions, or source document sets?
 
@@ -111,7 +141,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 - "通用上更正确" wording that replaces a user-confirmed business fact.
 - "大家都知道 / 默认就是 / 这个不用写" around pricing, funds, roles, source data, or status.
-- Detailed implementation that cannot point to a user discussion, anchor, source, existing behavior, or recommendation label.
+- Detailed implementation that cannot point to a user discussion, anchor, source, existing behavior, or recommendation label pending user confirmation.
+- "数据来源：系统生成 / 平台同步 / 自动统计" without trigger, input, rule, persisted object, authority, and consistency check.
 - "按规则处理", "具体以实际为准", "计价口径", "有效单据" without definition.
 - Long sections or tables that do not change behavior, testing, UX, risk, or implementation.
 - New status/object/page/component added only for neatness, not because the flow requires it.

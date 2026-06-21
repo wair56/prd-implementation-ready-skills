@@ -85,6 +85,22 @@ For each possibility, decide whether it is in scope, out of scope, or closed by 
 
 Do not add all of these to the PRD as features. Use them as a possibility scan to prevent wrong assumptions. If the answer is "not supported in MVP", write the boundary and the safe behavior.
 
+## Resource and Value Flow Gate
+
+Many PRD mistakes are not finance mistakes. They are resource-flow mistakes. Use this gate for any controlled resource or value object, not only finance: money, credit, inventory, coupon, points, quota, seat capacity, delivery capacity, task capacity, appointment slots, assets, vehicle energy, content permission, membership rights, API usage, approval authority, visibility rights, or any scarce/controlled thing.
+
+Before writing modules, prove the closed loop:
+
+1. **Source**: where the resource/value comes from, who owns it, and which authoritative anchor proves it exists. Do not invent an anchor such as creation time, receipt time, sync time, or approval time unless that field is truly authoritative for the business object.
+2. **Eligibility**: which states, roles, tenants, contracts, periods, objects, or source records make it usable/selectable.
+3. **Reserve / occupy**: when the resource becomes unavailable to others, what pool is affected, whether source trace is only audit or controls release, and whether one-to-one pairing is required.
+4. **Allocate / combine**: whether one action can combine multiple sources or pools when partial insufficiency happens. Avoid single-source flows unless explicitly confirmed.
+5. **Consume / settle**: which event actually uses the resource/value and what downstream object/status/writeback it creates.
+6. **Release / reverse**: cancel, reject, timeout, refund, rollback, rebuild, disable, or correction behavior.
+7. **Role perspective and visibility**: which actor sees the resource, the counterparty context, the disabled reason, and the history.
+
+This is the same thinking behind fund flow, but it also applies to non-finance business. For example, an appointment quota, coupon balance, inventory stock, API quota, and content permission all need source, reserve, allocate, consume, release, trace, and role perspective.
+
 ## Reader-First Module PRD Structure
 
 Module PRDs should be easy for humans to read first, then detailed enough for implementation. Do not open a module with dense rule tables unless the user explicitly asks for a checklist-only artifact.
@@ -180,9 +196,10 @@ Read only the references needed for the current stage:
 | Reader may not understand the business, roles, domain terms, business model, special concepts, or value/money flow | `references/business-context.md` |
 | Need broad coverage across business objects, object flow, or information introduced during each step without dumping all questions at once | `references/coverage-matrix.md` |
 | Need to clarify data flow, cross-object linkage, side effects, writebacks, notifications, statistics, locks, rollback, or downstream impacts | `references/data-flow.md` |
+| Requirement involves any controlled resource/value such as inventory, coupon, quota, capacity, permission, entitlement, slot, balance, support credit, or visibility right | `references/coverage-matrix.md`, then `references/data-flow.md`, `references/business-consistency.md`, and domain-specific references |
 | User describes workflow, says "你来决定", or flow seems awkward | `references/research-and-flow.md` |
 | Reviewing multiple docs, finding contradictory口径, or checking money / formula / fund movement computability | `references/business-consistency.md` |
-| Finance operations include cost periods, fund priority, sync data, supplier states, reconciliation, invoice, red flush / void, or cross-module jumps | `references/finance-operations.md` |
+| Finance operations include cost periods, fund priority, fund-flow, support credit, recharge/payment, sync data, supplier states, reconciliation, invoice, red flush / void, or cross-module jumps | `references/finance-operations.md` |
 | Details may be unsupported, data source unclear, state axes / initial states uncertain, technical terms or 计价口径-type words appear | `references/source-language-guards.md` |
 | Discussing target端, touchpoints, menus, page Tabs, UX, component choice, UI style, design.md, interaction habits | `references/page-ui.md` |
 | User asks for full PRD, multiple docs, index/global rules, final structure | `references/output-structure.md` |
@@ -197,6 +214,7 @@ Read only the references needed for the current stage:
 - Before locking flows, run a business possibility scan for SaaS/multi-tenant, multiple-role, cross-organization, migration, compatibility, and external-system variants. Close each as supported, blocked, later, or a recommended default.
 - Treat short answers ("加 / 不需要 / 你来 / 按最佳实践") as decisions to digest, not missing context.
 - Use the minimum structure that makes the product buildable, testable, and understandable. Do not add entities, statuses, pages, components, tables, or prose just to look complete.
+- **Finance Fund-Flow Gate:** Before finalizing any balance, credit, support fund, prepayment, recharge, refund, freeze, occupation, release, write-off, profit sharing, or payment rule, prove the fund loop closes: source pool, usable amount, deduction/occupation order, mixed funding behavior, ledger effect, source trace, closure path, reversal, page visibility, and cross-module side effects. Do not invent a single-source, single-period, one-to-one, or audit-heavy path just because it is easy to write.
 - In the main PRD file, draw the business flow atlas first. Include Mermaid flowcharts for each flow line and Mermaid `stateDiagram-v2` diagrams for key object status changes when objects have lifecycles.
 - When proposing a flow, page, component, or rule, explain the product constraint it solves and what would break without it.
 - Write from the user-agreed business mainline. Generic best practices and polished wording must not override confirmed business facts.
@@ -211,6 +229,9 @@ Read only the references needed for the current stage:
 - About to omit lifecycle/state diagrams for objects whose statuses govern operations, writebacks, locks, or downstream flows.
 - About to write the full PRD **without** marking invented details as 待确认, because the user said "别问、直接写".
 - About to lock口径 / write defaults **without** first reading existing project docs (skipping research under time pressure).
+- About to model a finance action as "choose one balance source" when partial insufficiency could require mixed funding, or as "automatic audit/payment" when the business only needs a deterministic ledger adjustment.
+- About to tie a refund/release to the same receipt/source detail without proving that the occupied pool and the source trace have a one-to-one pairing.
+- About to call a supplier pre-recharge or operating payment an internal ledger registration without checking whether real external payment happens.
 - About to write an abstract term (计价口径 / 统计口径 / 结算口径 / 规则 / 策略) into a uniqueness key, filter, or acceptance rule **without** decomposing it into fields.
 - About to put `status=1` / `incomeStatus in (...)` / code enums into PRD正文.
 - Adding an entity/status/page/field just to look complete, with no product constraint behind it.

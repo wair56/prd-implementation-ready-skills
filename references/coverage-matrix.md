@@ -24,6 +24,7 @@ Use this after identifying the business goal and core objects. The purpose is to
 | Actor / permission | Who can view, create, edit, approve, cancel, export, jump | One backend role assumed too broadly |
 | Time / period | Attribution date, month boundary, current month rule, late data | "按月汇总" without date source |
 | Amount / formula | Source amount, formula, rate, rounding, split, snapshot | Fund or profit amount not computable |
+| Resource / value flow | Any scarce or controlled resource: inventory, coupon, quota, points, capacity, permission, balance, entitlement. Check source, eligibility, reserve, allocate, combine, consume, release, trace, and role perspective | Treating non-finance resources as simple fields instead of closed-loop objects |
 | State axes | Business, audit, payment, invoice, receipt, push, exception separated | Mixed "status" field |
 | Data fields | Required fields, optional fields, display source, editability | Field list copied without source |
 | Query / list | Filters, default sorting, Tab meaning, include/exclude rules | Global doc contains page-level filters |
@@ -58,6 +59,23 @@ Rules:
 - When new information can arrive late, be corrected, or be re-synced, define whether it updates the current object, creates a version, or is blocked after lock/audit.
 - If the source of a new information item is unknown, mark that step "信息来源待确认" instead of writing the value as final PRD口径.
 - If the step moves data across objects, systems, pages, or reports, also use `data-flow.md` to create a data flow map and linkage map.
+
+## Resource / Value Flow Gate
+
+Use this not only finance. Any non-finance controlled resource can break the product if its loop is vague: inventory, coupon, quota, points, seat capacity, task capacity, appointment slots, membership rights, content permission, API usage, visibility rights, or approval authority.
+
+For each resource/value object, define:
+
+| Resource | Source / Authoritative Anchor | Eligibility | Reserve / Occupy | Allocate / Combine | Consume / Settle | Release / Reverse | Pool vs Trace | Role Perspective | Confirm |
+|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- Do not invent the authoritative anchor. A created time, sync time, approval time, or receipt time is only valid when the business object truly uses it as the anchor.
+- If partial insufficiency can happen, decide whether users/system can combine multiple resources or sources; do not force a single-source rule without confirmation.
+- Separate pool from trace. The current available pool controls use; source trace explains history. A one-to-one source pairing is required only when the business says so.
+- Define reserve/release even when there is no money: stock reservation, coupon lock, appointment slot hold, content permission grant, quota occupation, task capacity allocation.
+- Show the role perspective: the acting user, owner, approver, counterparty, platform/admin, or tenant may need different visibility and disabled reasons.
 
 Do not ask every axis for every object at once. Prioritize:
 

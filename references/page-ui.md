@@ -63,6 +63,20 @@ If page-level Tabs are recommended:
 
 Page-level Tabs are independent work pages. List Tabs are filters. Do not mix the two.
 
+## Role Perspective and Resource Visibility
+
+For any page involving a controlled resource/value, design the role perspective explicitly. This applies to finance and non-finance resources: inventory, coupon, quota, capacity, permission, entitlement, membership rights, appointment slots, task capacity, or content visibility.
+
+| Role Perspective | Page Must Explain |
+|---|---|
+| Actor | What can I use, reserve, allocate, consume, release, revoke, or retry now? |
+| Owner | Which pool/source is mine, what is available/reserved/occupied/consumed/released, and what changed it? |
+| Counterparty | Which counterparty funds/resources/status explain this operation, disabled reason, or settlement/result? |
+| Approver / operator | What source, trace, risk, exception, and downstream side effect am I confirming? |
+| Platform/admin/tenant admin | Cross-role totals, abnormal locks, source traces, tenant/organization boundaries, and recovery entries |
+
+Do not show only the acting user's local field when the operation depends on counterparty context. If an action is disabled because another party's pool, lock, status, quota, permission, or trace is insufficient, stale, frozen, occupied, or missing, the page must show that reason in business language.
+
 ## UX and Component Selection
 
 For each page or important action, specify the UX carrier and component behavior. Do not stop at "add a page" or "add a button".

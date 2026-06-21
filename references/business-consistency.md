@@ -1,23 +1,34 @@
 # Business Consistency and Computability
 
-Use this when reviewing multiple PRD files, finance/payment/settlement requirements, or any flow involving funds, payment orders, audit, refunds, allocation, cost, profit sharing, or amount calculation.
+Use this when reviewing multiple PRD files, finance/payment/settlement requirements, or any flow involving funds, payment orders, audit, refunds, allocation, cost, profit sharing, amount calculation, inventory, coupon, quota, permission, capacity, entitlement, or other resource/value movement.
 
 ## P0 Rule
 
 Treat these as P0 blockers. Do not continue writing detailed PRD口径 until the user confirms them:
 
 - A confirmed business anchor is contradicted, weakened, or replaced by generic wording.
-- A derived implementation detail cannot trace back to user confirmation, a business anchor, source data, existing system behavior, research recommendation, or待确认.
+- A user changes the business mainline / anchor, but the PRD is patched locally without impact analysis across affected business, object, data, linkage, page, and acceptance sections.
+- A derived implementation detail cannot trace back to user confirmation, a business anchor, source data, existing system behavior, research recommendation pending user confirmation, or待确认.
+- A list, field, status, statistic, formula operand, selectable record set, or default value uses data but has no visible data source marker in the PRD.
+- A named data source cannot be verified as real in the confirmed flow, conflicts with another module, or lacks authority / timing / update rules.
+- Internal generated data is described as "system generated" without trigger, input, generation rule, persisted object, authority, and correction behavior.
 - The same object/action/status is described differently in different files or sections.
 - The document index, file references, reading order, or "higher than 01-07" style scope statement points to deleted, merged, or nonexistent docs.
 - A topic is marked pending / out of scope / not in acceptance in one place but later written as confirmed detailed implementation.
 - A money movement says funds increase/decrease/split/freeze/refund, but does not define the calculation rule.
+- A non-finance resource movement says inventory/coupon/quota/permission/capacity is granted, reserved, allocated, consumed, released, or revoked without source, authoritative anchor, pool, trace, one-to-one rule, or reversal.
 - An amount field is used in a formula but has no authoritative source.
+- A period-based finance rule mentions current month, this month, this period, billing cycle, same month, next month, locked month, late data, backfill, or correction without an explicit attribution anchor and period boundary.
+- A source-generated bill, reconciliation, settlement, payment, invoice, profit-sharing, or recovery flow says "select orders / select waybills / select details" without source detail eligibility, occupation, release rule, and unavailable reason.
+- A relative period phrase such as "本月", "当月", "本期", "账期内", "周期内", or "同月" appears without naming the business object, authoritative time field, period boundary/timezone, and cross-month rule.
+- A larger or older out-of-scope document is used to judge, replace, or import口径 into the user-selected scope without explicit user permission.
 - A "payment order" is created but whether it triggers real payment is unclear.
 - "Audit" is mentioned but the audited object, audit type, actor, and side effect are unclear.
 - A status appears in body text, Tab names, filters, or exception handling but is missing from the state axis / enum / transition table.
 
 ## Cross-Document Consistency Scan
+
+Run this scan only across documents inside the user-selected scope. If the user-selected scope is one directory or one file, sibling directories and old versions are out-of-scope document sources, even if they are larger or older. Ask before expanding scope.
 
 When reviewing multiple docs, actively compare the same term across files. Use a table like:
 
@@ -27,11 +38,23 @@ When reviewing multiple docs, actively compare the same term across files. Use a
 Check especially:
 
 - business anchors, pricing/fund/source/status premises, and "obvious" domain facts;
+- visible data source markers, authoritative sources, generated-data rules, and copied-field update rules;
+- attribution anchor, source detail eligibility, relative period phrase definitions, source occupation, and occupation release rules;
 - document links, module numbers, reading order, and "this doc overrides..." statements;
 - object names: cost bill, payment order, reconciliation bill, profit bill, invoice, receipt, refund;
 - actions: create, submit, confirm, audit, pay, refund, reverse, void, rebuild, push;
 - states: pending audit, pending payment, paying, failed, refunded, exception pending confirmation;
 - money words: available, frozen, occupied, released, deducted, transferred, allocated, shared.
+- non-finance resource words: inventory, coupon, quota, points, capacity, permission, entitlement, slot, reservation, grant, revoke, consume, release.
+
+## Data Source Authenticity Guard
+
+When a PRD names a data source, verify that the source is not only plausible but usable:
+
+| Data Item | Claimed Source | Source Exists In Flow? | Authority Consistent? | Timing Valid? | Internal Generation Complete? | Conflict Location | Required Fix |
+|---|---|---|---|---|---|---|---|
+
+Include internal sources such as generated bills, snapshots, status counts, to-do tasks, callback results after idempotency, imported staging records, and manually adjusted records. They must be checked the same way as external systems.
 
 ## Money and Formula Computability Guard
 
@@ -53,6 +76,30 @@ Examples:
 - "来账确认后增加货主冻结资金和运营支持金" is incomplete unless it defines how one receipt amount is split between the two pools.
 - "分润金额" is incomplete unless it defines profit formula, sharing parties, sharing ratio/source, rounding, snapshot, and negative/zero handling.
 - "按月包车应收金额" is incomplete unless it defines whether the source is shipper contract, monthly fixed amount, route/package agreement, manual adjustment, or imported bill.
+
+## Resource and Value Computability Guard
+
+This is the non-finance version of money computability. Any controlled resource/value must be testable and conserved.
+
+Require:
+
+| Item | Must Define |
+|---|---|
+| Source | Where the resource/value comes from and who owns it |
+| Authoritative anchor | The business event/field that proves the resource exists or belongs to a period/object; do not invent one from an easy timestamp |
+| Pool | Current available/reserved/occupied/consumed/released amount or state |
+| Trace | Source record/history used for audit or source-level control |
+| One-to-one rule | Whether use/release must match a specific source trace or can come from the current pool |
+| Combine rule | Whether multiple resources/pools can combine under partial insufficiency |
+| State effect | Which object status, visibility, or downstream flow changes |
+| Reversal | How cancel, timeout, reject, disable, revoke, refund, rebuild, or correction restores or preserves the resource |
+| Role perspective | What actor, owner, counterparty, tenant, or admin can see and operate |
+
+Examples:
+
+- Coupon use is incomplete unless it defines grant source, validity anchor, reserve-on-submit, consume-on-paid, release-on-cancel, and whether several coupons can combine.
+- Inventory reservation is incomplete unless it defines source stock pool, reserve timing, partial insufficiency behavior, release timeout, and oversell prevention.
+- Content permission is incomplete unless it defines who grants it, which object it attaches to, who can see it, revoke behavior, and downstream visibility changes.
 
 ## Audit / Payment Disambiguation
 

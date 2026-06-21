@@ -19,8 +19,8 @@ Do not treat these as the same thing. A single business action may update multip
 
 Use this table when data source, transformation, or downstream consumption is unclear:
 
-| Data Item | Trigger / Step | Source / Authority | Input Conditions | Transform / Rule | Validation | Persisted Object / Field | Consumer | Writeback / Sync | Timing | Failure Handling | Confirm |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| Data Item | Trigger / Step | Visible Source Mark | Source / Authority | Input Conditions | Transform / Rule | Validation | Persisted Object / Field | Consumer | Writeback / Sync | Timing | Failure Handling | Reality / Consistency Check | Confirm |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 Check:
 
@@ -30,8 +30,54 @@ Check:
 - Timing: real-time, scheduled sync, manual refresh, after audit, after payment, after callback, T+N.
 - Consumer: list, detail, downstream object, report/statistic, notification, permission, external system.
 - Writeback: whether status, amount, lock, result, timestamp, or error reason is returned to upstream objects.
+- Reality / consistency: whether the named source exists in the flow, contains the data used, uses the same authority in every module, and has a defined update/snapshot rule.
 
 If a data item is displayed or used but has no source/authority/consumer, mark it as "数据流待确认".
+
+## Resource / Value Flow Map
+
+Use this for any money or non-finance resource: inventory, coupon, quota, points, capacity, task slots, asset usage, content permission, membership rights, API usage, visibility, approval authority. A resource/value flow is data flow plus business conservation: the system must show where the resource comes from, when it is reserved, how it is allocated, when it is consumed, and how it is released.
+
+| Resource / Value | Source | Authoritative Anchor | Owner / Pool | Trace Source | Eligibility | Reserve / Occupy Trigger | Allocate / Combine Rule | Partial Insufficiency Rule | Consume / Settle Trigger | Release / Reverse Rule | Role Perspective / Counterparty Visibility | Confirm |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- Do not invent an authoritative anchor. Pick the field/event that makes the resource belong to the business object, not the easiest timestamp in the system.
+- Pool and trace are different. The pool controls current availability; trace explains where it came from. Do not require one-to-one pairing unless business rules need source-level locking.
+- If users can combine multiple pools/sources, specify priority, split, ledger/status effect, and disabled reason when the combined amount/capacity/permission is still insufficient.
+- Reserve and release are not finance-only. Inventory can be reserved, appointment slots can be held, coupons can be locked, quotas can be occupied, permissions can be granted/revoked.
+- Role perspective matters: actor, owner, counterparty, approver, platform/admin, and tenant may see different totals, traces, disabled reasons, and history.
+
+## Source Detail Eligibility Gate
+
+Use this before any PRD says users or the system can select source details to generate a bill, reconciliation record, settlement record, payment request, invoice, profit-sharing record, or recovery batch. "Selectable source details" are not just list filters; they are financial input boundaries.
+
+Define:
+
+| Item | Must Define |
+|---|---|
+| Source detail object | order, waybill, cost item, income item, consumption item, bill line, payment line |
+| Ownership scope | customer, supplier, contractor, project, route, organization, tenant, contract |
+| Required business state | completed, signed, fee-confirmed, audited, payable, receivable, exception-free, not cancelled, not voided |
+| Amount/source readiness | amount exists, formula source is available, currency/tax/rounding are defined, abnormal amount behavior is clear |
+| Period eligibility | which attribution anchor and period boundary place the detail in the selectable window |
+| Existing occupation | whether already selected by draft/pending/confirmed/paid/profit-shared records blocks reuse |
+| Occupation timing | when selection creates occupation: draft save, submit, audit approval, payment, or receipt |
+| Release rule | which reverse actions release occupation and which terminal states keep it occupied |
+| Unavailable reason | how unavailable details are hidden or shown with a reason |
+| Snapshot rule | whether generated records freeze source fields or follow later source/master-data changes |
+
+If eligibility or occupation is undefined, do not write final wording like "select waybills" or "select orders". Mark it as source detail eligibility pending and ask the smallest question needed.
+
+## Internal Generated Data
+
+Treat internal data as sourced data, not as magic. For every system-generated record, status, statistic, snapshot, message, task, jump parameter, or derived amount, define:
+
+| Generated Data | Trigger | Input Data | Generation Rule / Version | Persisted Object | Authority After Generation | Consumers | Rebuild / Correction | Failure Handling | Confirm |
+|---|---|---|---|---|---|---|---|---|---|
+
+If the PRD says "系统生成 / 自动生成 / 自动统计 / 自动同步", it must name the trigger, inputs, rule, persisted result, and what happens when inputs later change.
 
 ## Linkage Map
 
