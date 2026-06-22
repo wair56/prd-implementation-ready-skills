@@ -62,6 +62,7 @@ Examples:
 - "来账确认后增加货主冻结资金和运营支持金" is incomplete unless it defines how one receipt amount is split between the two pools.
 - "分润金额" is incomplete unless it defines profit formula, sharing parties, sharing ratio/source, rounding, snapshot, and negative/zero handling.
 - "按月包车应收金额" is incomplete unless it defines whether the source is shipper contract, monthly fixed amount, route/package agreement, manual adjustment, or imported bill.
+- "金额构成 = 成本基数 + 服务费 + 调整项" is incomplete unless each component has source object/source field, source state, business period, snapshot, formula/operand, drilldown/backtrace, detail sum reconciliation, and correction behavior. Use `data-flow.md#amount-composition-source-lineage-gate`.
 
 ## Settlement Input vs Analysis Metric Computability
 

@@ -97,6 +97,8 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Is there a data flow map for high-risk data: source/authority, trigger, transform/rule, validation, persistence target, consumer, writeback/sync timing, and failure handling?
 - Does every list, field, status, statistic, formula operand, selectable record set, and default value show a visible data source marker in正文 or its local table?
 - Were visible data source markers checked for真实性 and consistency: source exists in the flow, contains the data used, authority is clear, timing is valid, and cross-doc wording is consistent?
+- For every amount composition / amount breakdown, does each displayed amount component have source object/source field, source state, business period, snapshot, derived formula/operand, drilldown/backtrace, and detail sum reconciliation against the displayed total?
+- Is any hidden data source buried behind labels such as cost basis, base amount, source total, order amount total, service fee, adjustment line, included detail list, or tax amount?
 - For internal generated data, are trigger, input data, generation rule/version, persisted object, authority after generation, consumers, and correction/rebuild behavior clear?
 - For non-finance resources such as inventory, coupon, quota, points, capacity, permission, entitlement, slots, or visibility rights, are source, authoritative anchor, pool, trace, reserve, allocate, combine, consume, release, partial insufficiency, and role perspective defined?
 - For any attribution/share/occupancy/cost attribution metric, did the PRD classify whether it is a settlement hard constraint or an analysis metric, and name which business action consumes it?
@@ -152,6 +154,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - For reconciliation duplicate prevention, does the unique key include the real billing unit, and does it allow parallel projects / project/contract/billing unit / partial reconciliation when the business allows them?
 - For customer/shipper billing, does monthly charter stay by vehicle when the commercial object is vehicle-based, and does transport-volume billing use shipper freight on the waybill or confirmed receivable source?
 - For billing/profit-sharing, are vehicle, waybill, customer, supplier, contract, route, project, cost type, and period dimensions preserved for analysis when useful?
+- For monthly charter billing, does cost basis explain its source cost bill, cost inclusion state, cost type scope, locked period, amortization/accrual treatment, drilldown/backtrace, and whether corrections rebuild the bill or create adjustment lines?
 - For cross-module jumps, are source action, target menu/page/Tab, parameters, default filters, empty state, and permission behavior defined?
 - If confirm and view-detail reuse a modal, are confirm mode, view mode, pagination/search, grouping, and amount-summary consistency defined?
 

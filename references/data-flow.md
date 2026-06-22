@@ -38,6 +38,33 @@ Check:
 
 If a data item is displayed or used but has no source/authority/consumer, mark it as "数据流待确认".
 
+## Amount Composition Source Lineage Gate
+
+Use this when a page, drawer, bill, statement, payslip, invoice preview, settlement detail, price explanation, or report shows an amount composition / amount breakdown such as base amount + rate + fee + adjustment lines, source detail total + deductions, cost basis + service fee, usage amount + package discount, or subtotal + tax.
+
+Do not stop at naming the components. Every displayed amount component must have data lineage:
+
+| Component Item | Must Define |
+|---|---|
+| Business meaning | What this component means in user language, and why it appears in the amount breakdown |
+| Source object / source field | Which cost bill, order, waybill, contract, rate config, adjustment line, payment line, invoice, usage record, imported file, or generated record provides it |
+| Source state | Which source state makes it eligible: audited, confirmed, paid, locked, exception-free, not voided, or another business state |
+| Business period | Which period anchor places the source into this statement, and how cross-period or late data behaves |
+| Derived component | If the component is calculated, define formula, operand source, rate snapshot, rounding, tax basis, and zero/negative handling |
+| Snapshot / version | Whether the statement freezes component values, source detail set, rule version, and rate at creation/confirmation |
+| Drilldown / backtrace | How users open the source detail list, source bill, cost bill, order, waybill, adjustment line, or audit trail from the amount component |
+| Detail sum reconciliation | Whether detail sum must equal the displayed total; if not, explain rounding, exclusions, manual adjustments, or hidden lines |
+| Rebuild / correction | Whether source changes rebuild the amount, create adjustment lines, or only affect future statements after lock |
+
+High-risk component examples:
+
+- Cost basis: define the source cost bill, cost inclusion state, included/excluded cost types, contractor/customer/vehicle/project scope, business period, locked period, amortization/accrual treatment, and drilldown to cost details.
+- Service fee: define rate source, rate snapshot time, fee base, formula, rounding, tax basis, and platform/receiver ownership.
+- Adjustment line: define manual/system source, positive/negative direction, reason, audit requirement, attachment, operator, and whether it changes detail sum reconciliation.
+- Included detail list: define eligible source details, occupation/snapshot timing, unavailable reason, and backtrace to the original order/waybill/usage/cost record.
+
+Red flag: a PRD says "金额构成展示成本基数 + 服务费率 + 服务费 + 调整项" or "展示运单金额合计 + 调整项 + 纳入清单" but does not explain where the cost basis/source total comes from, which source states are included, how users drill down, and whether the detail sum matches the displayed total.
+
 ## Resource / Value Flow Gate
 
 Alias: Resource/Value Flow Gate.

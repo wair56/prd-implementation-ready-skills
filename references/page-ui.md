@@ -81,6 +81,10 @@ For visible information, do not stop at field names:
 
 If no one can explain why a field, card, drawer, or button changes the user's decision, operation, risk control, traceability, or acceptance test, remove it or move it to detail/export.
 
+For an amount breakdown area, add a local source explanation instead of only listing component labels. Each displayed amount component should show or link to its source explanation: source object/source field, source state, business period, formula/operand, snapshot time, and drilldown/backtrace. The UI must make it clear how a user reconciles the displayed total to source details or adjustment lines, and where rounding/exclusion differences appear.
+
+Amount breakdown examples that need this treatment: cost basis, service fee rate, service fee, adjustment line, order amount total, included order list, tax amount, discount, credit consumption, remaining balance, or any generated subtotal.
+
 ## Operation-to-Surface Map
 
 Every important operation needs a home in the UI. Do not list operations only in a rule table; users must know where they start them and how they see the result.

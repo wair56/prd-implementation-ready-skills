@@ -53,6 +53,7 @@ Read only what the current stage needs.
 | Rules design stage | `references/coverage-matrix.md`, `references/data-flow.md`, `references/business-consistency.md` |
 | Finance, funds, costs, reconciliation, invoice, payroll, profit sharing | `references/finance-operations.md` then the indexed finance topic file |
 | A metric may be action input or only analysis/risk-control, such as cost attribution, usage share, occupancy, contribution, or profitability | `references/data-flow.md`, `references/business-consistency.md` |
+| Amount composition or amount breakdown has hidden component sources such as cost basis, source total, service fee, adjustment lines, included detail list | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
 | Page design stage | `references/page-ui.md`, `references/output-structure.md` |
 | Notifications, todos, pushes, emails/SMS, bot messages, webhooks | `references/notifications.md`, `references/data-flow.md` |
 | Product-level non-functional decisions | `references/non-functional.md` |
@@ -81,6 +82,7 @@ Stop and return to the workflow when any of these appears:
 - Scattered notification design: a notification, todo, push, email, SMS, bot message, or webhook appears only as a side effect without trigger event, receiver, channel, dedupe, read/task state, recall/update, preferences, failure handling, and deep link.
 - Invented terminology: a new term appears without user wording, existing system labels, confirmed business terms, or a clear recommended naming basis.
 - Analysis metric used as an action hard gate: attribution, occupancy, or cost attribution blocks settlement/payment/refund/release without reliable source and a named business action consumer.
+- Hidden amount composition source: amount breakdown names cost basis, source total, service fee, adjustment lines, or included detail list without source lineage, drilldown, snapshot, and detail-sum reconciliation.
 - Field-only page design: columns/buttons are listed but why shown, what decision or action they support, operation surface, disabled reason, and recovery are missing.
 - Created downstream records are listed after an event, but exact persisted field writebacks on existing objects are missing.
 
