@@ -42,6 +42,8 @@ When a PRD names a data source, verify that the source is not only plausible but
 
 Include internal sources such as generated bills, snapshots, status counts, to-do tasks, callback results after idempotency, imported staging records, and manually adjusted records. They must be checked the same way as external systems.
 
+If a source comes from an external system, other module, upstream object, import, sync result, configuration, or source detail list, also run `data-flow.md#source-data-filter-and-eligibility-gate`. Source authenticity is not enough: the PRD must define the business eligibility filter, UI query filter, include condition, exclude condition, owner scope, permission scope, source state, period window, selectable/visible but unavailable behavior, unavailable reason, dedupe/occupation, snapshot, refresh timing, sync status, stale data, external failure, and correction behavior.
+
 ## Money and Formula Computability Guard
 
 Every amount or fund movement must be computable from business information. Require:

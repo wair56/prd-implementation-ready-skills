@@ -94,6 +94,10 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 
 ## Data Flow and Linkage
 
+- When a page, formula, operation, or server flow takes data from an external system, other module, upstream object, import, sync result, configuration, or source detail list, did it pass the Source Data Filter and Eligibility Gate?
+- Does every referenced source dataset define business eligibility filter, UI query filter, include condition, exclude condition, owner scope, permission scope, source state, period window, availability, visible but unavailable behavior, unavailable reason, dedupe/occupation, snapshot, refresh timing, sync status, stale data, external failure, and correction behavior?
+- Is there vague source selection wording such as "take data from", "sync from", "select source records", or "load upstream data" without source data filter?
+
 - Is there a data flow map for high-risk data: source/authority, trigger, transform/rule, validation, persistence target, consumer, writeback/sync timing, and failure handling?
 - Does every list, field, status, statistic, formula operand, selectable record set, and default value show a visible data source marker in正文 or its local table?
 - Were visible data source markers checked for真实性 and consistency: source exists in the flow, contains the data used, authority is clear, timing is valid, and cross-doc wording is consistent?
@@ -188,6 +192,8 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Empty, max, min, invalid input, file, amount, date, pagination.
 
 ## Page and UI
+
+- Pages that display or select external/other-module source data show filter basis, result count, fixed business filters, editable UI filters, reset behavior, unavailable reason, sync/stale/external failure state, and source links.
 
 - Does the 00 主文件 include a main file navigation map / information architecture mind map showing 端 / 模块 / 页面 / 功能点 before module details?
 - Can a reader immediately tell where each function lives, including default entry, target role, permission, data scope, and cross-side / 跨端 links?

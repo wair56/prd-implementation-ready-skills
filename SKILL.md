@@ -52,6 +52,7 @@ Read only what the current stage needs.
 | Existing behavior, v1 to v2, migration, or compatibility | `references/version-evolution.md`, `references/business-anchors.md` |
 | Rules design stage | `references/coverage-matrix.md`, `references/data-flow.md`, `references/business-consistency.md` |
 | Finance, funds, costs, reconciliation, invoice, payroll, profit sharing | `references/finance-operations.md` then the indexed finance topic file |
+| A feature takes data from an external system, other module, upstream object, imported file, sync result, configuration, or source detail list | `references/data-flow.md`, `references/page-ui.md`, `references/business-consistency.md` |
 | A metric may be action input or only analysis/risk-control, such as cost attribution, usage share, occupancy, contribution, or profitability | `references/data-flow.md`, `references/business-consistency.md` |
 | Amount composition or amount breakdown has hidden component sources such as cost basis, source total, service fee, adjustment lines, included detail list | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
 | Formula, list scope, amount basis, permission, or report dimension depends on binding, dedicated relationship, current relationship, latest configuration, or real-time fetch | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
@@ -83,6 +84,7 @@ Stop and return to the workflow when any of these appears:
 - Scattered notification design: a notification, todo, push, email, SMS, bot message, or webhook appears only as a side effect without trigger event, receiver, channel, dedupe, read/task state, recall/update, preferences, failure handling, and deep link.
 - Invented terminology: a new term appears without user wording, existing system labels, confirmed business terms, or a clear recommended naming basis.
 - Analysis metric used as an action hard gate: attribution, occupancy, or cost attribution blocks settlement/payment/refund/release without reliable source and a named business action consumer.
+- Unfiltered source data: a PRD says take data from an external system, other module, upstream object, import, sync result, or configuration without source dataset, include/exclude conditions, source state, scope, period window, availability, unavailable reason, snapshot, and refresh behavior.
 - Hidden amount composition source: amount breakdown names cost basis, source total, service fee, adjustment lines, or included detail list without source lineage, drilldown, snapshot, and detail-sum reconciliation.
 - Unqualified real-time relationship: amount, list scope, permission, or report dimension says current binding, current relationship, latest configuration, or real-time fetch without relationship source, effective period, anchor time, snapshot, rebuild policy, and correction behavior.
 - Field-only page design: columns/buttons are listed but why shown, what decision or action they support, operation surface, disabled reason, and recovery are missing.

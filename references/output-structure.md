@@ -166,6 +166,7 @@ Each concrete page/module should include:
 - Visible information intent: why each key area/field/component is shown and what decision or action it supports.
 - List fields.
 - Search/filter/sort/page rules.
+- Source data filter: source dataset, include/exclude conditions, source state, scope, period window, permission, availability, unavailable reason, snapshot, and refresh timing when data comes from outside the current page/object.
 - Tab filter rules in business language.
 - UX carrier and key components.
 - Operations and state restrictions.

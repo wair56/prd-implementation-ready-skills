@@ -38,6 +38,35 @@ Check:
 
 If a data item is displayed or used but has no source/authority/consumer, mark it as "数据流待确认".
 
+## Source Data Filter and Eligibility Gate
+
+Use this whenever a requirement says the system will take data from an external system, other module, upstream object, imported file, sync result, configuration, source detail list, or another place. This applies to finance and non-finance products: orders, content, users, inventory, coupons, tasks, CRM leads, appointments, assets, notifications, permissions, analytics, and AI context.
+
+Do not treat this as only a search condition; it is not only a search condition. A business eligibility filter decides which source records may enter the current workflow. A UI query filter only helps users find records inside that eligible set. Both may exist, but they are different.
+
+| Filter Item | Must Define |
+|---|---|
+| Source dataset | The exact source object/table/API/file/configuration/report and whether it is raw, synced, staged, generated, or snapshotted |
+| Business purpose | Why this data enters the current flow: calculate, select, reconcile, notify, authorize, recommend, analyze, display, or export |
+| Include condition | Business include condition, not SQL/code enum: which records are eligible |
+| Exclude condition | Business exclude condition: canceled, voided, expired, disabled, already used, exception, locked, duplicate, or out-of-scope records |
+| Owner scope | Tenant, organization, project, customer, supplier, vehicle, user, role, geography, store, content space, contract, or other ownership boundary |
+| Permission scope | Who can see, select, operate, export, or override the filtered result |
+| Source state | Required source status/state before the record can enter the flow |
+| Period window | Event time, business period, effective date, created time, updated time, settlement period, service period, or rolling window |
+| Relationship / mapping filter | Any binding, mapping, tag, category, route, group, role, or entitlement used to include records; if time-sensitive, run Relationship Temporal Anchor Gate |
+| Availability | Whether a source record is selectable, auto-included, visible but unavailable, hidden, or sent to exception handling |
+| Unavailable reason | The business reason shown when a record is excluded or visible but unavailable |
+| Dedupe / occupation | Duplicate key, already-used rule, occupation timing, release rule, and whether partial use is allowed |
+| Snapshot | Whether the selected source dataset freezes at draft, submit, audit, generation, confirmation, or remains live |
+| Refresh timing | Real-time query, scheduled sync, manual refresh, import time, callback time, or T+N; include sync status, stale data, and external failure behavior |
+| Sorting / grouping | Default sort, grouping, pagination, summary count, and whether totals/counts are computed before or after user filters |
+| Correction behavior | Whether source changes rebuild, create adjustments, update only display, or affect future records only |
+
+When writing pages, show the filter basis in business language: what source is being queried, current result count, which business filters are fixed, which UI query filters users can change, reset behavior, and unavailable reasons. Do not hide missing data under an empty list.
+
+Red flag: "take data from X", "sync data from X", "select source records", "use upstream records", or "load external data" without source data filter, include/exclude conditions, state, scope, period, permission, availability, snapshot, and refresh timing.
+
 ## Amount Composition Source Lineage Gate
 
 Use this when a page, drawer, bill, statement, payslip, invoice preview, settlement detail, price explanation, or report shows an amount composition / amount breakdown such as base amount + rate + fee + adjustment lines, source detail total + deductions, cost basis + service fee, usage amount + package discount, or subtotal + tax.

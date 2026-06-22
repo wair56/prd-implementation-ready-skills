@@ -123,6 +123,8 @@ For each user-visible element, answer four questions in business language:
 
 If a PRD says "the page contains a list, detail drawer, and action buttons" but does not name table columns, row actions, batch actions, pagination, header actions, filters, drawer sections, modal fields, empty/loading/error/submitting states, or permission/visibility, run this gate again.
 
+When a page lists or selects data from another place, expose the filter basis: source dataset, fixed business eligibility filter, editable UI query filter, result count, summary count/totals, option source, default filters, reset behavior, sync status, stale data warning, external failure state, visible but unavailable rows, unavailable reason, and cross-module/source link.
+
 ## Operation-to-Surface Map
 
 Every important operation needs a home in the UI. Do not list operations only in a rule table; users must know where they start them and how they see the result.

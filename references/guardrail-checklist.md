@@ -25,6 +25,7 @@ Priority:
 | Priority | Trigger | Required Action |
 |---|---|---|
 | P0 | Mainline changed but downstream objects/pages/data/rules were patched locally | Update global doc and affected modules together |
+| P0 | External/other-module source data is used without source dataset, include/exclude conditions, source state, scope, period window, permission, availability, unavailable reason, snapshot, and refresh timing | Run Source Data Filter and Eligibility Gate |
 | P0 | Money or non-finance resource moves without source, authoritative anchor, pool, trace, reserve/consume/release, reversal, and role visibility | Run Resource / Value Flow Gate |
 | P0 | Formula uses guarantee, max/min, base amount, rate, tier, threshold, or adjustment without operand semantics | Run Formula Operand Semantics Gate |
 | P0 | Amount composition names cost basis, source total, service fee, adjustment lines, or included detail list without component source lineage, snapshot, drilldown/backtrace, and detail-sum reconciliation | Run Amount Composition Source Lineage Gate |
