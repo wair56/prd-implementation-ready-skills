@@ -28,6 +28,7 @@ Priority:
 | P0 | Money or non-finance resource moves without source, authoritative anchor, pool, trace, reserve/consume/release, reversal, and role visibility | Run Resource / Value Flow Gate |
 | P0 | Formula uses guarantee, max/min, base amount, rate, tier, threshold, or adjustment without operand semantics | Run Formula Operand Semantics Gate |
 | P0 | Amount composition names cost basis, source total, service fee, adjustment lines, or included detail list without component source lineage, snapshot, drilldown/backtrace, and detail-sum reconciliation | Run Amount Composition Source Lineage Gate |
+| P0 | Amount, list scope, permission, receiver, or report dimension depends on current binding/current relationship/latest configuration/real-time fetch without relationship source, effective period, anchor time, snapshot, and correction behavior | Run Relationship Temporal Anchor Gate |
 | P0 | Analysis metric, attribution, occupancy share, or cost attribution is used as a hard gate for settlement/payment/refund/release without reliable source and business action consumer | Run Business Action Input vs Analysis Metric Gate |
 | P0 | Payment order lacks source business object, business type, payer/payee, receiver account, amount split, transaction metadata, trigger/status, reverse/retry | Fix Payment Order Origin Payload |
 | P1 | Parallel, master-child, event-driven, cycle, or state-machine flow is flattened into one line | Split flow lines and mark convergence |

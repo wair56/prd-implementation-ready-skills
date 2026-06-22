@@ -85,6 +85,8 @@ For an amount breakdown area, add a local source explanation instead of only lis
 
 Amount breakdown examples that need this treatment: cost basis, service fee rate, service fee, adjustment line, order amount total, included order list, tax amount, discount, credit consumption, remaining balance, or any generated subtotal.
 
+When a displayed amount, list, filter result, or button eligibility depends on a relationship, show the relationship source instead of hiding it behind "current relation". Examples: dedicated vehicle, vehicle-customer binding, supplier-project mapping, user-tenant role, entitlement package, or content visibility group. The page should show the relationship source, effective date, source link, snapshot time/version when frozen, and the disabled/exception reason for missing, multiple, or overlapping relations.
+
 ## Page Element Inventory Gate
 
 Do not stop at page purpose, big areas, or "list + detail". A page spec is incomplete until every visible element and every operation carrier has a named place, purpose, data source, permission/visibility rule, interaction behavior, and state behavior.

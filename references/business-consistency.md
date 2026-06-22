@@ -64,6 +64,8 @@ Examples:
 - "按月包车应收金额" is incomplete unless it defines whether the source is shipper contract, monthly fixed amount, route/package agreement, manual adjustment, or imported bill.
 - "金额构成 = 成本基数 + 服务费 + 调整项" is incomplete unless each component has source object/source field, source state, business period, snapshot, formula/operand, drilldown/backtrace, detail sum reconciliation, and correction behavior. Use `data-flow.md#amount-composition-source-lineage-gate`.
 
+- "Use current binding / current relationship / latest configuration / real-time fetch" is incomplete when that relationship decides an amount, list scope, permission, receiver, or report dimension. Use `data-flow.md#relationship-temporal-anchor-gate` to define relationship source, source authority, binding record, effective period, anchor time, business period, snapshot, rebuild policy, and correction behavior.
+
 ## Settlement Input vs Analysis Metric Computability
 
 Before requiring a derived number in final PRD wording, classify it with `data-flow.md#business-action-input-vs-analysis-metric-gate`.
@@ -72,6 +74,8 @@ Before requiring a derived number in final PRD wording, classify it with `data-f
 - If a metric is an analysis metric, define its source, freshness, caveat, drilldown, and role visibility, but do not force allocation and do not let it block invoice, settlement, payment, refund, or resource release.
 - If a cost attribution, usage split, contribution score, or occupancy share has no reliable source, it cannot be a settlement prerequisite. Mark it as risk analysis / post-event analysis or ask for the missing source.
 - Preserve dimensions for diagnosis and later modeling even when the action uses a reliable total. Mapping corrections for analysis-only metrics should rebuild analysis outputs and does not change financial results unless the user explicitly confirms a financial restatement rule.
+
+| Relationship operand | If the operand scope comes from a relation such as dedicated vehicle or vehicle-customer binding, define the relationship source, effective period, anchor time, snapshot, and correction behavior |
 
 Diagnostic questions:
 

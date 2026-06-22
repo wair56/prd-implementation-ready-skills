@@ -54,6 +54,7 @@ Read only what the current stage needs.
 | Finance, funds, costs, reconciliation, invoice, payroll, profit sharing | `references/finance-operations.md` then the indexed finance topic file |
 | A metric may be action input or only analysis/risk-control, such as cost attribution, usage share, occupancy, contribution, or profitability | `references/data-flow.md`, `references/business-consistency.md` |
 | Amount composition or amount breakdown has hidden component sources such as cost basis, source total, service fee, adjustment lines, included detail list | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
+| Formula, list scope, amount basis, permission, or report dimension depends on binding, dedicated relationship, current relationship, latest configuration, or real-time fetch | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
 | Page design stage | `references/page-ui.md`, `references/output-structure.md` |
 | Notifications, todos, pushes, emails/SMS, bot messages, webhooks | `references/notifications.md`, `references/data-flow.md` |
 | Product-level non-functional decisions | `references/non-functional.md` |
@@ -83,6 +84,7 @@ Stop and return to the workflow when any of these appears:
 - Invented terminology: a new term appears without user wording, existing system labels, confirmed business terms, or a clear recommended naming basis.
 - Analysis metric used as an action hard gate: attribution, occupancy, or cost attribution blocks settlement/payment/refund/release without reliable source and a named business action consumer.
 - Hidden amount composition source: amount breakdown names cost basis, source total, service fee, adjustment lines, or included detail list without source lineage, drilldown, snapshot, and detail-sum reconciliation.
+- Unqualified real-time relationship: amount, list scope, permission, or report dimension says current binding, current relationship, latest configuration, or real-time fetch without relationship source, effective period, anchor time, snapshot, rebuild policy, and correction behavior.
 - Field-only page design: columns/buttons are listed but why shown, what decision or action they support, operation surface, disabled reason, and recovery are missing.
 - Large-region page design: page presentation stops at page purpose, big areas, or "list + detail" without a complete visible element inventory for page header, summary cards, filters, tabs, table/list, actions, drawers/modals, logs, import/export, and interaction states.
 - Created downstream records are listed after an event, but exact persisted field writebacks on existing objects are missing.

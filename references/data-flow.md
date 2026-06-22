@@ -65,6 +65,30 @@ High-risk component examples:
 
 Red flag: a PRD says "金额构成展示成本基数 + 服务费率 + 服务费 + 调整项" or "展示运单金额合计 + 调整项 + 纳入清单" but does not explain where the cost basis/source total comes from, which source states are included, how users drill down, and whether the detail sum matches the displayed total.
 
+## Relationship Temporal Anchor Gate
+
+Use this when a formula, list scope, amount basis, report dimension, permission rule, notification receiver, or page filter depends on a relationship instead of a direct field. Risk phrases include: real-time fetch, current relationship, current binding, latest configuration, dedicated relationship, belongs to, associated with, mapped by, bound to, exclusive to, or "use the current master data".
+
+Do not treat a relationship as obvious master data. A relationship source can change after the business event, so final PRD wording must define which version of the relationship is used and what later changes do.
+
+| Relationship Item | Must Define |
+|---|---|
+| Business meaning | What the relationship means: dedicated vehicle, vehicle-customer binding, supplier-project mapping, user-tenant role, membership entitlement, content visibility group, or another domain relation |
+| Relationship source / source authority | Which binding record, contract, configuration page, imported mapping, external sync, or manual audit creates the relationship, and which source wins when sources conflict |
+| Effective period | When the relationship starts/ends and whether partial-period, mid-period change, future-effective, expired, disabled, or deleted records participate |
+| Anchor time | Which time reads the relationship: source event time, business period, bill generation, audit approval, payment time, report query time, or real-time view time |
+| Business period | Which business period the relationship is applied to, and whether it is based on period start, period end, daily overlap, or detail event time |
+| Snapshot / version | Whether the generated bill, statement, permission grant, report, or downstream object freezes the relationship set and relation version |
+| Rebuild policy / correction behavior | If the relationship changes after calculation, whether to recalculate, rebuild draft only, create adjustment lines, rebuild analysis only, or affect only future records |
+| Missing relationship | What happens when no relation exists: block, exception workbench, manual selection, fallback owner, exclude, or mark analysis unavailable |
+| Multiple relationships | What happens when several relations match: priority, split, manual resolution, block, or warning |
+| Overlapping effective periods | How overlaps are resolved and whether overlapping effective periods are allowed |
+| Visibility and trace | Where users can show the relationship source, effective date, source link, snapshot version, and correction/rebuild history |
+
+Default recommendation for financial/action records: use the relationship effective during the business period or source detail event, then snapshot it when the generated record is created or confirmed. Use unqualified real-time fetch only for read-only views where changes should immediately affect display and no money/resource result is frozen.
+
+Example: "cost basis = sum of costs for the customer's dedicated vehicle" is incomplete if it only says the vehicle-customer binding is real-time. It must name the vehicle-customer binding record, source authority, effective period, anchor time for the billing month, snapshot timing, and what happens if the vehicle is rebound after the bill is generated.
+
 ## Resource / Value Flow Gate
 
 Alias: Resource/Value Flow Gate.
