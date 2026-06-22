@@ -136,6 +136,29 @@ Use this gate for finance and non-finance flows where a completion event unlocks
 
 Do not hide this under "after payment, linkage is handled automatically." The PRD must say what is linked, when it runs, how it is retried, and how operators recover it.
 
+## Post-Event Writeback Gate
+
+Use this whenever a transaction completion, approval, payment, refund, settlement, issuance, sync, import, cancellation, or external callback changes existing objects after the main record is created. Creating downstream records is not enough; the PRD must also list every existing field that is written back because those fields often drive the next business decision.
+
+Build a writeback inventory:
+
+| Item | Must Define |
+|---|---|
+| Source event | transaction completion, payment success, audit pass, refund success, batch created, external callback, sync completed, void/red flush, or manual correction |
+| Source event timestamp | the authoritative event time used for writeback, display, period attribution, retry, and audit |
+| Target object | original business object, related master data, account/ledger, contractor/driver/supplier/customer profile, summary/statistic record, source detail, report cache, or external system |
+| Exact persisted field | field name in business language, previous value, new value, default/null behavior, and whether it is list/detail/search/export visible |
+| Business period | if writing a month/period field, define which business period it represents and which event/date anchors it |
+| Writeback policy | overwrite, keep max/latest, append, accumulate, clear, recompute, version, or block after lock |
+| Consumer | which later page, eligibility rule, duplicate check, filter, statistic, settlement, or external push reads the field |
+| Idempotency/concurrency | stable key, duplicate callback behavior, race handling, and whether repeated completion changes the field again |
+| Reverse/correction behavior | refund, void, red flush, cancellation, correction, or re-sync effect; whether to rollback, recompute, preserve history, or create an adjustment |
+| Visibility/recovery | where users can see the writeback result, failure reason, retry/rebuild entry, and audit history |
+
+Example: after labor fee payment succeeds, it may create a value-added payroll batch, but that is not enough. If the business says payment success also updates last labor payment time and labor payment month on the contractor/driver/service relationship, the PRD must state the target object, exact persisted field, source event timestamp, business period, writeback policy, consumer, idempotency, and reverse/correction behavior.
+
+Red flag: the PRD lists only created downstream records such as "create batch / create payment order / generate bill", but does not list field writebacks on existing objects. That usually hides eligibility, duplicate prevention, reporting, and next-period logic.
+
 ## Reverse Linkage
 
 Every cancel, reject, refund, red flush, void, rollback, rebuild, disable, or re-sync must define:

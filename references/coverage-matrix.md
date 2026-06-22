@@ -20,6 +20,7 @@ Use this after identifying the business goal and core objects. The purpose is to
 | Lifecycle | Creation, initial state, transitions, terminal states, rebuild/reopen | Starting at audit/payment midway |
 | Information delta | What new information is introduced at each step, where it comes from, and where it is stored | State changes without explaining data source |
 | Data flow | Source, transform, persistence, consumer, writeback, sync timing | Data displayed but not traceable |
+| Post-event writeback | After transaction completion, payment success, audit pass, refund success, callback, batch creation, or sync completion, list target object, exact persisted field, timestamp, business period, update policy, consumer, and reverse behavior | Only new downstream records are written, while existing fields used by next steps are omitted |
 | Linkage / side effect | Linked objects, modules, messages, reports, locks, permissions, reverse effects | "联动处理" without affected objects |
 | Actor / permission | Who can view, create, edit, approve, cancel, export, jump | One backend role assumed too broadly |
 | Time / period | Attribution date, month boundary, current month rule, late data | "按月汇总" without date source |
