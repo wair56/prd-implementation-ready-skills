@@ -128,12 +128,14 @@ Recommended module order:
 9. Product-level non-functional requirements, if speed, reliability, consistency, degradation, or abuse control changes the user/business promise.
 10. Module acceptance checklist.
 
-The detailed page sections must include fields, data sources, status/writeback, permissions, idempotency, interaction behavior, and validation together. Avoid separate "field table / status table / permission table" sections when they force readers to jump around.
+The detailed page sections must include a Page Element Inventory Gate result, fields, data sources, status/writeback, permissions, idempotency, interaction behavior, and validation together. Avoid separate "field table / status table / permission table" sections when they force readers to jump around.
 
 For a page, use:
 
 | Page Area / Operation | User Goal | Why Shown / Decision Supported | Layout / Interaction | Fields | Data Source | Status / Writeback | Permission | Idempotency / Duplicate Handling | Error / Empty / Disabled | Feedback / Recovery | Acceptance |
 |---|---|---|---|---|---|---|---|---|---|---|---|
+
+Before or inside the table, include the page element inventory rather than only naming large regions. Cover page header, breadcrumb, status tag, primary action, summary cards, filters, search, sort, tabs, table columns, row actions, batch actions, pagination, import/export, detail drawer, modal/form, timeline, operation log, attachments, empty/loading/error/disabled/submitting/success states, permission/visibility, default value, data source, drilldown, and feedback/recovery.
 
 For a server-only automatic flow, use:
 
@@ -156,6 +158,7 @@ Each concrete page/module should include:
 
 - Page purpose.
 - Why this page exists, what the user sees first, and the primary path before listing fields.
+- Page element inventory: every visible element, control, action entry, drawer/modal, state, and trace surface.
 - Target端 / touchpoint and target user.
 - Entry and permissions.
 - Data source and authority.

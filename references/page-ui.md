@@ -85,6 +85,42 @@ For an amount breakdown area, add a local source explanation instead of only lis
 
 Amount breakdown examples that need this treatment: cost basis, service fee rate, service fee, adjustment line, order amount total, included order list, tax amount, discount, credit consumption, remaining balance, or any generated subtotal.
 
+## Page Element Inventory Gate
+
+Do not stop at page purpose, big areas, or "list + detail". A page spec is incomplete until every visible element and every operation carrier has a named place, purpose, data source, permission/visibility rule, interaction behavior, and state behavior.
+
+Apply this to every page, page-level Tab, workbench, portal screen, detail page, detail drawer, modal, import/export flow, and exception/recovery surface. The goal is not to make a decorative UI spec; it is to prevent missing buttons, filters, source explanations, audit traces, and recovery entries that implementation needs.
+
+Start with a page-level inventory:
+
+| Page / Surface | Element / Area | Required? | Why Shown / Decision Supported | Data Source / Metric Source | Permission/Visibility | Default Value / Default State | Interaction | Disabled Reason / Empty State | Feedback/Recovery | Acceptance |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+Then scan the standard element set. Skip an element only when the reason is obvious from the business flow or explicitly stated.
+
+| Element Set | Must Specify |
+|---|---|
+| Page header | title, breadcrumb, viewed subject switch, status tag, primary action, secondary actions, export/import entry, and permission/visibility |
+| Summary cards | metric name, metric source, calculation period, refresh timing, click/drilldown target, empty state, and permission/visibility |
+| Filters and search | filters, search fields, option source, default value, reset behavior, saved view if any, and whether filters affect summary cards |
+| Tabs and status views | page-level Tabs vs list filter Tabs, count metric source, include/exclude conditions in business language, default Tab, and empty state |
+| Table/list | table columns, column source, row status tags, default sort, sticky or important columns, pagination, selection, row actions, batch actions, and export scope |
+| Operation bar | primary action, secondary action, batch action, enabled condition, disabled reason, validation, confirmation, submitting state, success feedback, and failure recovery |
+| Detail drawer / detail page | sections, fields, related lists, source links, drilldown/backtrace, timeline, operation log, attachments, and cross-module links |
+| Modal/form | trigger entry, fields, default value, validation, confirmation copy, cancel behavior, submitting state, success state, failure state, and audit/log |
+| Import/export | template/source scope, permissions, file limits, parsing result, partial success, result report, download content, and retry/recovery |
+| Empty/loading/error states | empty, loading, error, disabled, submitting, success, stale data, permission denied, and retry/refresh behavior |
+| Audit and trace | timeline, operation log, operator, time, before/after value, reason, external serial number, attachment, and source object link |
+
+For each user-visible element, answer four questions in business language:
+
+- What does the user learn or decide from this element?
+- What action can the user take from it, if any?
+- Where does the value come from, and when can it be stale or empty?
+- What happens when the element is hidden, disabled, failed, or corrected?
+
+If a PRD says "the page contains a list, detail drawer, and action buttons" but does not name table columns, row actions, batch actions, pagination, header actions, filters, drawer sections, modal fields, empty/loading/error/submitting states, or permission/visibility, run this gate again.
+
 ## Operation-to-Surface Map
 
 Every important operation needs a home in the UI. Do not list operations only in a rule table; users must know where they start them and how they see the result.

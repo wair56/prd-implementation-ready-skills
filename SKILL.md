@@ -39,7 +39,7 @@ Diagram requirements: always consider flow shape, parallel flow convergence, bus
 
 For existing products or v1 to v2 changes, run the Version Evolution Gate before rewriting: old rule, change intent, impact range, old vs new, migration, backward compatibility, release/rollback, and decision record.
 
-For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include fields, data source, status/writeback, permissions, idempotency, validation, error/empty/disabled states, feedback/recovery, and acceptance. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
+For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include a page element inventory, fields, data source, status/writeback, permissions, idempotency, validation, error/empty/disabled states, feedback/recovery, and acceptance. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
 
 ## Reference Router
 
@@ -84,6 +84,7 @@ Stop and return to the workflow when any of these appears:
 - Analysis metric used as an action hard gate: attribution, occupancy, or cost attribution blocks settlement/payment/refund/release without reliable source and a named business action consumer.
 - Hidden amount composition source: amount breakdown names cost basis, source total, service fee, adjustment lines, or included detail list without source lineage, drilldown, snapshot, and detail-sum reconciliation.
 - Field-only page design: columns/buttons are listed but why shown, what decision or action they support, operation surface, disabled reason, and recovery are missing.
+- Large-region page design: page presentation stops at page purpose, big areas, or "list + detail" without a complete visible element inventory for page header, summary cards, filters, tabs, table/list, actions, drawers/modals, logs, import/export, and interaction states.
 - Created downstream records are listed after an event, but exact persisted field writebacks on existing objects are missing.
 
 For the full staged list, use `references/guardrail-checklist.md`. Any P0 blocker means stop detailed writing until the issue is closed or explicitly marked pending with a recommended default.

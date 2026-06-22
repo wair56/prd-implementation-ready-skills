@@ -16,7 +16,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 4. Main happy path is written in business language.
 5. Important object/status changes are named.
 6. Data source is visible for every displayed or calculated value.
-7. Page or touchpoint explains why it exists and what users do first.
+7. Page or touchpoint explains why it exists, what users do first, and which visible elements/actions are on the page.
 8. Primary operation defines success, failure, disabled reason, and recovery.
 9. Any notification, resource, payment, or external sync has an owner and next step.
 10. Open decisions are closed with recommended defaults or marked pending with reason.
@@ -190,6 +190,9 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Does the 00 主文件 include a main file navigation map / information architecture mind map showing 端 / 模块 / 页面 / 功能点 before module details?
 - Can a reader immediately tell where each function lives, including default entry, target role, permission, data scope, and cross-side / 跨端 links?
 - Does each page pass the Page Task Closure Gate: why this page exists, what the user sees first, what business question it answers, what primary action it enables, and what feedback/recovery appears after success or failure?
+- Does each page pass the Page Element Inventory Gate: every visible element/control is named with purpose, data source, permission/visibility, interaction, state behavior, and acceptance?
+- Are there missing visible elements: page header, breadcrumb, status tag, primary action, summary cards, filters, search, sort, tabs, table columns, row actions, batch actions, pagination, import/export, detail drawer, modal/form, timeline, operation log, attachments, empty/loading/error/disabled/submitting/success states?
+- Does any page spec only describe large page regions such as "overview + list + detail" without table columns, operation entries, disabled reasons, default values, or recovery behavior?
 - Is there any field-only page where columns/buttons are listed but why shown, decision supported, drilldown, operation surface, disabled reason, and recovery are missing?
 - Target端 / touchpoint confirmed from user task and working context, not assumed.
 - Menu/page structure confirmed from business reality, not style taste.
