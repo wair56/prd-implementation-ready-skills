@@ -2,40 +2,15 @@
 
 Use this when reviewing multiple PRD files, finance/payment/settlement requirements, or any flow involving funds, payment orders, audit, refunds, allocation, cost, profit sharing, amount calculation, inventory, coupon, quota, permission, capacity, entitlement, or other resource/value movement.
 
-## P0 Rule
+## P0 Rule Pointer
 
-Treat these as P0 blockers. Do not continue writing detailed PRD口径 until the user confirms them:
+Authoritative staged blockers live in `references/guardrail-checklist.md`. Keep the P0/P1 trigger list there so SKILL.md, review checklists, and consistency guidance do not drift.
 
-- A confirmed business anchor is contradicted, weakened, or replaced by generic wording.
-- A user changes the business mainline / anchor, but the PRD is patched locally without impact analysis across affected business, object, data, linkage, page, and acceptance sections.
-- A derived implementation detail cannot trace back to user confirmation, a business anchor, source data, existing system behavior, research recommendation pending user confirmation, or待确认.
-- A list, field, status, statistic, formula operand, selectable record set, or default value uses data but has no visible data source marker in the PRD.
-- A named data source cannot be verified as real in the confirmed flow, conflicts with another module, or lacks authority / timing / update rules.
-- Internal generated data is described as "system generated" without trigger, input, generation rule, persisted object, authority, and correction behavior.
-- The same object/action/status is described differently in different files or sections.
-- The document index, file references, reading order, or "higher than 01-07" style scope statement points to deleted, merged, or nonexistent docs.
-- A topic is marked pending / out of scope / not in acceptance in one place but later written as confirmed detailed implementation.
-- A money movement says funds increase/decrease/split/freeze/refund, but does not define the calculation rule.
-- A non-finance resource movement says inventory/coupon/quota/permission/capacity is granted, reserved, allocated, consumed, released, or revoked without source, authoritative anchor, pool, trace, one-to-one rule, or reversal.
-- A cost enters a monthly bill, reconciliation, profit sharing, or report without a Cost Inclusion State Gate: audit status, payment status, cost recognition state, locked cost period, inclusion/exclusion states, and rebuild behavior.
-- A duplicate prevention key blocks business work without proving whether parallel projects, project/contract/billing unit, partial reconciliation, or source-detail occupation allow multiple valid bills in the same broad period.
-- A billing or profit-sharing rule collapses vehicle, waybill, customer, supplier, contract, route, project, cost type, or period dimensions before deciding which downstream calculations use totals and which analytics preserve detail.
-- A platform service fee appears without payer, receiver/platform pocket, rate snapshot, fee base, ledger effect, and collection/deduction timing.
-- A profit-sharing flow lacks a profit-sharing funds waterfall: customer funds, frozen funds, platform-granted credit, contractor own-funded advances, platform service fee, remaining profit, insufficient/continuing deduction, zero/negative profit sharing, and profit-sharing void fund rollback.
-- A payment order lacks payment order origin payload: source business object, business type, payer/payee, receiver account, amount split, transaction metadata, trigger/status, and reverse/retry rule.
-- Payment completion changes only payment status while attached business actions, idempotency, retry, partial failure, visibility, and reverse behavior are not specified.
-- Missing post-event writeback is a P0 blocker: transaction completion, payment success, audit pass, refund success, batch creation, sync completion, or callback completion changes existing objects but the PRD does not list the writeback inventory, target object, exact persisted field, source event timestamp, business period, writeback policy, consumer, idempotency, and reverse/correction behavior.
-- Missing progress-control loop is a P0 blocker for repeated/cyclic operations: if a field like last paid month, handled-through period, next period, eligibility marker, or last issued time determines the next create/action range, the PRD must define who reads it, how the next value is derived and locked, what prevents duplicate/overlap/gap, which success event advances it, which failures do not, and how void/reissue/correction behaves.
-- Credit/support fund logic appears only as side effects or account fields, without centralized credit management for grant, occupation, repay, release, limits, page operations, and ledger reconciliation.
-- An amount field is used in a formula but has no authoritative source.
-- A formula uses guarantee/保底, max/min/取大取小, cap/floor, tier, threshold, base amount, detail-calculated amount, rate, coefficient, or adjustment without defining operand semantics, comparison basis, period, entity scope, eligibility, proration, and adjustment timing.
-- A period-based finance rule mentions current month, this month, this period, billing cycle, same month, next month, locked month, late data, backfill, or correction without an explicit attribution anchor and period boundary.
-- A source-generated bill, reconciliation, settlement, payment, invoice, profit-sharing, or recovery flow says "select orders / select waybills / select details" without source detail eligibility, occupation, release rule, and unavailable reason.
-- A relative period phrase such as "本月", "当月", "本期", "账期内", "周期内", or "同月" appears without naming the business object, authoritative time field, period boundary/timezone, and cross-month rule.
-- A larger or older out-of-scope document is used to judge, replace, or import口径 into the user-selected scope without explicit user permission.
-- A "payment order" is created but whether it triggers real payment is unclear.
-- "Audit" is mentioned but the audited object, audit type, actor, and side effect are unclear.
-- A status appears in body text, Tab names, filters, or exception handling but is missing from the state axis / enum / transition table.
+Use this file for the detailed consistency and computability methods behind those blockers: cross-document conflicts, data source authenticity, formula operand semantics, resource/value computability, audit/payment disambiguation, and ghost status cleanup.
+
+Common P0 examples routed to the guardrail checklist: missing post-event writeback, missing payment order origin payload, missing Cost Inclusion State Gate, missing progress-control loop, unclear real-payment nature, and ghost status.
+
+Authoritative gate: `references/data-flow.md#post-event-writeback-gate`.
 
 ## Cross-Document Consistency Scan
 

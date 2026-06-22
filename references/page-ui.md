@@ -1,5 +1,9 @@
 # Page, Menu, UX, and Component Guidance
 
+Solves: page task closure, touchpoint choice, menu/page carrier decisions, component selection, and operation feedback/recovery.
+Read when: a PRD describes pages, tabs, fields, buttons, workbenches, drawers, modals, mobile/PC portals, or UI behavior.
+Pair with: `output-structure.md`, `data-flow.md`, `notifications.md`, and `review-checklists.md`.
+
 Use this after the business objects and main flow are known. Page structure is part of broad UI / interaction style, not just visual design. The goal is to choose the right target端, page carrier, and components so users can understand the task, operate efficiently, and avoid mistakes. Apply `necessity-gate.md`: do not specify pages or components unless they solve a real user task, workflow constraint, risk, or comprehension need.
 
 ## Target端 / Touchpoint
@@ -52,6 +56,56 @@ Do not choose target端, menu, page structure, or components by taste. Decide fr
 - Risk level: money, contract, invoice, privacy, irreversible action.
 - Need for comparison, traceability, explanation, or guided operation.
 - Existing navigation/design conventions.
+
+## Page Task Closure Gate
+
+Before listing fields, close the page task. A page is not complete because it has columns and buttons. It is complete when the user can enter the page, understand the situation, decide what to do, complete the operation, and recover from failure without guessing.
+
+For each page, define:
+
+| Item | Must Define |
+|---|---|
+| Why this page exists | the user job, business risk, operation, analysis, or exception it owns |
+| What the user sees first | default summary, default Tab, default filters, empty state, and the first thing the user should understand |
+| Business question answered | what the page lets the user judge: available amount, payable status, supplier risk, missing mapping, payment progress, invoice consistency, or another domain question |
+| Primary path | the shortest normal path from entering the page to completing the main operation |
+| Information hierarchy | summary card, main list, status tags, drilldown, detail drawer, operation area, log/timeline, and what belongs in each layer |
+| Visible item intent | why it is shown, what decision or action it supports, and whether it should be always visible, folded, in a drawer, or only in export |
+| Operation surface | where the user clicks, what context is visible before clicking, which modal/drawer/page carries the operation, and what validation/confirmation appears |
+| Feedback/recovery | success state, failure state, disabled reason, retry entry, undo/void/correction entry, notification, and audit trail |
+
+For visible information, do not stop at field names:
+
+| Visible Item / Area | Why It Is Shown | What Decision Or Action It Supports | Data Source | Default / Sort / Grouping | Interaction | Empty / Disabled Reason | Drilldown / Export |
+|---|---|---|---|---|---|---|---|
+
+If no one can explain why a field, card, drawer, or button changes the user's decision, operation, risk control, traceability, or acceptance test, remove it or move it to detail/export.
+
+## Operation-to-Surface Map
+
+Every important operation needs a home in the UI. Do not list operations only in a rule table; users must know where they start them and how they see the result.
+
+| Operation | Entry Point | Page Carrier | Context Visible Before Action | Input / Validation | Confirmation / Verification | Success Result | Feedback/Recovery | Linked Page / Object |
+|---|---|---|---|---|---|---|---|---|
+
+Use this especially when the operation involves money, account changes, supplier status, source-detail selection, external payment, notification, or downstream side effects. If an operation has no entry point, it is either missing from the UI or should be a server-only flow with a visible log/task/alert.
+
+## Business View Inventory Scan
+
+When writing a page, actively scan which view surfaces are needed for the business, not only which fields the database has:
+
+| Surface | Use When | Examples |
+|---|---|---|
+| Summary card | The user needs an immediate total, current state, risk count, or next action | wallet total, available/frozen/occupied amount, pending payment count |
+| Per-counterparty aggregation | The same subject has balances, obligations, or progress split by customer/supplier/project/tenant | customer prepaid total by customer, supplier payable by supplier, contractor funds by shipper |
+| Drilldown | A total must be explainable and auditable | click customer balance to see receipt/payment/settlement ledger |
+| Detail drawer | Users need related details without leaving list context | related-driver drawer for labor supplier, source detail drawer for bill lines |
+| Verification modal | Operation is high-risk but short | recharge confirmation with verification code, bind card, change phone |
+| Cross-object link | The user must continue work in another page | jump to payment order, invoice, source bill, exception workbench |
+| Notification side effect | Another role must act after this operation | supplier disabled sends driver handling message; payment completion pushes payroll output |
+| Payment trace fields | The operation must be reconciled later | receipt, payment batch number, payment serial number, payer/payee info, initiated time, completed time |
+
+Account and supplier pages are common places where field-only PRDs miss UX. Scan for account operations such as recharge, withdrawal, bind card, contact, and phone changes; account views such as wallet total, per-counterparty aggregation, balance board, and detail ledger; supplier views such as tax number, rate, payment method, cooperation status, related-driver drawer, disable notification side effect, payment transition state, merge payment, second-level reconciliation time, and invoice tax consistency checks. Do not add these blindly; use the scan to ask or recommend the page surfaces that fit the current business.
 
 ## Common Page Organization Patterns
 
@@ -190,3 +244,16 @@ Extract:
 Default broad UI recommendation for B端后台:
 
 > 沿用现有后台风格；列表高信息密度；复杂详情优先详情页或抽屉；高风险动作必须二次确认。
+## Good-Enough Example
+
+For an exception workbench:
+
+```text
+Purpose: operations staff resolves supplier consumption lines that cannot match a vehicle.
+First view: summary cards for unmatched count and oldest pending age, then a table grouped by supplier and sync batch.
+Primary action: open detail drawer, select vehicle from eligible list, confirm mapping, and trigger recalculation.
+Disabled reason: source line is locked by a confirmed reconciliation bill or the operator lacks project permission.
+Recovery: failed recalculation stays in the same row with retry and error reason; success moves the line back to the normal cost flow.
+```
+
+This is enough because it explains why the page exists, what users see first, where they act, which data is needed, disabled reasons, and recovery.

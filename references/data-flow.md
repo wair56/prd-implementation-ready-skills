@@ -1,5 +1,9 @@
 # Data Flow and Linkage Map
 
+Solves: source, authority, transformation, writeback, linkage, side effect, and controlled resource/value closure.
+Read when: a field, status, statistic, resource, payment callback, notification, report, or downstream object depends on data moving across objects/systems.
+Pair with: `coverage-matrix.md`, `business-consistency.md`, `page-ui.md`, and finance topic files when money is involved.
+
 Use this after the main business flow is roughly understood, and again before final PRD output. The goal is to ensure a PRD explains how data moves and what each action links to, not only what pages and statuses exist.
 
 ## Four Flows
@@ -34,7 +38,9 @@ Check:
 
 If a data item is displayed or used but has no source/authority/consumer, mark it as "数据流待确认".
 
-## Resource / Value Flow Map
+## Resource / Value Flow Gate
+
+Alias: Resource/Value Flow Gate.
 
 Use this for any money or non-finance resource: inventory, coupon, quota, points, capacity, task slots, asset usage, content permission, membership rights, API usage, visibility, approval authority. A resource/value flow is data flow plus business conservation: the system must show where the resource comes from, when it is reserved, how it is allocated, when it is consumed, and how it is released.
 
@@ -191,6 +197,19 @@ For each such field, define the loop:
 Example: the driver list shows "last payroll paid time/month". When finance creates a payroll sheet, the popup reads that field and defaults the payroll period to the next natural month; the period is locked to prevent repeated payroll creation. The field is advanced only after payroll payment succeeds and downstream payroll distribution finishes if that is the true business completion point. Draft, approval rejection, cancelled payroll sheet, payment failure, or payment-in-progress must not advance it. Void/reissue must define whether the progress rolls back or remains with an adjustment record.
 
 Red flag: a PRD says "create payroll sheet defaults to next month" or "prevent repeated payroll" but does not define the source progress field, locked period, uniqueness key, success event that advances the field, and failure/reversal behavior. That is an incomplete flow even if the page fields look complete.
+
+## Good-Enough Example
+
+For a repeated payroll flow:
+
+```text
+Driver list shows last paid month from the driver payroll relationship.
+Create payroll reads last paid month and defaults the period to the next natural month; the period is locked.
+Payroll payment success writes back last paid month and last paid time. Draft, rejection, cancellation, payment failure, and payment-in-progress do not advance it.
+Void/reissue keeps the historical value and creates an adjustment unless the platform admin uses a correction action with audit reason.
+```
+
+This is enough because it names the source field, reader action, default derivation, success writeback, non-advance events, correction behavior, and user-visible location.
 
 ## Reverse Linkage
 

@@ -1,10 +1,35 @@
 # Review Checklists
 
+Solves: final and lightweight PRD review, with quick entry points before the full checklist.
+Read when: saying a PRD is complete, reviewing an existing/generated PRD, or choosing L2/L3/L4 review depth.
+Pair with: `guardrail-checklist.md`, `stage-gates.md`, `data-flow.md`, and domain/topic references.
+
 Use before saying a PRD is complete or when the user asks to review an existing PRD.
+
+## L2 Quick Check - 10 Core Checks
+
+Use this for lightweight requirements. If any answer is no, either fix it or move the work to L3/L4.
+
+1. Business goal is clear and separated from system construction goal.
+2. In/out scope is explicit.
+3. User/role and trigger are known.
+4. Main happy path is written in business language.
+5. Important object/status changes are named.
+6. Data source is visible for every displayed or calculated value.
+7. Page or touchpoint explains why it exists and what users do first.
+8. Primary operation defines success, failure, disabled reason, and recovery.
+9. Any notification, resource, payment, or external sync has an owner and next step.
+10. Open decisions are closed with recommended defaults or marked pending with reason.
 
 ## Stage and Flow
 
 - Does the PRD stay lean: no needless entities, fields, states, pages, components, tables, or repeated prose?
+- Did the business discussion start with context-first business understanding based on user-provided context, or did it fall into process-before-context / template-first PRD writing?
+- Is there a context digest separating business facts, roles, objects, constraints, conflicts, gaps, and inferences before detailed workflow or module writing?
+- Did the business understanding stage produce a deep business understanding package before module writing: external research, flow awkwardness analysis, micro-flow discovery, exception/reverse understanding, and decision summary?
+- Is shallow business understanding visible as a blocker: no research, no awkward-flow analysis, no reverse paths, or no exception/recovery understanding before detailed PRD writing?
+- Did the business discussion stage use business observation lenses before module writing, instead of discovering small flows only during final review?
+- Is missing micro-flow discovery visible as a blocker: small operations, notifications, server-only flows, recovery paths, role handoffs, or page actions are either included with owner/trigger/entry/surface/downstream impact, merged deliberately, or marked out of scope?
 - For each added object/status/field/page/component/flow step, is the user/business/process need clear?
 - Are the agreed business mainline and business anchors written explicitly before detailed rules?
 - Did the assistant preserve user-confirmed anchors when recommending best practices, rewriting, or polishing?
@@ -16,6 +41,8 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Can a new reader understand what business this is before reading rules?
 - Is the business goal written separately from the system construction goal?
 - Are role glossary, core concepts, and special/counterintuitive terms defined in plain language?
+- Is human-readable wording preserved: business-readable language, user's wording, existing system labels, and confirmed business terms are used instead of invented terminology?
+- Is every new term aligned with the requirement, with a source/basis, allowed synonyms, forbidden replacement, and confirmation state when needed?
 - Do money/value/data flows among roles have a simple front-door explanation?
 - Is every controlled resource/value closed loop before writing modules: source, reserve, allocate, consume, release, reverse, and role visibility?
 - Are circular definitions avoided, especially for financial concepts?
@@ -24,6 +51,18 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Is the main flow confirmed before exceptions and states?
 - Did the assistant compare original, recommended, and MVP flow when useful?
 - Did it guide the user when flow was awkward?
+
+## Product Design Breadth
+
+- Is the PRD finance/logistics-only in examples, gates, or terminology when the actual product is C-end, content/social, consumer app, tool SaaS, or general B2B SaaS/admin?
+- Was the domain adaptation table applied: each finance-named gate is translated to an equivalent concept or explicitly skipped with a reason?
+- For v1 to v2 or existing-product changes, does the PRD include old rule, change intent, impact range, old vs new, migration, backward compatibility, release/rollback, and decision record?
+- Are thin user stories visible as a blocker: stories name role/goal but omit context, trigger, preconditions, alternate path, success criteria, or emotion/friction?
+- Do scenario walkthroughs cover happy path, common alternate path, exception/recovery path, and boundary/abuse path where relevant?
+- Is there any missing product-level non-functional decision: performance target, SLA, data visibility latency, consistency level, idempotency/retry, degradation, concurrency/load, rate limit/abuse, security/privacy, backup, or observability?
+- Is there any scattered notification design: notification/todo/push/email/SMS/webhook appears as a side effect but lacks trigger event, receiver, channel, deep link, dedupe/throttle, read/unread or task state, recall/update, user preferences, failure/retry, and audit/log?
+- Do C-end or consumer scenarios include activation, retention, privacy/safety, unsubscribe/settings, cancellation/regret, and trust moments when they affect UX?
+- Do tool SaaS scenarios include workspace/project, quota, background jobs, import/export, API key, webhook, retry, and partial success when relevant?
 
 ## Coverage Matrix
 
@@ -64,6 +103,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - For payment completion, are attached actions defined with idempotency, retry, partial failure handling, visibility, and reverse/compensation?
 - For transaction completion / payment success / audit pass / refund success / batch creation / callback completion, is there a post-event writeback inventory covering target object, exact persisted field, source event timestamp, business period, writeback policy, consumer, idempotency, and reverse/correction behavior?
 - For repeated/cyclic operations, did the assistant proactively identify any progress-control field such as last paid month, handled-through period, next period, eligibility marker, or last issued time, then define reader action, locked/default value, success event that advances it, non-advance events, duplicate prevention, and reverse/correction behavior?
+- Missing progress-control loop is a P0 blocker when repeated/cyclic operations use last/previous/handled-through/paid-through/next/progress fields to drive the next action.
 - Are "同步更新 / 自动回滚 / 联动处理" decomposed into affected objects, affected fields, timing, and failure behavior?
 - For reverse actions, are released locks, reverted data, recomputed data, non-reverted data, and audit reason clear?
 
@@ -143,9 +183,13 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 
 - Does the 00 主文件 include a main file navigation map / information architecture mind map showing 端 / 模块 / 页面 / 功能点 before module details?
 - Can a reader immediately tell where each function lives, including default entry, target role, permission, data scope, and cross-side / 跨端 links?
+- Does each page pass the Page Task Closure Gate: why this page exists, what the user sees first, what business question it answers, what primary action it enables, and what feedback/recovery appears after success or failure?
+- Is there any field-only page where columns/buttons are listed but why shown, decision supported, drilldown, operation surface, disabled reason, and recovery are missing?
 - Target端 / touchpoint confirmed from user task and working context, not assumed.
 - Menu/page structure confirmed from business reality, not style taste.
 - Each page, Tab, component, and interaction is tied to a workflow constraint, user task, risk control, or comprehension need.
+- For each important visible field/card/drawer/modal, is it clear why it is shown and what decision or action it supports?
+- For each important operation, is there an operation-to-surface map: entry point, carrier, visible context, validation, confirmation, success result, failure recovery, and linked object/page?
 - Page-level Tabs vs list filter Tabs are separated.
 - UX carrier and components are specified for key pages/actions: table, detail, drawer, modal, wizard, batch action, exception workbench, upload/download, timeline/log.
 - Important actions define primary/secondary actions, disabled reasons, confirmation copy, validation, recovery, and audit trace.
@@ -164,6 +208,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 ## Red Flags
 
 - "通用上更正确" wording that replaces a user-confirmed business fact.
+- Invented terminology, decorative names, or void-created term replacing the user's wording.
 - "大家都知道 / 默认就是 / 这个不用写" around pricing, funds, roles, source data, or status.
 - Detailed implementation that cannot point to a user discussion, anchor, source, existing behavior, or recommendation label pending user confirmation.
 - "数据来源：系统生成 / 平台同步 / 自动统计" without trigger, input, rule, persisted object, authority, and consistency check.

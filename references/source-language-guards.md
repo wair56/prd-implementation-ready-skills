@@ -2,6 +2,42 @@
 
 Use this when a generated requirement contains details that may not be sourced, when data origin is unclear, or when technical / abstract language appears.
 
+## Human-Readable Wording Gate
+
+PRD wording must be plain language and business-readable. The reader should feel the document is describing their work, not an internal taxonomy invented by the model.
+
+Use the user's wording, existing system labels, and confirmed business terms as the primary vocabulary. Do not invent decorative names, clever labels, or a void-created term just to make the document look systematic.
+
+Before introducing a new term, define its basis:
+
+| Candidate Term | Source / Basis | Why Existing Term Is Not Enough | Recommended Naming? | Keep Original Term Nearby | Confirm |
+|---|---|---|---|---|---|
+
+Rules:
+
+- If the user already has a term, keep it. Add clarification in parentheses instead of replacing it.
+- If an existing system page, field, status, or menu label exists, use that label unless it conflicts with the business.
+- If a shorter label is useful, mark it as recommended naming and keep the original term nearby until confirmed.
+- Avoid abstract container words such as "strategy", "policy", "capability", "engine", "matrix", "center", or "domain object" unless the business actually uses them.
+- Translate SQL, code enums, interface params, and database fields into business wording before PRD正文.
+
+## Term Alignment Ledger
+
+Use this when a PRD has many terms, multiple roles, or generated wording may drift from the user's language.
+
+| User Term | Business Meaning | Source / Where User Said It | Existing System Label | Allowed Synonyms | Forbidden Replacement | Confirm |
+|---|---|---|---|---|---|---|
+
+This ledger prevents "professional" wording from changing the requirement. A term is aligned with the requirement only when its meaning, scope, and source match what the user described.
+
+Bad:
+
+> Create an "Operational Value Settlement Entity" to manage driver lifecycle incentives.
+
+Better:
+
+> Use the user's term "司机工资单". If a short internal label is needed, propose "Payroll Sheet (司机工资单)" as recommended naming and keep the original term in headings and page copy until confirmed.
+
 ## Requirement Source Trace
 
 Every generated detail needs a source:

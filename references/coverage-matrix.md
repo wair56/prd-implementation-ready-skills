@@ -11,6 +11,32 @@ Use this after identifying the business goal and core objects. The purpose is to
 5. Mark each item as confirmed, recommended default,待确认, or out of scope.
 6. Re-run the matrix after the main flow changes.
 
+## Business Observation Lenses
+
+Use business observation lenses during product discussion before module writing. The point is not to ask every question; it is to notice small flows the user did not name because they feel obvious inside the business.
+
+| Lens | What To Notice | Typical Small Flow |
+|---|---|---|
+| Role lens | Each role's action, view, responsibility, handoff, notification, and recovery | platform disables supplier, driver receives handling message |
+| Object lifecycle lens | Object creation, draft, submit, approve, pay, fail, retry, void, reopen, archive | invoice red flush, payment retry, account bind/unbind |
+| Trigger/event lens | Click, import, sync, callback, scheduled job, timeout, status change, external event | payment callback updates source, sync failure creates task |
+| Resource/value lens | Money, quota, stock, coupon, permission, capacity, entitlement, visibility | quota occupation/release, permission grant/revoke |
+| Data/source lens | Source detail, copied field, generated data, authoritative source, late/corrected data | unmatched vehicle correction, generated summary rebuild |
+| Page/task lens | Where users notice, decide, act, drill down, see disabled reason, and recover | summary card to detail drawer to retry action |
+| Notification lens | Who needs to know, act, approve, retry, or recover after an event | push preference, todo assignment, webhook retry |
+| Product-domain lens | Whether finance-named gates need domain translation for tool SaaS, C-end, content/social, consumer app, or B2B admin | coupon lock, API quota, content visibility, membership benefit |
+| Exception/recovery lens | Failure, rejection, missing mapping, partial success, duplicate, rollback, manual correction | exception workbench and re-enter downstream flow |
+| Tenant/organization lens | Same subject across tenants, orgs, projects, contracts, roles, or external IDs | customer exists in two tenants, supplier is also payer |
+
+## Micro-Flow Discovery Ledger
+
+Use this during product discussion before module writing:
+
+| Micro-Flow | Why It Matters | Owner Object | Trigger | Actor/System | Entry/Surface | Data Source | State/Rule Impact | Downstream Impact | Exception/Recovery | Scope Decision |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+Not every micro-flow becomes a module. Some are page operations, drawers, server-only flows, notifications, logs, recovery entries, or out-of-scope notes. But every included micro-flow needs an owner, trigger, entry/surface, data source, downstream impact, exception behavior, and a testable result.
+
 ## Coverage Axes
 
 | Axis | What To Check | Typical Miss |
@@ -35,6 +61,8 @@ Use this after identifying the business goal and core objects. The purpose is to
 | Lock / occupation | When source records are occupied, released, rolled back | Reconciliation source reused twice |
 | Reverse / exception | Cancel, reject, refund, red flush, void, retry, timeout, partial success | Only happy path written |
 | Cross-system | Push, callback, duplicate, delay, sync timestamp, stale data | Sync data treated as instant truth |
+| Notification / message | Trigger event, receiver, channel, dedupe/throttle, read/task state, recall/update, preferences, deep link, retry | Notification only mentioned as "send message" |
+| Product-level non-functional | Performance target, SLA, consistency, data visibility latency, retry, degradation, rate limit/abuse, security, backup, observability | Non-functional requirements dumped into generic appendix |
 | Cross-module | Source action, target page/Tab, params, default filters, permissions | "查看详情跳转" unspecified |
 | Audit trail | Operation log, before/after value, operator, time, reason | High-risk finance action no trace |
 | Necessity | Whether this object/detail must exist or can merge/defer/remove | Complete-looking but bloated PRD |
@@ -102,7 +130,11 @@ Rules:
 - Define adjustment timing: whether加减项/adjustments happen before comparison, after comparison, inside each operand, or as separate ledger lines.
 - Define proration for partial periods, onboarding/offboarding, inactive days, missing source details, and no-activity cases.
 
-## Resource / Value Flow Gate
+## Resource / Value Flow Pointer
+
+Authoritative gate: `references/data-flow.md#resource--value-flow-gate`.
+
+Use this matrix to notice that a controlled resource exists, then switch to the authoritative gate instead of maintaining a second full version here.
 
 Use this not only finance. Any non-finance controlled resource can break the product if its loop is vague: inventory, coupon, quota, points, seat capacity, task capacity, appointment slots, membership rights, content permission, API usage, visibility rights, or approval authority.
 

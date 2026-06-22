@@ -95,7 +95,7 @@ Use this as a menu, not a quota. Omit or merge sections that add no decision, ru
 4. Background and goals.
 5. Scope.
 6. Users, roles, permissions, visibility.
-7. User stories and scenarios.
+7. User stories and scenario walkthroughs, using `references/user-stories-scenarios.md` when the product depends on real user context, activation, retention, or alternate paths.
 8. Business flow.
 9. Core objects, object flows, and state machines.
 10. Data flow, source documents, writeback, linkage, and idempotency.
@@ -105,10 +105,11 @@ Use this as a menu, not a quota. Omit or merge sections that add no decision, ru
 14. Interaction and UI states.
 15. Data requirements.
 16. Analytics.
-17. Non-functional requirements.
-18. Release strategy.
-19. Dependencies and risks.
-20. Appendix.
+17. Notifications, tasks, pushes, webhooks, and message preferences when events must reach another role or system.
+18. Non-functional requirements as product decisions: performance target, SLA, data visibility latency, consistency, degradation, retry, security, backup, rate limit/abuse.
+19. Release strategy.
+20. Dependencies and risks.
+21. Appendix.
 
 ## Reader-First Module Document
 
@@ -123,18 +124,30 @@ Recommended module order:
 5. Risks and exceptions.
 6. Page implementation details.
 7. Server-only automatic flows, if the module has background jobs, callbacks, sync, scheduled tasks, or compensation.
-8. Module acceptance checklist.
+8. Notifications / tasks / webhooks, if module events must reach another role, user, or system.
+9. Product-level non-functional requirements, if speed, reliability, consistency, degradation, or abuse control changes the user/business promise.
+10. Module acceptance checklist.
 
 The detailed page sections must include fields, data sources, status/writeback, permissions, idempotency, interaction behavior, and validation together. Avoid separate "field table / status table / permission table" sections when they force readers to jump around.
 
 For a page, use:
 
-| Page Area / Operation | User Goal | Layout / Interaction | Fields | Data Source | Status / Writeback | Permission | Idempotency / Duplicate Handling | Error / Empty / Disabled | Acceptance |
-|---|---|---|---|---|---|---|---|---|---|
+| Page Area / Operation | User Goal | Why Shown / Decision Supported | Layout / Interaction | Fields | Data Source | Status / Writeback | Permission | Idempotency / Duplicate Handling | Error / Empty / Disabled | Feedback / Recovery | Acceptance |
+|---|---|---|---|---|---|---|---|---|---|---|---|
 
 For a server-only automatic flow, use:
 
 | Automatic Flow | Trigger / Timing | Input Source | Processing Rule | Persisted Object | Status / Writeback | Idempotency / Retry | Failure / Compensation | Visibility / Log | Acceptance |
+|---|---|---|---|---|---|---|---|---|---|
+
+For notification or task flows, use:
+
+| Event | Trigger Event | Receiver | Channel | Purpose | Content Variables | Deep Link | Dedupe / Throttle | Read/Unread / Task State | Recall / Update | User Preferences | Failure / Retry | Audit / Log |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+For product-level non-functional requirements, use:
+
+| Capability | Performance Target / SLA | Data Visibility Latency | Consistency Level | Idempotency / Retry | Degradation | Rate Limit / Abuse | Security / Privacy | Observability / Alert | Acceptance |
 |---|---|---|---|---|---|---|---|---|---|
 
 ## Feature Detail Page Section
@@ -142,17 +155,19 @@ For a server-only automatic flow, use:
 Each concrete page/module should include:
 
 - Page purpose.
+- Why this page exists, what the user sees first, and the primary path before listing fields.
 - Target端 / touchpoint and target user.
 - Entry and permissions.
 - Data source and authority.
 - Data flow, linked objects, writeback, and downstream consumers.
+- Visible information intent: why each key area/field/component is shown and what decision or action it supports.
 - List fields.
 - Search/filter/sort/page rules.
 - Tab filter rules in business language.
 - UX carrier and key components.
 - Operations and state restrictions.
 - Detail/drawer/modal behavior.
-- Empty/loading/error/disabled states.
+- Empty/loading/error/disabled states and feedback/recovery after each operation.
 - Validation, disabled reasons, confirmation, recovery, audit trace.
 - Exceptions and acceptance criteria.
 

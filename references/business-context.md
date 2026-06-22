@@ -16,6 +16,38 @@ Before detailed rules, make sure a new reader can answer:
 
 If these cannot be answered from the PRD, add a front section before rules, state machines, and page details.
 
+## Context-First Business Understanding
+
+Before applying the workflow, make a context digest from the user-provided context. The user's notes, examples, uploaded docs, corrections, existing PRDs, screenshots, and business explanations are the first source of truth. The PRD workflow should organize and test that understanding; it should not replace it with a generic template.
+
+Use:
+
+| Context Item | Extract |
+|---|---|
+| Business facts | what is explicitly said or clearly confirmed |
+| Roles | users, operators, counterparties, approvers, external systems |
+| Objects | business records, resources, pages, source details, bills, tasks |
+| Constraints | scope, MVP boundary, existing system behavior, user-confirmed anchors |
+| Conflicts | contradictions between user notes, old docs, generated docs, or assumptions |
+| Gaps | missing business decisions that block implementation |
+| Inferences | AI-proposed understanding or recommended defaults pending confirmation |
+
+Do not start from a generic structure. Avoid template-first PRD writing. First state the current business understanding based on the user's context, then follow the staged workflow to deepen it and write the requirement.
+
+## Deep Business Understanding Package
+
+The business understanding stage must be deep enough to steer the PRD. Before module writing, produce a compact or detailed package depending on the task depth:
+
+| Part | Required Understanding |
+|---|---|
+| External research | What same or adjacent domain products/patterns do; what existing docs/screenshots/code imply; what pattern should be adopted or avoided before locking the flow |
+| Flow awkwardness analysis | Which steps are redundant, manual, late, offline, unclear, or carrying too many responsibilities |
+| Micro-flow discovery | Which small flows exist, who owns them, what triggers them, where they surface, and whether they are in scope |
+| Exception/reverse understanding | Which failures, reverse paths, rollback, cancel, reject, refund, void, retry, timeout, and partial success cases change the product behavior |
+| Decision summary | Confirmed anchors, recommended defaults, conflicts, gaps, out-of-scope boundaries, and questions to ask now |
+
+If time is tight, make this package short. Do not skip it.
+
 ## Required Front Section
 
 For complex PRDs, especially money/settlement/approval/cross-system flows, add a 0-1 page front section:
