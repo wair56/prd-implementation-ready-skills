@@ -28,6 +28,7 @@ Confirm before anything else:
 - Role glossary and core concept dictionary, especially counterintuitive business or financial concepts.
 - Core business objects, then run `coverage-matrix.md` lightly to identify the highest-risk missing axes.
 - Business risk: money, contract, invoice, privacy, approval, integration, migration.
+- Repeated/cyclic operations: whether the business has "next run", "last run", "paid through", "handled through", "already issued", "prevent repeat", or "auto default next period" behavior. If yes, identify the likely progress-control field and ask/derive the loop before page fields are written.
 - Existing systems or historical constraints.
 
 Output:
@@ -47,7 +48,7 @@ Only after Stage 1, reconstruct the flow:
 | Recommended Flow |  |  |  |  |
 | MVP Flow |  |  |  |  |
 
-While reconstructing the flow, identify which core objects move through the flow, where new information is introduced, and which data/linkage paths are affected. Keep this coarse at Stage 2; detail it in Stage 3.
+While reconstructing the flow, identify which core objects move through the flow, where new information is introduced, and which data/linkage paths are affected. For repeated/cyclic flows, explicitly identify what tells the system "where the previous run ended" and "what the next run should cover"; this is often the source of duplicate prevention and locked defaults. Keep this coarse at Stage 2; detail it in Stage 3.
 
 Ask the user to confirm the flow before expanding detailed rules.
 
@@ -62,6 +63,7 @@ After the main flow is accepted, confirm:
 - Necessity of every proposed object, state, field, flow step, exception, and table; merge or defer anything that does not serve a confirmed user/business/process need.
 - Object flow and information ledger: for every step, define action/event, actor/system, from/to state, new information introduced, authoritative source, validation, persistence target, side effect, failure/retry, and whether the step creates another object.
 - Data flow and linkage map: for every important data item/action, define source/authority, transform/rule, validation, persisted object/field, consumer, writeback/sync timing, linked object/module, side effect, reverse/rollback, and failure behavior.
+- Progress-control field loops: for every last/previous/paid-through/handled-through/progress field, define reader action, next-period/default derivation, editability, continuity/duplicate rule, advance event, non-advance events, reverse/correction, and recovery visibility.
 - Core object lifecycle.
 - State fields and transitions, including each object's creation point, initial state, pre-audit / pre-payment stages, actor, trigger, terminal states, and whether shared status labels really apply to every object.
 - Cross-document consistency for repeated objects, actions, statuses, audit wording, payment wording, and money terms.

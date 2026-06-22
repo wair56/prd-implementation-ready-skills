@@ -63,6 +63,7 @@ Use before saying a PRD is complete or when the user asks to review an existing 
 - Is there a linkage map for high-impact actions: linked objects/modules, linkage type, side effect, trigger timing, reverse/rollback, user visibility, and risk?
 - For payment completion, are attached actions defined with idempotency, retry, partial failure handling, visibility, and reverse/compensation?
 - For transaction completion / payment success / audit pass / refund success / batch creation / callback completion, is there a post-event writeback inventory covering target object, exact persisted field, source event timestamp, business period, writeback policy, consumer, idempotency, and reverse/correction behavior?
+- For repeated/cyclic operations, did the assistant proactively identify any progress-control field such as last paid month, handled-through period, next period, eligibility marker, or last issued time, then define reader action, locked/default value, success event that advances it, non-advance events, duplicate prevention, and reverse/correction behavior?
 - Are "同步更新 / 自动回滚 / 联动处理" decomposed into affected objects, affected fields, timing, and failure behavior?
 - For reverse actions, are released locks, reverted data, recomputed data, non-reverted data, and audit reason clear?
 

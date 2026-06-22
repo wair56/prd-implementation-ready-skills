@@ -159,6 +159,39 @@ Example: after labor fee payment succeeds, it may create a value-added payroll b
 
 Red flag: the PRD lists only created downstream records such as "create batch / create payment order / generate bill", but does not list field writebacks on existing objects. That usually hides eligibility, duplicate prevention, reporting, and next-period logic.
 
+## Progress-Control Field Loop
+
+Use this when a page shows a field like last time, last month, last paid-through period, handled-through period, next period, progress marker, eligibility marker, last issued at, or last settled through. These fields are often not passive display fields. They are business control fields that decide which next operation is allowed, which period is created, and how duplicate work is blocked.
+
+Do not wait for the user to name this pattern. During product discussion, infer it when the user mentions repeated work, monthly/periodic creation, "next time", "last time", "already paid/issued/settled", "avoid duplicate", "auto default", "cannot edit", or "continue from previous". Say the inferred loop out loud and ask a small set of confirmation questions with recommended defaults.
+
+Discovery prompt shape:
+
+- "This sounds like a repeated-period flow. I suggest using [field] as the progress-control field: the create popup reads it, defaults to [next period], locks the period, and advances it only after [true completion event]. Does that match the business?"
+- "If [draft/rejected/payment failed/cancelled] happens, I recommend not advancing [field], so the same period can be retried. Confirm?"
+- "If a completed record is voided or reissued, should [field] roll back, stay advanced with an adjustment, or be manually corrected?"
+- "For first-time use, should the first period come from onboarding date, contract start date, first service month, or manual initialization?"
+
+For each such field, define the loop:
+
+| Item | Must Define |
+|---|---|
+| Field meaning | what business progress the field represents, and which object/relationship owns it |
+| Display location | list/detail/card/statistic where users see it, including empty state before the first run |
+| Reader action | which create/action flow reads it, at what moment, and under which object status |
+| Default derivation | how the next value is calculated, such as next natural month after the last paid month |
+| Editability | whether the default can be changed; if locked, show disabled reason and exception entry |
+| Continuity rule | whether gaps, overlaps, repeated periods, or future periods are blocked or allowed by exception |
+| Duplicate prevention | uniqueness key and idempotency key, usually subject + business period + source action |
+| Advance event | the exact success event that writes the new value, such as payroll payment success, not only payroll sheet creation |
+| Non-advance events | draft, submitted, rejected, cancelled, payment failed, payment pending, voided, or partial failure cases that must not advance the field |
+| Reverse/correction | whether void, refund, reissue, red flush, manual correction, or data rebuild rolls back, preserves, or recomputes the progress field |
+| Recovery visibility | where operators see wrong progress, retry writeback, rebuild, or manually correct with audit |
+
+Example: the driver list shows "last payroll paid time/month". When finance creates a payroll sheet, the popup reads that field and defaults the payroll period to the next natural month; the period is locked to prevent repeated payroll creation. The field is advanced only after payroll payment succeeds and downstream payroll distribution finishes if that is the true business completion point. Draft, approval rejection, cancelled payroll sheet, payment failure, or payment-in-progress must not advance it. Void/reissue must define whether the progress rolls back or remains with an adjustment record.
+
+Red flag: a PRD says "create payroll sheet defaults to next month" or "prevent repeated payroll" but does not define the source progress field, locked period, uniqueness key, success event that advances the field, and failure/reversal behavior. That is an incomplete flow even if the page fields look complete.
+
 ## Reverse Linkage
 
 Every cancel, reject, refund, red flush, void, rollback, rebuild, disable, or re-sync must define:
