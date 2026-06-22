@@ -1,9 +1,9 @@
 ---
-name: prd-rigorous-completion
-description: Use when writing, reviewing, or filling gaps in a product PRD or 需求文档 of any kind — turning a rough requirement into an implementation-ready spec. Covers business/user flow, states, data source, page/UX structure, edge cases, and abstract or undecided terms. Strongest for complex B端/后台 and finance/payment/settlement/对账/分润/approval flows, but applies to any product domain (B端, C端, content, commerce, tooling).
+name: prd-implementation-ready
+description: Use when writing, reviewing, or filling gaps in PRDs, product requirements, BRDs, functional specs, or SaaS/admin workflows that must become implementation-ready. Especially useful for business flows, object states, page UX, data sources, permissions, exceptions, finance/payment/reconciliation/profit-sharing, formulas, and post-event writebacks.
 ---
 
-# PRD Rigorous Completion
+# PRD Implementation Ready
 
 ## Core Principle
 
