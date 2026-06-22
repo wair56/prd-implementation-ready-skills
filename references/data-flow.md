@@ -73,6 +73,26 @@ Use this when a PRD says "single total", "按总额", "不按车/不按明细", 
 
 Example: profit sharing may use a bill's single total for settlement, but the system can still keep vehicle dimension and customer mapping for single-vehicle profit analysis. Do not delete the detail dimension just because the settlement formula uses the total.
 
+## Business Action Input vs Analysis Metric Gate
+
+Use this when a PRD discussion asks for an amount, attribution, share, score, occupancy, cost attribution, usage split, or contribution metric and it is unclear whether that value is a settlement hard constraint or only an analysis metric.
+
+First ask: **which business action consumes this metric?** The answer decides the required precision and timing.
+
+| Question | Must Define |
+|---|---|
+| Business action consumer | What business action consumes the metric: invoice, settlement, payment, refund, allocation, approval, eligibility, quota release, recommendation, risk analysis, report, or dashboard |
+| Hard action input | Whether the metric blocks or changes a money/resource action; if yes, it needs a reliable source, formula, snapshot, timing, and reverse behavior |
+| Analysis-only use | Whether the metric is only for post-event risk analysis, operations review, profitability view, health score, or diagnosis |
+| Source reality | Whether source data can actually compute it now, such as usage, mileage, duration, order count, vehicle/customer mapping, event logs, or manual tags |
+| Non-allocation boundary | If no reliable allocation source exists, state that the metric cannot be a settlement prerequisite and must not become a hard gate |
+| Dimension preservation | Which dimensions should still be stored for later analysis even when the business action uses a total |
+| Financial/resource impact | Whether later mapping corrections only rebuild analysis outputs or also change financial results; if analysis-only, preserve dimensions but it does not change financial results |
+
+Do not force a real-time allocation formula just because a business user asks "which customer/project/order used how much." If the current settlement, billing, payment, refund, or release flow does not consume that allocation, keep the financial action on its reliable inputs and write the attribution as an analysis metric.
+
+Example: monthly settlement may use a total cost pool and confirmed customer receivable amounts, while customer-level cost attribution is only post-event risk analysis. If the system has no mileage/time/waybill effort source that allocates vehicle cost to each customer, the customer cost attribution cannot be a settlement prerequisite. Preserve dimensions such as vehicle, customer, waybill, route, project, and period for analysis, but do not change financial results or block settlement.
+
 ## Source Detail Eligibility Gate
 
 Use this before any PRD says users or the system can select source details to generate a bill, reconciliation record, settlement record, payment request, invoice, profit-sharing record, or recovery batch. "Selectable source details" are not just list filters; they are financial input boundaries.

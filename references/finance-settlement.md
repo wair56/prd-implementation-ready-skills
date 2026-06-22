@@ -41,6 +41,8 @@ Supplier reconciliation completeness requires separating supplier types and paym
 
 Monthly charter should stay tied to the real commercial object, often by vehicle. Transport-volume billing should use shipper freight on the waybill or confirmed receivable source. Preserve vehicle, waybill, customer, supplier, contract, route, project, cost type, and period dimensions when they support analysis.
 
+When customer, vehicle, project, or waybill-level cost attribution is discussed, first decide whether it is a settlement hard constraint or an analysis metric. Do not force a real-time allocation formula for transport-volume customers only to make profitability look complete. If customer-level cost attribution lacks a reliable effort source such as mileage, duration, waybill effort, or vehicle/customer mapping, keep billing and profit-sharing on confirmed receivable/cost-pool inputs and place that attribution in post-event risk analysis.
+
 Platform service fee is platform revenue. Define payer, receiver/platform pocket, rate snapshot, fee base, timing, ledger entry, and whether it is deducted before profit sharing or collected separately.
 
 Profit-sharing funds waterfall must cover customer funds, frozen funds, platform-granted credit, contractor own-funded advances, platform service fee, remaining contractor profit, insufficient/continuing deduction, zero/negative profit sharing, and profit-sharing void fund rollback.

@@ -63,6 +63,21 @@ Examples:
 - "分润金额" is incomplete unless it defines profit formula, sharing parties, sharing ratio/source, rounding, snapshot, and negative/zero handling.
 - "按月包车应收金额" is incomplete unless it defines whether the source is shipper contract, monthly fixed amount, route/package agreement, manual adjustment, or imported bill.
 
+## Settlement Input vs Analysis Metric Computability
+
+Before requiring a derived number in final PRD wording, classify it with `data-flow.md#business-action-input-vs-analysis-metric-gate`.
+
+- If a metric is a settlement hard constraint, every operand must be computable before the business action runs. Define source, timing, snapshot, rounding, correction, and reverse behavior.
+- If a metric is an analysis metric, define its source, freshness, caveat, drilldown, and role visibility, but do not force allocation and do not let it block invoice, settlement, payment, refund, or resource release.
+- If a cost attribution, usage split, contribution score, or occupancy share has no reliable source, it cannot be a settlement prerequisite. Mark it as risk analysis / post-event analysis or ask for the missing source.
+- Preserve dimensions for diagnosis and later modeling even when the action uses a reliable total. Mapping corrections for analysis-only metrics should rebuild analysis outputs and does not change financial results unless the user explicitly confirms a financial restatement rule.
+
+Diagnostic questions:
+
+- What business action consumes this value: billing, invoice, settlement, payment, refund, approval, risk analysis, dashboard, or profitability review?
+- Does the value change money/resource movement, or only explain whether the movement was profitable, risky, or worth optimizing later?
+- If the value is unavailable, should the action stop, proceed with a reliable total, or proceed while marking the analysis as unavailable?
+
 ## Formula Operand Semantics Gate
 
 This gate catches the "the formula looks obvious, but the business term is undefined" failure. A formula is not complete because it has operators. It is complete only when each operand has business meaning and a source.

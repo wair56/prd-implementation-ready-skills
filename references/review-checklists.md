@@ -99,6 +99,8 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Were visible data source markers checked for真实性 and consistency: source exists in the flow, contains the data used, authority is clear, timing is valid, and cross-doc wording is consistent?
 - For internal generated data, are trigger, input data, generation rule/version, persisted object, authority after generation, consumers, and correction/rebuild behavior clear?
 - For non-finance resources such as inventory, coupon, quota, points, capacity, permission, entitlement, slots, or visibility rights, are source, authoritative anchor, pool, trace, reserve, allocate, combine, consume, release, partial insufficiency, and role perspective defined?
+- For any attribution/share/occupancy/cost attribution metric, did the PRD classify whether it is a settlement hard constraint or an analysis metric, and name which business action consumes it?
+- If an analysis metric is unavailable or only model-based, is it prevented from becoming a hard gate for invoice, settlement, payment, refund, release, or approval?
 - Is there a linkage map for high-impact actions: linked objects/modules, linkage type, side effect, trigger timing, reverse/rollback, user visibility, and risk?
 - For payment completion, are attached actions defined with idempotency, retry, partial failure handling, visibility, and reverse/compensation?
 - For transaction completion / payment success / audit pass / refund success / batch creation / callback completion, is there a post-event writeback inventory covering target object, exact persisted field, source event timestamp, business period, writeback policy, consumer, idempotency, and reverse/correction behavior?
@@ -121,6 +123,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - If the platform can see all records, is that platform scope preserved instead of being narrowed to one operator role's self view?
 - Are invoice, payment trace, exception record, allocation detail, attachment, adjustment, receipt, refund, approval task, or external sync record treated with a child object lifecycle when users need to query/operate/audit them?
 - If a rule uses a single total for summary calculation, are detail dimensions such as vehicle dimension, customer/shipper, supplier, contract, route, project, cost type, and period still preserved for dimension analysis when useful?
+- If a cost attribution or allocation source is missing, does the PRD avoid inventing a real-time allocation formula and keep it in post-event risk analysis unless the user confirms a reliable source?
 - For annual/prepaid/cross-period costs, are cash payment and cost recognition separated, with monthly amortization or another allocation rule when needed?
 - Does every cost entering downstream bills pass a Cost Inclusion State Gate: audit status, payment status, recognition state, locked cost period, inclusion/exclusion states, and rebuild behavior?
 - Does every formula define operand semantics, source/authority, entity scope, period, eligibility, comparison basis, proration, rates, caps/floors, tier, threshold, rounding, snapshot, and zero/negative handling?
