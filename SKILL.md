@@ -28,6 +28,7 @@ Default first response shape: context digest based on the user's context; deep b
 
 `references/stage-gates.md` is the authoritative workflow. In plain text: stage-gates.md is the authoritative workflow. The progressive workflow summary is:
 
+0. If the user asks how to use the skill, gives a mixed request, or the next action is unclear, choose the usage path from `references/usage-path.md` before loading heavy references.
 1. Business understanding first: context digest, deep business understanding package, external research, flow awkwardness analysis, micro-flow discovery, exception/reverse understanding, business anchors, and scope.
 2. Flow shape next: identify single-line, parallel, master-child, state-machine, event-driven, cycle/periodic, or mixed flow. For parallel flows, name convergence points instead of flattening the work.
 3. Navigation and diagrams before detail: the main PRD / 00 file should include a side/module/page/function navigation map and a business flow atlas before detailed rules.
@@ -47,6 +48,7 @@ Read only what the current stage needs.
 
 | Stage / Situation | Read |
 |---|---|
+| Choosing how to use this skill, selecting a mode, routing mixed requests, or explaining the best usage path | `references/usage-path.md` |
 | Business understanding stage | `references/stage-gates.md`, `references/business-context.md`, `references/research-and-flow.md` |
 | Domain fit, C-end, consumer app, content/social, or tool SaaS | `references/domain-adaptation.md`, `references/user-stories-scenarios.md` |
 | Existing behavior, v1 to v2, migration, or compatibility | `references/version-evolution.md`, `references/business-anchors.md` |
@@ -59,8 +61,7 @@ Read only what the current stage needs.
 | Page design stage | `references/page-ui.md`, `references/output-structure.md` |
 | Notifications, todos, pushes, emails/SMS, bot messages, webhooks | `references/notifications.md`, `references/data-flow.md` |
 | Product-level non-functional decisions | `references/non-functional.md` |
-| Source language, unsupported details, technical wording | `references/source-language-guards.md` |
-| Public release, bilingual wording, or confusing Chinese/English terms | `references/terminology.md`, `references/source-language-guards.md` |
+| Source language, unsupported details, technical wording, bilingual/public wording, or confusing terms | `references/terminology.md`, `references/source-language-guards.md` |
 | Final review stage | `references/review-checklists.md`, `references/guardrail-checklist.md` |
 
 Gate authority:
