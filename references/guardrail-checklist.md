@@ -19,6 +19,7 @@ Priority:
 | P1 | Domain examples are finance/logistics-only for a C-end, content/social, consumer app, or tool SaaS product | Run Domain Adaptation Table |
 | P1 | User stories are thin | Add context, trigger, preconditions, alternate path, success criteria, and emotion/friction |
 | P1 | New term appears without user wording, existing system labels, confirmed business terms, or recommended naming basis | Run Human-Readable Wording Gate and Term Alignment Ledger |
+| P1 | Same non-critical concept has different page label, PRD term, object field, formula wording, or export wording | Run Page-Document Term Alignment Gate |
 
 ## Flow Design
 
@@ -27,6 +28,7 @@ Priority:
 | P0 | Mainline changed but downstream objects/pages/data/rules were patched locally | Update global doc and affected modules together |
 | P0 | External/other-module source data is used without source dataset, include/exclude conditions, source state, scope, period window, permission, availability, unavailable reason, snapshot, and refresh timing | Run Source Data Filter and Eligibility Gate |
 | P0 | Money or non-finance resource moves without source, authoritative anchor, pool, trace, reserve/consume/release, reversal, and role visibility | Run Resource / Value Flow Gate |
+| P0 | Money/resource term changes across page label, PRD term, calculation field, ledger/accounting effect, or fund destination and could change payer, receiver, owner, balance, or settlement result | Run Page-Document Term Alignment Gate and Resource / Value Flow Gate |
 | P0 | Formula uses guarantee, max/min, base amount, rate, tier, threshold, or adjustment without operand semantics | Run Formula Operand Semantics Gate |
 | P0 | Amount composition names cost basis, source total, service fee, adjustment lines, or included detail list without component source lineage, snapshot, drilldown/backtrace, and detail-sum reconciliation | Run Amount Composition Source Lineage Gate |
 | P0 | Amount, list scope, permission, receiver, or report dimension depends on current binding/current relationship/latest configuration/real-time fetch without relationship source, effective period, anchor time, snapshot, and correction behavior | Run Relationship Temporal Anchor Gate |

@@ -43,6 +43,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Are role glossary, core concepts, and special/counterintuitive terms defined in plain language?
 - Is human-readable wording preserved: business-readable language, user's wording, existing system labels, and confirmed business terms are used instead of invented terminology?
 - Is every new term aligned with the requirement, with a source/basis, allowed synonyms, forbidden replacement, and confirmation state when needed?
+- Is there page/document term drift: the same concept appears with different names across page label, PRD正文, business object, calculation field, formula component, status/operation wording, report/export, ledger/accounting effect, or fund destination?
 - Do money/value/data flows among roles have a simple front-door explanation?
 - Is every controlled resource/value closed loop before writing modules: source, reserve, allocate, consume, release, reverse, and role visibility?
 - Are circular definitions avoided, especially for financial concepts?
@@ -172,6 +173,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Are internal sources such as generated records, snapshots, callbacks after idempotency, statistics, tasks, and copied fields treated as data sources with authenticity and consistency checks?
 - Are technical fields, SQL conditions, code enums, and interface params converted to business wording?
 - Are abstract terms such as 计价口径 / 统计口径 / 规则 / 策略 decomposed into fields, enums, IDs, versions, or source document sets?
+- Does every high-risk term have one canonical term, one preferred display term, allowed synonyms, forbidden synonym, and page-visible label mapping when it appears in both pages and formulas?
 
 ## Rules and Objects
 
@@ -206,6 +208,7 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Menu/page structure confirmed from business reality, not style taste.
 - Each page, Tab, component, and interaction is tied to a workflow constraint, user task, risk control, or comprehension need.
 - For each important visible field/card/drawer/modal, is it clear why it is shown and what decision or action it supports?
+- For each important visible label, is the term mapping clear between page text, PRD term, source field, formula component, ledger/accounting effect, fund destination, export wording, and acceptance?
 - For each important operation, is there an operation-to-surface map: entry point, carrier, visible context, validation, confirmation, success result, failure recovery, and linked object/page?
 - Page-level Tabs vs list filter Tabs are separated.
 - UX carrier and components are specified for key pages/actions: table, detail, drawer, modal, wizard, batch action, exception workbench, upload/download, timeline/log.

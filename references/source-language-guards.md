@@ -30,6 +30,32 @@ Use this when a PRD has many terms, multiple roles, or generated wording may dri
 
 This ledger prevents "professional" wording from changing the requirement. A term is aligned with the requirement only when its meaning, scope, and source match what the user described.
 
+## Page-Document Term Alignment Gate
+
+Use this when a term appears in a page, field list, button, summary card, formula, status, operation, report/export, ledger, or accounting/fund effect. The same business concept should not be called one thing on the page, another thing in PRD正文, a third thing in the formula, and a fourth thing in the money/resource destination.
+
+Create a mapping before final wording:
+
+| Business Concept | User Term | Existing UI Label / Page Label | Preferred Display Term | PRD Term | Business Object / Field | Calculation Field / Formula Component | Status / Operation Wording | Ledger/Accounting Effect | Fund Destination | Allowed Synonym | Forbidden Synonym | Confirm |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- Choose one canonical term for the concept, and one preferred display term for page-visible wording. If they differ, explain why.
+- Page label / visible label is a strong source. Use the same wording in page specs, operation tables, formulas, exports, and acceptance unless a deliberate difference is mapped.
+- If user wording and existing UI label conflict, show both and recommend one; do not silently replace either.
+- Technical field names, database names, and enum names may differ, but must map back to the preferred display term.
+- A synonym is allowed only when it is listed in the ledger and does not change scope, payer/receiver, period, object, or state.
+- Mark a forbidden synonym when it would mislead implementation or users, such as using a profit term for a fee, a page label for an accounting effect, or an analysis metric as an action amount.
+
+Finance example:
+
+| Business Concept | Preferred Display Term | PRD Term | Calculation Field / Formula Component | Ledger/Accounting Effect | Fund Destination | Forbidden Synonym |
+|---|---|---|---|---|---|---|
+| Platform fee charged on a profit-sharing bill | Platform service fee | Platform service fee | Platform service fee = profit-sharing reconciled amount total × contractor-level platform service fee rate snapshot | Platform income | Platform pocket; not contractor available balance | Profit, profit-sharing amount, contractor income |
+
+In Chinese PRD wording, this means do not alternate between "平台服务费", "服务费", "平台收入", "平台口袋", "分润金额", and "利润" unless the table says which one is the page label, which one is the calculation component, which one is the ledger/accounting effect, and which one is forbidden in that context.
+
 Bad:
 
 > Create an "Operational Value Settlement Entity" to manage driver lifecycle incentives.

@@ -121,6 +121,13 @@ For each user-visible element, answer four questions in business language:
 - Where does the value come from, and when can it be stale or empty?
 - What happens when the element is hidden, disabled, failed, or corrected?
 
+For every visible label on a page, keep term mapping close to the element. The page spec must make the page label, PRD term, source field, formula component, status/operation wording, report/export wording, and fund/resource destination use the same wording or an explicit mapping. Do not let a summary card say "平台服务费" while the formula says "服务费", the ledger says "平台收入", and the operation result says "利润扣减" unless the mapping explains that these are different layers of the same concept.
+
+Use:
+
+| Page / Surface | Visible Label | Term Mapping / PRD Term | Source Field or Object | Formula Component | Ledger/Accounting Effect or Fund Destination | Same Wording? | If Different, Why | Forbidden Synonym |
+|---|---|---|---|---|---|---|---|---|
+
 If a PRD says "the page contains a list, detail drawer, and action buttons" but does not name table columns, row actions, batch actions, pagination, header actions, filters, drawer sections, modal fields, empty/loading/error/submitting states, or permission/visibility, run this gate again.
 
 When a page lists or selects data from another place, expose the filter basis: source dataset, fixed business eligibility filter, editable UI query filter, result count, summary count/totals, option source, default filters, reset behavior, sync status, stale data warning, external failure state, visible but unavailable rows, unavailable reason, and cross-module/source link.

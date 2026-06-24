@@ -33,6 +33,20 @@ Check especially:
 - money words: available, frozen, occupied, released, deducted, transferred, allocated, shared.
 - non-finance resource words: inventory, coupon, quota, points, capacity, permission, entitlement, slot, reservation, grant, revoke, consume, release.
 
+## Page / Document Term Consistency Scan
+
+Run this scan when page-visible labels, PRD正文, formulas, operation tables, reports/exports, and ledger/accounting effects describe the same concept.
+
+| Concept | Page-Visible Label | PRD Term | Business Object / Field | Formula Component | Operation / Status Wording | Ledger/Accounting Effect | Fund Destination | Conflict | Required Fix |
+|---|---|---|---|---|---|---|---|---|---|
+
+Rules:
+
+- A page-visible label and formula component for the same amount/resource should use the same wording unless the difference is intentionally mapped.
+- Ledger/accounting effect and fund destination are not substitutes for the page term. For example, platform service fee may be displayed as a fee, calculated as a formula component, and recorded as platform income; these layers must be mapped instead of mixed as synonyms.
+- If a money/resource term changes payer, receiver, owner, object scope, period, or downstream balance, treat it as a blocker, not a copy edit.
+- If the same concept has different names across module docs, page specs, formulas, exports, and acceptance, select a canonical term and update all affected locations or mark the old term as forbidden.
+
 ## Data Source Authenticity Guard
 
 When a PRD names a data source, verify that the source is not only plausible but usable:

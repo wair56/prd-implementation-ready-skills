@@ -21,6 +21,7 @@ Core bar:
 - **Close pending decisions** when safe: use business anchors, source data, existing behavior, or low-risk best-practice defaults. Leave pending only when the user explicitly says it is undecided, sources conflict, or no safe default exists.
 - **Do not invent terms**: use the user's wording, existing system labels, or confirmed business terms.
 - **Human-readable wording**: PRD正文 must stay business-readable and aligned with the requirement. Do not replace user terms with abstract, decorative, or void-created terms.
+- **Page/document term alignment**: page labels, PRD terms, business objects, calculation fields, and fund/resource destinations must use one mapped vocabulary before final wording.
 
 Default first response shape: context digest based on the user's context; deep business understanding plan; one-sentence business goal; known/unknown scope, users, objects, and risks; initial flow shape; likely small flows from observation lenses; inferred high-risk control loops for repeated/cyclic operations; 3-6 confirmation questions with recommended defaults.
 
@@ -61,7 +62,7 @@ Read only what the current stage needs.
 | Page design stage | `references/page-ui.md`, `references/output-structure.md` |
 | Notifications, todos, pushes, emails/SMS, bot messages, webhooks | `references/notifications.md`, `references/data-flow.md` |
 | Product-level non-functional decisions | `references/non-functional.md` |
-| Source language, unsupported details, technical wording, bilingual/public wording, or confusing terms | `references/terminology.md`, `references/source-language-guards.md` |
+| Source language, unsupported details, page/document term drift, technical wording, bilingual/public wording, or confusing terms | `references/terminology.md`, `references/source-language-guards.md`, `references/page-ui.md` |
 | Final review stage | `references/review-checklists.md`, `references/guardrail-checklist.md` |
 
 Gate authority:
@@ -84,6 +85,7 @@ Stop and return to the workflow when any of these appears:
 - Missing product-level non-functional decisions when performance target, SLA, data visibility latency, consistency, retry, degradation, or abuse control changes behavior.
 - Scattered notification design: a notification, todo, push, email, SMS, bot message, or webhook appears only as a side effect without trigger event, receiver, channel, dedupe, read/task state, recall/update, preferences, failure handling, and deep link.
 - Invented terminology: a new term appears without user wording, existing system labels, confirmed business terms, or a clear recommended naming basis.
+- Page/document term drift: the same concept appears under different page labels, PRD terms, formula components, ledger effects, or fund/resource destinations without an explicit mapping and chosen wording.
 - Analysis metric used as an action hard gate: attribution, occupancy, or cost attribution blocks settlement/payment/refund/release without reliable source and a named business action consumer.
 - Unfiltered source data: a PRD says take data from an external system, other module, upstream object, import, sync result, or configuration without source dataset, include/exclude conditions, source state, scope, period window, availability, unavailable reason, snapshot, and refresh behavior.
 - Hidden amount composition source: amount breakdown names cost basis, source total, service fee, adjustment lines, or included detail list without source lineage, drilldown, snapshot, and detail-sum reconciliation.
