@@ -26,3 +26,8 @@ Rules:
 - For degradation, say what the product does before asking users to contact support.
 - Do not over-specify low-risk MVP screens. Apply this gate where reliability, trust, money, safety, collaboration, or repeated operations depend on it.
 
+## API Measurability Shortcut
+
+When the product exposes an API, wrapper API, upstream query, webhook, or callback, pair this file with `api-interface.md#measurable-api-non-functional-gate`.
+
+At minimum, replace generic wording with numbers or confirmed defaults for max list size, max payload size, per-stage concurrency, upstream timeout, overall timeout, retry count, rate limit, cache hit p95, upstream-query p95, degradation behavior, request ID, stage timing log, cache hit/miss log, and upstream error observability.

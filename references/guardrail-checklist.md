@@ -27,6 +27,7 @@ Priority:
 |---|---|---|
 | P0 | Mainline changed but downstream objects/pages/data/rules were patched locally | Update global doc and affected modules together |
 | P0 | External/other-module source data is used without source dataset, include/exclude conditions, source state, scope, period window, permission, availability, unavailable reason, snapshot, and refresh timing | Run Source Data Filter and Eligibility Gate |
+| P0 | Missing API/upstream contract: API/interface, wrapper API, upstream provider, callback/webhook, cache, or error-code design lacks raw field mapping, input combination matrix, result completeness, cache state matrix, error envelope, or measurable limits | Run API / Upstream Contract Gate |
 | P0 | Money or non-finance resource moves without source, authoritative anchor, pool, trace, reserve/consume/release, reversal, and role visibility | Run Resource / Value Flow Gate |
 | P0 | Money/resource term changes across page label, PRD term, calculation field, ledger/accounting effect, or fund destination and could change payer, receiver, owner, balance, or settlement result | Run Page-Document Term Alignment Gate and Resource / Value Flow Gate |
 | P0 | Formula uses guarantee, max/min, base amount, rate, tier, threshold, or adjustment without operand semantics | Run Formula Operand Semantics Gate |

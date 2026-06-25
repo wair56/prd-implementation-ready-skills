@@ -19,6 +19,7 @@ It is strongest for:
 - finance, payment, reconciliation, invoicing, cost, credit, and profit-sharing flows
 - object lifecycle and state-machine design
 - page structure, fields, data sources, permissions, and idempotency
+- API/interface PRDs, wrapper APIs, upstream services, field mappings, cache/error contracts, and measurable limits
 - exception handling, rollback, red flush, void, retry, and recovery
 - formulas, pricing, settlement, guarantees, caps/floors, and adjustments
 - post-event writebacks after payment, audit, refund, callback, sync, or batch completion

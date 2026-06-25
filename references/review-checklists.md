@@ -98,6 +98,14 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - When a page, formula, operation, or server flow takes data from an external system, other module, upstream object, import, sync result, configuration, or source detail list, did it pass the Source Data Filter and Eligibility Gate?
 - Does every referenced source dataset define business eligibility filter, UI query filter, include condition, exclude condition, owner scope, permission scope, source state, period window, availability, visible but unavailable behavior, unavailable reason, dedupe/occupation, snapshot, refresh timing, sync status, stale data, external failure, and correction behavior?
 - Is there vague source selection wording such as "take data from", "sync from", "select source records", or "load upstream data" without source data filter?
+- For API/interface PRDs, wrapper API, upstream provider, callback/webhook, or system-to-system service, did the PRD pass the API / Upstream Contract Gate?
+- Does the API/interface PRD include upstream field mapping with raw field path, normalized field, required flag, empty handling, example, and mapping lock status?
+- Does it define input combination behavior for required-but-empty arrays, all-empty inputs, skipped stages, partial success, max list size, and array index validation errors?
+- If early stop or priority match exists, does the response or field wording state result completeness and whether evidence is not exhaustive?
+- Does any wildcard, fuzzy, masked, or matching rule define scope, literal star behavior, multiple wildcard behavior, length/count limits, and regex injection protection?
+- Does caching distinguish successful empty result, successful missing-field result, upstream failure, expired cache, stale fallback, and cache read/write failure?
+- Does the API have an error contract with HTTP status, business code, message, details, field path, array index, request ID, and retryability?
+- Are API non-functional requirements measurable: max list size, concurrency, upstream timeout, overall timeout, retry, rate limit, p95/p99, degradation, and observability?
 
 - Is there a data flow map for high-risk data: source/authority, trigger, transform/rule, validation, persistence target, consumer, writeback/sync timing, and failure handling?
 - Does every list, field, status, statistic, formula operand, selectable record set, and default value show a visible data source marker in正文 or its local table?
