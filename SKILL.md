@@ -42,7 +42,7 @@ Diagram requirements: always consider flow shape, parallel flow convergence, bus
 
 For existing products or v1 to v2 changes, run the Version Evolution Gate before rewriting: old rule, change intent, impact range, old vs new, migration, backward compatibility, release/rollback, and decision record.
 
-For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include a page element inventory and the Field Specification Gate result: concrete fields inside each element, source, display/input behavior, status/writeback, permissions, idempotency, validation, error/empty/disabled states, feedback/recovery, and acceptance. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
+For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include a page element inventory and the Field Specification Gate result: concrete fields inside each element, plus one complete field detail record for every business field; field count and detail record count must match. Each record covers source/authority, snapshot, display/input behavior, type/precision, option source, required/default/editable rules, status/writeback, downstream use, permissions, validation, error/empty/disabled states, correction, and example. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
 
 ## Reference Router
 

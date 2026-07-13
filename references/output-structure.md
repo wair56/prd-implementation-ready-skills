@@ -142,12 +142,12 @@ After each field-bearing element, include a compact field table:
 | Element | Field | Business Meaning / Why Shown | Control / Placement | Data Source | Display / Default | Edit / Validation / State |
 |---|---|---|---|---|---|---|
 
-For complex or high-risk fields, place expandable implementation details directly below the compact row:
+For every business field, provide a complete field detail record. Complex or high-risk fields may add deeper examples, but they do not define the coverage boundary:
 
 | Field | Source Object / Field | Authority / Snapshot | Type / Format / Unit | Enum / Option Source | Writeback / Consumer | Permission / Empty / Error |
 |---|---|---|---|---|---|---|
 
-For interactive HTML, keep the compact field table visible and put implementation details in a `<details>`-style disclosure per element or field group. For print/export, expand all details. Do not create one page-wide fourteen-column table.
+For interactive HTML, keep the compact field table visible and give each compact field row a direct per-field disclosure for its complete definition. A field-group disclosure is acceptable only when every field inside it still has an individually identifiable complete record. For print/export, expand all field records. Do not create one page-wide fourteen-column table.
 
 Each operation's Input / Validation text must name the fields defined above. Phrases such as "按页面字段输入" are not implementation detail.
 

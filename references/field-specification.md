@@ -46,7 +46,9 @@ The compact row must still name the real business field. Do not merge several un
 
 ## Expandable Implementation Details
 
-For inputs, selectors, calculated values, status/time fields, sensitive data, money/resource fields, files, and fields with downstream effects, add implementation details near the compact row:
+Every business field must have a complete field detail record. The detail record count must equal field count for the page or server-only field group. High-risk fields only is not complete field coverage; high-risk fields may receive more examples or deeper rules, but ordinary visible, filter, trace, and read-only fields still need the complete record below.
+
+Each compact field row must expose a per-field disclosure or an equally direct local link to its own complete definition. A group-level disclosure that contains details for only some fields does not pass this gate.
 
 | Detail Item | Must Define |
 |---|---|
@@ -69,7 +71,18 @@ For inputs, selectors, calculated values, status/time fields, sensitive data, mo
 | Permission / masking | View/edit/export permission, sensitive-data masking, audit access, and cross-tenant boundary |
 | Example | One realistic display/input example when format or meaning is easy to misunderstand |
 
-Do not turn the main document into a fourteen-column wall. For interactive HTML, show the compact field table first and use expandable implementation details per element or high-risk field. For print/export, expand all field details so offline readers do not lose information.
+Inherited group defaults may reduce repeated prose only when the group names the shared value, every affected field explicitly inherits it, and field-level exceptions are written beside the field. Inherited group defaults cannot leave a detail dimension absent or hide that a field still needs a decision.
+
+Do not turn the main document into a fourteen-column wall. For interactive HTML, show the compact field table first and provide a per-field disclosure from each compact field row. For print/export, expand every field's complete detail record so offline readers do not lose information.
+
+Before accepting the page, report or verify:
+
+```text
+Field count = N
+Complete field detail record count = N
+Fields with explicit pending dimensions = named list
+Fields without a detail record = 0
+```
 
 ## Field Source Quality Gate
 
@@ -121,4 +134,3 @@ If this cross-check fails, return to the element and field specifications before
 ## Good-Enough Example
 
 For a monthly bill confirmation modal, "monthly bill detail and confirmation modal" is only the element. A good field layer separately defines billing month, viewed subject, each amount component, total amount, tax amount, source-detail count, current status, submission note, and confirmation action context. Each row names its source object/field, snapshot timing, format, editability, validation, permission, empty behavior, and downstream consumer. The operation then references those exact field names instead of saying "input according to page fields".
-

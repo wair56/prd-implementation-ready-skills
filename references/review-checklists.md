@@ -212,10 +212,11 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Does each field-bearing element pass the Field Specification Gate: concrete fields are listed under filters/search, summary cards, table columns, detail drawers/pages, modal/forms, attachments/files, and server-only field groups where relevant?
 - Is there any element-only page specification where a container name such as "detail modal", "list", "amount and status", or "information area" is being counted as field definition?
 - Does every field define business meaning, placement/control, source object/field, source authority, snapshot or real-time behavior, type/format/unit/precision, enum/option source, default/derivation, required/editable state, validation/error wording, visibility/disabled condition, writeback target, downstream consumer, permission/masking, and empty/unavailable behavior where relevant?
+- Does the complete field detail record count equal the concrete field count, rather than providing details only for high-risk fields?
 - Does every operation's input and validation name defined fields instead of saying "input according to page fields" / "按页面字段输入"?
 - Are generic sources such as "module query API", "server amount field", "business master data", or "system generated" replaced by a concrete business source/field or explicitly marked pending source mapping?
 - Does every page element have a field list or `No business fields` with an explicit reason?
-- For readable HTML, is there a compact field table with expandable implementation details, with print/export preserving all details?
+- For readable HTML, does each compact field row expose its own complete definition through a per-field disclosure, with print/export preserving every field record?
 - If any answer above is no, run Field Specification Gate before accepting the page.
 - Are there missing visible elements: page header, breadcrumb, status tag, primary action, summary cards, filters, search, sort, tabs, table columns, row actions, batch actions, pagination, import/export, detail drawer, modal/form, timeline, operation log, attachments, empty/loading/error/disabled/submitting/success states?
 - Does any page spec only describe large page regions such as "overview + list + detail" without table columns, operation entries, disabled reasons, default values, or recovery behavior?
