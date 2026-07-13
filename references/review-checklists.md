@@ -210,6 +210,9 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Does each page pass the Page Task Closure Gate: why this page exists, what the user sees first, what business question it answers, what primary action it enables, and what feedback/recovery appears after success or failure?
 - Does each page pass the Page Element Inventory Gate: every visible element/control is named with purpose, data source, permission/visibility, interaction, state behavior, and acceptance?
 - Does each field-bearing element pass the Field Specification Gate: concrete fields are listed under filters/search, summary cards, table columns, detail drawers/pages, modal/forms, attachments/files, and server-only field groups where relevant?
+- Does the Full-Document Field Coverage ledger count every in-scope role-specific page and server-only touchpoint, rather than treating one sample page or one module aggregate as complete?
+- Does `in-scope field-bearing page count` equal `page field-specification coverage count`, and is the `uncovered page list` empty?
+- For every covered page, does its concrete field count equal its complete field detail record count?
 - Is there any element-only page specification where a container name such as "detail modal", "list", "amount and status", or "information area" is being counted as field definition?
 - Does every field define business meaning, placement/control, source object/field, source authority, snapshot or real-time behavior, type/format/unit/precision, enum/option source, default/derivation, required/editable state, validation/error wording, visibility/disabled condition, writeback target, downstream consumer, permission/masking, and empty/unavailable behavior where relevant?
 - Does the complete field detail record count equal the concrete field count, rather than providing details only for high-risk fields?

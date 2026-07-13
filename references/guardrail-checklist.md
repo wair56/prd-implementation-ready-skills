@@ -44,6 +44,7 @@ Priority:
 | P0 | Page lists fields/buttons but not why the page exists, what users see first, or how operations complete | Run Page Task Closure Gate |
 | P0 | Page presentation stops at page purpose, large page regions, or "list + detail" without naming visible elements, controls, actions, states, and trace surfaces | Run Page Element Inventory Gate |
 | P0 | Missing field-level detail: an element-only page specification names filters, cards, tables, drawers, modals/forms, files, or operations but omits their concrete fields, source/authority, display/input rules, validation, permission, writeback, or consumer | Run Field Specification Gate |
+| P0 | A sample page is field-complete but another in-scope role/page/server touchpoint has no field specification, or page coverage is reported only at module level | Build the Full-Document Field Coverage ledger; require in-scope page count = covered page count and an empty uncovered page list |
 | P0 | Field table exists but complete detail records cover only selected/high-risk fields, or detail record count is lower than field count | Add a per-field complete definition and verify field count = detail record count |
 | P0 | Missing-link data is marked exception but has no workbench/recovery/re-enter path | Add exception workbench or mark out of scope |
 | P1 | A visible field/card/button has no user decision, action, risk-control, traceability, or acceptance purpose | Remove, move to detail/export, or explain why shown |

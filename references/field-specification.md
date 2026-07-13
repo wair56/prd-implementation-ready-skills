@@ -33,6 +33,36 @@ Each element must have either:
 
 Do not count an element name, tab name, drawer name, modal name, or the phrase "list fields" as field coverage.
 
+## Full-Document Field Coverage Gate
+
+Run field specification coverage at document scope, not only on the page used as an example. A sample page does not satisfy full-document coverage, even when that sample is excellent.
+
+Build a page coverage ledger before accepting the PRD:
+
+| Module | End / Role | Page or Server Touchpoint | Has Business Fields? | Element Inventory Complete? | Concrete Field Count | Complete Detail Count | Pending Dimensions | Coverage Status |
+|---|---|---|---|---|---:|---:|---|---|
+
+Apply these rules:
+
+1. Count each role-specific page separately. Platform and customer views of the same module are two pages when their data scope, fields, operations, or permissions differ.
+2. Count server-only business touchpoints separately when callbacks, jobs, calculations, normalized fields, writebacks, or downstream effects have no user page.
+3. Every in-scope field-bearing page must have an element inventory, a concrete compact field list, and one complete detail record per field.
+4. A shared component may reuse an authoritative field definition, but each consuming page must name the shared component, inherited fields, page-specific visibility, permission, data scope, and exceptions. Do not silently mark sibling pages covered.
+5. A page with no business fields must say `No business fields` and explain why. Static navigation does not excuse missing fields inside the destination page.
+6. An external iframe or embedded product still needs boundary fields: local subject/context, launch URL/session, load/error state, external field families, callback/result fields, and any external contract dimensions that remain pending. Do not invent the external field contract.
+7. Scan the implementation or source material page by page where available: filters, cards, table columns, drawers, forms, request/response fields, local state, files, operation context, error displays, and post-event writebacks. Page titles alone are not a field inventory.
+
+Before saying the document is field-complete, report and verify exactly:
+
+```text
+In-scope field-bearing page count = N
+Page field-specification coverage count = N
+Uncovered page list = empty
+Per-page field count = per-page complete detail record count
+```
+
+If the counts differ, list every uncovered page by `module + end/role + page name` and continue writing. Do not report a module-level aggregate as page coverage.
+
 ## Compact Field Table
 
 Keep the first reading layer compact and local to the page element:
