@@ -132,6 +132,16 @@ If a PRD says "the page contains a list, detail drawer, and action buttons" but 
 
 When a page lists or selects data from another place, expose the filter basis: source dataset, fixed business eligibility filter, editable UI query filter, result count, summary count/totals, option source, default filters, reset behavior, sync status, stale data warning, external failure state, visible but unavailable rows, unavailable reason, and cross-module/source link.
 
+## Field-Level Detail Handoff
+
+The Page Element Inventory Gate answers which carriers exist. It does not define the business fields inside a filter area, table, summary card, modal/form, detail drawer, attachment area, or server-only data flow.
+
+After the element inventory, run `field-specification.md#field-specification-gate` for every field-bearing element. Keep the field details local to that element. An element-only page specification is incomplete even when every page region has a purpose and data-source label.
+
+Do not satisfy field detail with generated phrases such as "module query API", "server amount field", "display according to rules", or "input according to page fields". Name the real business source and field, or mark the source mapping as pending without inventing it.
+
+Before finalizing the page, run the Operation-Field Cross-Check so every operation's input and validation references defined fields, and every field has a user/operation/rule/trace consumer.
+
 ## Operation-to-Surface Map
 
 Every important operation needs a home in the UI. Do not list operations only in a rule table; users must know where they start them and how they see the result.

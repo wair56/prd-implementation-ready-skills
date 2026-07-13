@@ -209,6 +209,14 @@ Use this for lightweight requirements. If any answer is no, either fix it or mov
 - Can a reader immediately tell where each function lives, including default entry, target role, permission, data scope, and cross-side / 跨端 links?
 - Does each page pass the Page Task Closure Gate: why this page exists, what the user sees first, what business question it answers, what primary action it enables, and what feedback/recovery appears after success or failure?
 - Does each page pass the Page Element Inventory Gate: every visible element/control is named with purpose, data source, permission/visibility, interaction, state behavior, and acceptance?
+- Does each field-bearing element pass the Field Specification Gate: concrete fields are listed under filters/search, summary cards, table columns, detail drawers/pages, modal/forms, attachments/files, and server-only field groups where relevant?
+- Is there any element-only page specification where a container name such as "detail modal", "list", "amount and status", or "information area" is being counted as field definition?
+- Does every field define business meaning, placement/control, source object/field, source authority, snapshot or real-time behavior, type/format/unit/precision, enum/option source, default/derivation, required/editable state, validation/error wording, visibility/disabled condition, writeback target, downstream consumer, permission/masking, and empty/unavailable behavior where relevant?
+- Does every operation's input and validation name defined fields instead of saying "input according to page fields" / "按页面字段输入"?
+- Are generic sources such as "module query API", "server amount field", "business master data", or "system generated" replaced by a concrete business source/field or explicitly marked pending source mapping?
+- Does every page element have a field list or `No business fields` with an explicit reason?
+- For readable HTML, is there a compact field table with expandable implementation details, with print/export preserving all details?
+- If any answer above is no, run Field Specification Gate before accepting the page.
 - Are there missing visible elements: page header, breadcrumb, status tag, primary action, summary cards, filters, search, sort, tabs, table columns, row actions, batch actions, pagination, import/export, detail drawer, modal/form, timeline, operation log, attachments, empty/loading/error/disabled/submitting/success states?
 - Does any page spec only describe large page regions such as "overview + list + detail" without table columns, operation entries, disabled reasons, default values, or recovery behavior?
 - Is there any field-only page where columns/buttons are listed but why shown, decision supported, drilldown, operation surface, disabled reason, and recovery are missing?

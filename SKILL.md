@@ -1,6 +1,6 @@
 ---
 name: prd-implementation-ready
-description: Use when writing, reviewing, or filling gaps in PRDs, product requirements, BRDs, functional specs, or SaaS/admin/tool/consumer workflows that must become implementation-ready. Especially useful for business flows, user scenarios, object states, page UX, data sources, permissions, notifications, non-functional decisions, exceptions, finance/payment, formulas, and writebacks.
+description: Use when writing, reviewing, or filling gaps in PRDs, product requirements, BRDs, functional specs, or SaaS/admin/tool/consumer workflows that must become implementation-ready. Especially useful for business flows, user scenarios, object states, page UX, field-level page specs, data sources, permissions, notifications, non-functional decisions, exceptions, finance/payment, formulas, and writebacks.
 ---
 
 # PRD Implementation Ready
@@ -22,6 +22,7 @@ Core bar:
 - **Do not invent terms**: use the user's wording, existing system labels, or confirmed business terms.
 - **Human-readable wording**: PRD正文 must stay business-readable and aligned with the requirement. Do not replace user terms with abstract, decorative, or void-created terms.
 - **Page/document term alignment**: page labels, PRD terms, business objects, calculation fields, and fund/resource destinations must use one mapped vocabulary before final wording.
+- **Field-level implementation detail**: a page element or container name never replaces the fields inside it. Every field-bearing element needs concrete fields, source, display/input behavior, validation, permission, writeback, and downstream use.
 
 Default first response shape: context digest based on the user's context; deep business understanding plan; one-sentence business goal; known/unknown scope, users, objects, and risks; initial flow shape; likely small flows from observation lenses; inferred high-risk control loops for repeated/cyclic operations; 3-6 confirmation questions with recommended defaults.
 
@@ -34,14 +35,14 @@ Default first response shape: context digest based on the user's context; deep b
 2. Flow shape next: identify single-line, parallel, master-child, state-machine, event-driven, cycle/periodic, or mixed flow. For parallel flows, name convergence points instead of flattening the work.
 3. Navigation and diagrams before detail: the main PRD / 00 file should include a side/module/page/function navigation map and a business flow atlas before detailed rules.
 4. Rules after flow: object lifecycle, data flow, source documents, writebacks, idempotency, permissions, exceptions, boundaries, and rollback.
-5. Pages after business shape: page task closure, target touchpoint, page carrier, component choice, interaction states, and feedback/recovery.
+5. Pages after business shape: page task closure, target touchpoint, page carrier, component choice, element inventory, field specification, interaction states, and feedback/recovery.
 6. Final writing after confirmation: show confirmed rules, recommended defaults, open high-risk decisions, and out-of-scope boundaries.
 
 Diagram requirements: always consider flow shape, parallel flow convergence, business flow atlas, Mermaid flowcharts, `stateDiagram-v2`, object status changes, and diagrams before detailed rules when the PRD spans multiple objects/modules or has lifecycle/state risk.
 
 For existing products or v1 to v2 changes, run the Version Evolution Gate before rewriting: old rule, change intent, impact range, old vs new, migration, backward compatibility, release/rollback, and decision record.
 
-For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include a page element inventory, fields, data source, status/writeback, permissions, idempotency, validation, error/empty/disabled states, feedback/recovery, and acceptance. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
+For module docs, keep details near the page/action/server flow where they matter. Page implementation details must include a page element inventory and the Field Specification Gate result: concrete fields inside each element, source, display/input behavior, status/writeback, permissions, idempotency, validation, error/empty/disabled states, feedback/recovery, and acceptance. Server-only automatic flows stay inside the module with trigger, input source, processing rule, persisted object, status/writeback, idempotency/retry, failure/compensation, visibility/log, and acceptance.
 
 ## Reference Router
 
@@ -59,7 +60,7 @@ Read only what the current stage needs.
 | A metric may be action input or only analysis/risk-control, such as cost attribution, usage share, occupancy, contribution, or profitability | `references/data-flow.md`, `references/business-consistency.md` |
 | Amount composition or amount breakdown has hidden component sources such as cost basis, source total, service fee, adjustment lines, included detail list | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
 | Formula, list scope, amount basis, permission, or report dimension depends on binding, dedicated relationship, current relationship, latest configuration, or real-time fetch | `references/data-flow.md`, `references/business-consistency.md`, `references/page-ui.md` |
-| Page design stage | `references/page-ui.md`, `references/output-structure.md` |
+| Page design stage | `references/page-ui.md`, `references/field-specification.md`, `references/output-structure.md` |
 | Notifications, todos, pushes, emails/SMS, bot messages, webhooks | `references/notifications.md`, `references/data-flow.md` |
 | Product-level non-functional decisions | `references/non-functional.md` |
 | Source language, unsupported details, page/document term drift, technical wording, bilingual/public wording, or confusing terms | `references/terminology.md`, `references/source-language-guards.md`, `references/page-ui.md` |
@@ -69,6 +70,7 @@ Gate authority:
 
 - Authoritative gate: `references/data-flow.md#post-event-writeback-gate`.
 - Authoritative gate: `references/data-flow.md#resource--value-flow-gate`.
+- Authoritative gate: `references/field-specification.md#field-specification-gate`.
 - Finance topic index: `references/finance-operations.md`.
 - Unified staged red flags and P0/P1 blockers: `references/guardrail-checklist.md`.
 
@@ -93,6 +95,7 @@ Stop and return to the workflow when any of these appears:
 - Missing API/upstream contract: an API/interface PRD, wrapper API, upstream service, external provider, callback/webhook, cache, or error-code design appears without raw field mapping, input combination behavior, result completeness, cache state matrix, error envelope, and measurable API non-functional limits.
 - Field-only page design: columns/buttons are listed but why shown, what decision or action they support, operation surface, disabled reason, and recovery are missing.
 - Large-region page design: page presentation stops at page purpose, big areas, or "list + detail" without a complete visible element inventory for page header, summary cards, filters, tabs, table/list, actions, drawers/modals, logs, import/export, and interaction states.
+- Missing field-level detail: an element-only page specification names filters, tables, cards, drawers, modals, forms, or files but does not define the fields inside them, or uses placeholders such as "module query API", "server amount field", or "input according to page fields".
 - Created downstream records are listed after an event, but exact persisted field writebacks on existing objects are missing.
 
 For the full staged list, use `references/guardrail-checklist.md`. Any P0 blocker means stop detailed writing until the issue is closed or explicitly marked pending with a recommended default.

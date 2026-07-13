@@ -102,6 +102,8 @@ After business objects and flow are clear, confirm:
 - Target端 / touchpoint: PC backend, role portal, mobile/H5/mini app, message/todo center, API/system job, import/export tool.
 - Menu and page structure.
 - Page task closure before field lists: why the page exists, what the user sees first, what business question it answers, what primary action it enables, and what feedback/recovery appears after action success or failure.
+- Page element inventory followed by field specification: every field-bearing filter, card, table, detail, drawer, modal/form, attachment area, and server-only field group defines concrete fields instead of only naming the container.
+- Operation-field cross-check: operation inputs and validation name defined fields; every field has a user decision, operation, rule, trace, or downstream consumer.
 - Page-level Tabs vs list filter Tabs.
 - Page specs based on data volume, field count, lifecycle, frequency, role differences.
 - UX carrier and component selection tied to workflow constraints: table, detail page, drawer, modal, wizard, batch bar, exception workbench, upload/download, timeline, operation log.
